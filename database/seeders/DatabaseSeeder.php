@@ -16,13 +16,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        User::firstOrCreate([   
-            'role_id' => 1,
+        $user = User::firstOrCreate([   
             'first_name' => 'Tarikul',
             'last_name' => 'Islam',
             'email' => 'tarikul.cse.bru@gmail.com',
             'is_active' => 1,
             'password' => bcrypt('123456')
         ]);
+
+        $user->roles()->attach(1);
     }
 }

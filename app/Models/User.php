@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -19,12 +20,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'role_id',
+        'photo',
         'first_name',
         'last_name',
         'email',
         'phone',
         'password',
+        'is_active'
     ];
 
     /**
@@ -48,11 +50,51 @@ class User extends Authenticatable
 
 
     /**
-     * User Role Relationship
+     * User-Role Relationship (User belongs to many roles)
+     * 
      */
 
-    public function role() {
-        return $this->belongsTo(Role::class);
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+
+
+    /**
+     * Is Admin?
+     */
+    public function isAdmin() {
+        foreach($this->roles()->get() as $role) {
+            if($role->name == 'administrator' && $this->is_active == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Is Instructor?
+     */
+    public function isInstructor() {
+        foreach($this->roles()->get() as $role) {
+            if($role->name == 'instructor' && $this->is_active == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Is Student?
+     */
+    public function isStudent() {
+        foreach($this->roles()->get() as $role) {
+            if($role->name == 'student' && $this->is_active == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
