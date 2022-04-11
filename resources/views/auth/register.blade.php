@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control rounded-pill @error('last_name') is-invalid @enderror"
-                                            id="last_name" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                                            id="last_name" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required autocomplete="last_name">
                                         @error('last_name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

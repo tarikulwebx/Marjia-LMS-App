@@ -1,1 +1,6 @@
-
+.navbar-toggler .toggler-icon,
+.navbar-toggler.collapsed .top-bar, 
+.navbar-toggler.collapsed .middle-bar,
+.navbar-toggler.collapsed .bottom-bar {
+    background-color: #eee !important;
+}

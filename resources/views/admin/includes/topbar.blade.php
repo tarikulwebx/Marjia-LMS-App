@@ -173,7 +173,7 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
                     <img class="img-profile rounded-circle"
-                        src="{{ asset('images/profile.svg') }}">
+                        src="{{ Auth::user()->photo ? url('/') . '/images/profile/' . Auth::user()->photo : asset('images/profile-placeholder-image.png') }}" alt="profile picture">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
@@ -191,7 +191,7 @@
                         Activity Log
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                    <a class="dropdown-item" href="{{ route('logout') }}" data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
                         Logout
                     </a>

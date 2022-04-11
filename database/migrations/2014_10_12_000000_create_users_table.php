@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('linkedin')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->string('slug')->nullable();
         });
     }
 

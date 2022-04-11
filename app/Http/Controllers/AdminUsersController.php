@@ -173,6 +173,6 @@ class AdminUsersController extends Controller
         }
         $user->delete();
         session()->flash('user_action_msg', 'Account Deleted Successfully');
-        return back();
+        return redirect()->route('users.index');
     }
 }
