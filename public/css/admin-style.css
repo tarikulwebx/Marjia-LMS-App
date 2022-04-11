@@ -1,0 +1,95 @@
+/* Data Table */
+table.dataTable {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+
+
+/* Form Custom */
+.form-control {
+  color: #495057;
+}
+.form-control:focus {
+  color: #495057;
+}
+
+
+/* Multi Select Custom */
+.multiselect-native-select .multiselect-container {
+  min-width: 300px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.multiselect-native-select .multiselect-container .multiselect-option {
+  font-family: "Heebo", sans-serif;
+  font-size: 0.98rem;
+  padding: 0.4rem 1rem !important;
+  text-transform: capitalize !important;
+}
+
+.multiselect-native-select .multiselect-container .multiselect-option:hover,
+.multiselect-native-select .multiselect-container .multiselect-option:focus,
+.multiselect-native-select .multiselect-container .multiselect-option:active,
+.multiselect-native-select .multiselect-container .multiselect-option.selected {
+  background-color: rgba(110, 66, 193, 0.15) !important;
+}
+
+.multiselect-native-select .multiselect {
+  text-align: left !important;
+  text-transform: capitalize !important;
+}
+
+
+
+/* Gray Color Classes */
+.text-gray-100 {
+  color: #f8f9fa;
+}
+
+.text-gray-200 {
+  color: #dee2e6;
+}
+
+.text-gray-300 {
+  color: #dee2e6;
+}
+
+.text-gray-400 {
+  color: #ced4da;
+}
+
+.text-gray-500 {
+  color: #adb5bd;
+}
+
+.text-gray-600 {
+  color: #6c757d;
+}
+
+.text-gray-700 {
+  color: #495057;
+}
+
+.text-gray-800 {
+  color: #343a40;
+}
+
+.text-gray-900 {
+  color: #212529;
+}
+
+
+
+/* Btn Styles */
+.btn {
+  color: #fff;
+}
+.btn:hover {
+  color: #fff;
+}
+.btn:focus {
+  box-shadow: none !important;
+  outline: none;
+}

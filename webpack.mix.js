@@ -34,11 +34,15 @@ mix.js('resources/js/app.js', 'public/js')
     ], 'public/js/libs.js')
     .styles([
         'resources/assets/css/fontawesome.css',
+        'resources/assets/css/datatables.min.css',
         'resources/assets/css/admin-style.css',
+        'resources/assets/css/bootstrap-multiselect.min.css',
     ], 'public/css/admin-libs.css')
     .scripts([
         'resources/assets/js/jquery-3.6.0.min.js',
         'resources/assets/js/jquery.easing.1.3.js',
+        'resources/assets/js/datatables.min.js',
+        'resources/assets/js/bootstrap-multiselect.js',
         'resources/assets/js/admin-script.js',
     ], 'public/js/admin-libs.js')
     .sourceMaps();

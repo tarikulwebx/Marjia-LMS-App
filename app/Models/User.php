@@ -26,7 +26,22 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
-        'is_active'
+        'is_active',
+        'address',
+        'about',
+        'bachelor_degree_department',
+        'bachelor_degree_university',
+        'bachelor_degree_session',
+        'bachelor_degree_year',
+        'master_degree_department',
+        'master_degree_university',
+        'master_degree_session',
+        'master_degree_year',
+        'facebook',
+        'twitter',
+        'telegram',
+        'github',
+        'linkedin',
     ];
 
     /**
