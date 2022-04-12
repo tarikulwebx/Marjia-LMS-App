@@ -58,7 +58,7 @@
         <div class="card-body pb-4">
             <div class="row">
                 <div class="col-xxl-10">
-                    {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->id], 'files'=>true]) !!}
+                    {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->slug], 'files'=>true]) !!}
                         <div class="row g-3">
                             {{-- Photo --}}
                             <div class="col-12">
@@ -292,7 +292,7 @@
                     <div class="row g-4">
                         <!-- update password Form -->
                         <div class="col-lg-6">
-                            {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.updatePassword', $user->id]]) !!}
+                            {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.updatePassword', $user->slug]]) !!}
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <h4 class="mb-0 mt-5">Change Password</h4>
@@ -321,7 +321,7 @@
                         </div>
                         <!-- Update email form -->
                         <div class="col-lg-6">
-                            {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.updateEmail', $user->id]]) !!}
+                            {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.updateEmail', $user->slug]]) !!}
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <h4 class="mb-0 mt-5">Change Account Email</h4>
@@ -345,7 +345,7 @@
                         <div class="col-12">
                             <h4 class="mt-5 text-danger mb-1">Delete Account</h4>
                             <p class="text-warning">After deleting, every data related to this account will be erased. Think again, what you're going to do!</p>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'class' => 'form-horizontal']) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->slug], 'class' => 'form-horizontal']) !!}
                                 {!! Form::button('<i class="fa-regular fa-trash-can me-2" ></i>Delete Account', ['type'=>'submit','class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                         </div>

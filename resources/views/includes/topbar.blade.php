@@ -86,16 +86,16 @@
                                 <hr class="dropdown-divider">
                             </li>
                             @if (Auth::user()->isInstructor() && Auth::user()->isStudent())
-                                <li><a class="dropdown-item" href="#">Student Profile <i class="fa-solid fa-user"></i></a></li>
-                                <li><a class="dropdown-item" href="#">Instructor Profile <i class="fa-solid fa-user"></i></a></li>
+                                <li><a class="dropdown-item" href="{{ route('student.show', Auth::user()->slug) }}">Student Profile <i class="fa-solid fa-user"></i></a></li>
+                                <li><a class="dropdown-item" href="{{ route('instructor.show', Auth::user()->slug) }}">Instructor Profile <i class="fa-solid fa-user"></i></a></li>
                                 @elseif (Auth::user()->isInstructor())
-                                    <li><a class="dropdown-item" href="#">My Profile <i class="fa-solid fa-user"></i></a></li>
+                                    <li><a class="dropdown-item" href="{{ route('instructor.show', Auth::user()->slug) }}">My Profile <i class="fa-solid fa-user"></i></a></li>
                                 @elseif (Auth::user()->isStudent())
-                                    <li><a class="dropdown-item" href="#">My Profile <i class="fa-solid fa-user"></i></a></li>
+                                    <li><a class="dropdown-item" href="{{ route('student.show', Auth::user()->slug) }}">My Profile <i class="fa-solid fa-user"></i></a></li>
                             @endif
                             
                             @if (Auth::user()->isAdmin())
-                                <li><a class="dropdown-item" href="{{ url('/admin') }}" target="_blank">Admin Dashboard <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin-dashboard') }}" target="_blank">Admin Dashboard <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
                             @endif
                             <li>
                                 <hr class="dropdown-divider">

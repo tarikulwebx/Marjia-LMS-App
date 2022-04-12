@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorProfileController;
+use App\Http\Controllers\StudentProfileController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,3 +36,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'instructor'])->group(function () {
     Route::resource('instructor', InstructorProfileController::class);
 });
+
+
+
+/**
+ * Student Profile Routes
+ */
+Route::middleware(['auth', 'student'])->group(function () {
+    Route::resource('student', StudentProfileController::class);
+});
+
+
+

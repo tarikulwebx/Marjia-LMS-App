@@ -65,11 +65,11 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
         //
 
-        $user = User::findOrFail($id);
+        $user = User::findBySlugOrFail($slug);
         return view('admin.users.show', compact('user'));
     }
 
@@ -79,10 +79,10 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
         //
-        $user = User::findOrFail($id);
+        $user = User::findBySlugOrFail($slug);
         $roles = Role::pluck('name', 'id')->all();
         return view('admin.users.edit', compact('user', 'roles'));
     }
@@ -94,7 +94,7 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         //
         $request->validate([
@@ -105,7 +105,7 @@ class AdminUsersController extends Controller
             'photo' => 'mimes:png,jpg',
         ]);
 
-        $user = User::findOrFail($id);
+        $user = User::findBySlugOrFail($slug);
         $inputs = $request->all();
         if ($photo_file = $request->file('photo')) {
             $name_rename = time().'-'.Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
@@ -127,14 +127,14 @@ class AdminUsersController extends Controller
     /**
      * Update User Email & Password
      */
-    public function updatePassword(Request $request, $id)
+    public function updatePassword(Request $request, $slug)
     {
         $request->validate([
             'password'  => 'required|min:8|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required|min:8',
         ]);
 
-        $user = User::findOrFail($id);
+        $user = User::findBySlugOrFail($slug);
         $inputs = $request->all();
         $inputs['password'] = bcrypt($inputs['password']);
         $user->update($inputs);
@@ -143,13 +143,13 @@ class AdminUsersController extends Controller
        
     }
 
-    public function updateEmail(Request $request, $id)
+    public function updateEmail(Request $request, $slug)
     {
         $request->validate([
             'email' => 'required|string|email|max:255|unique:users',
         ]);
         $input = $request->all();
-        $user = User::findOrFail($id);
+        $user = User::findBySlugOrFail($slug);
         $user->update($input);
         session()->flash('user_action_msg', 'Email Changed Successfully');
         return back();
@@ -163,10 +163,10 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         //
-        $user = User::findOrFail($id);
+        $user = User::findBySlugOrFail($slug);
         if($user->photo) {
             $photo = $user->photo;
             unlink(public_path() . '/images/profile/' . $photo);

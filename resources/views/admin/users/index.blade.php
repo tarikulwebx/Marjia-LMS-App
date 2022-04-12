@@ -78,8 +78,8 @@
                                     </td>
                                     <td>{{ $user->created_at->diffForHumans() }}</td>
                                     <td>
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
-                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-info"><i class="fa-solid fa-eye fa-sm"></i> Details</a>
+                                        <a href="{{ route('users.edit', $user->slug) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
+                                        <a href="{{ route('users.show', $user->slug) }}" class="btn btn-sm btn-info"><i class="fa-solid fa-eye fa-sm"></i> Details</a>
                                     </td>
                                 </tr>
                             @endforeach

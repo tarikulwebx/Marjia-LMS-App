@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentProfileController extends Controller
@@ -14,6 +15,7 @@ class StudentProfileController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**
@@ -40,12 +42,14 @@ class StudentProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
         //
+        $user = User::findBySlugOrFail($slug);
+        return view('user-profile.student_dashboard', compact('user'));
     }
 
     /**
