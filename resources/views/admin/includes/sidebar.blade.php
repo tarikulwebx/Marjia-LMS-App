@@ -61,6 +61,22 @@
         </div>
     </li>
 
+    <!-- Nav Item - Media Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMedia"
+            aria-expanded="true" aria-controls="collapseMedia">
+            <i class="fa-solid fa-images"></i>
+            <span>Media</span>
+        </a>
+        <div id="collapseMedia" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">File Manager</h6>
+                <a class="collapse-item" href="{{ url('admin/media/images') }}"><i class="fa-solid fa-image me-2"></i>Images</a>
+                <a class="collapse-item" href="{{ url('admin/media/files') }}"><i class="fa-solid fa-file me-2"></i>Files</a>
+            </div>
+        </div>
+    </li>
+
 
 
     <!-- Divider -->

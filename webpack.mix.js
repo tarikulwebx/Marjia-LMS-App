@@ -46,3 +46,5 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/assets/js/admin-script.js',
     ], 'public/js/admin-libs.js')
     .sourceMaps();
+    
+    mix.copyDirectory('vendor/tinymce/tinymce', 'public/js/tinymce');

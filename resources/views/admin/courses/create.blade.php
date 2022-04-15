@@ -87,7 +87,7 @@
                             <!-- Input: Description -->
                             <div class="col-12">
                                 {!! Form::label('description', 'Description') !!}
-                                {!! Form::textarea('description', null, ['class' => $errors->has('description') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Description', 'rows' => '10']) !!}
+                                {!! Form::textarea('description', null, ['id' => 'tinymceEditor', 'class' => $errors->has('description') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Description', 'rows' => '10']) !!}
                                 <small class="text-danger">{{ $errors->first('description') }}</small>
                             </div>
 
@@ -211,7 +211,7 @@
 
             
         });
-
-        
     </script>
+
+    @include('admin.includes.tinymce-config');
 @endsection

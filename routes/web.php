@@ -40,3 +40,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('admin/courses', AdminCoursesController::class);
 
 });
+
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
+Route::middleware(['auth', 'web'])->group(function () {
+    Route::get('admin/media/images', function () {
+        return view('admin.media.images');
+    });
+    Route::get('admin/media/files', function () {
+        return view('admin.media.files');
+    });
+});
