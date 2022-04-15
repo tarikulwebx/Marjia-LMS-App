@@ -77,6 +77,14 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * User has many Course
+     */
+    public function courses() {
+        return $this->hasMany(Course::class);
+    }
+
+
         /**
      * Is Admin?
      */

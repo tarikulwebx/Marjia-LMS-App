@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\HomeController;
@@ -34,5 +35,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Categories CRUD
     Route::resource('admin/courses/categories', AdminCategoriesController::class);
-    
+
+    // Courses CRUD
+    Route::resource('admin/courses', AdminCoursesController::class);
+
 });
