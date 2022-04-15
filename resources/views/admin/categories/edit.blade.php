@@ -45,8 +45,8 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Edit Category</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fa-solid fa-arrow-left text-white-50 me-1"></i> Courses</a>
+        <a href="{{ route('categories.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fa-solid fa-arrow-left text-white-50 me-1"></i> Create category</a>
     </div>
 
     <!-- ALL USERS TABLE -->

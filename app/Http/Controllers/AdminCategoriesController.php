@@ -26,7 +26,8 @@ class AdminCategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::all();
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -52,18 +53,20 @@ class AdminCategoriesController extends Controller
 
         Category::create($inputs);
         session()->flash('category_action_msg', 'Category "'.$inputs['name'] .'" Created Successfully');
-        return back();
+        return redirect()->route('categories.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $category = Category::findBySlugOrFail($slug);
+        $categories = Category::all();
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
