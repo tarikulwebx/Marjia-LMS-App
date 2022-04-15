@@ -45,7 +45,7 @@
 
 
     <!-- Nav Item - Course Collapse Menu -->
-    {{-- <li class="nav-item {{ Request::is('admin/courses*') ? 'active' : '' }}">
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCourses"
             aria-expanded="true" aria-controls="collapseCourses">
             <i class="fa-solid fa-graduation-cap"></i>
@@ -54,12 +54,12 @@
         <div id="collapseCourses" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manage Courses</h6>
-                <a class="collapse-item {{ Request::is('admin/courses') ? 'active' : '' }}" href="{{ route('courses.index') }}"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
+                <a class="collapse-item" href="#"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
                 <a class="collapse-item {{ Request::is('admin/courses/categories*') ? 'active' : '' }}" href="{{ route('categories.index') }}"><i class="fa-solid fa-table-list me-2"></i>Categories</a>
-                <a class="collapse-item {{ Request::is('admin/courses/create') ? 'active' : '' }}" href="{{ route('courses.create') }}"><i class="fa-solid fa-square-plus me-2"></i>New Course</a>
+                <a class="collapse-item" href="#"><i class="fa-solid fa-square-plus me-2"></i>New Course</a>
             </div>
         </div>
-    </li> --}}
+    </li>
 
 
 

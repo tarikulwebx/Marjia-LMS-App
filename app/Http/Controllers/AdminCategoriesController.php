@@ -1,0 +1,127 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\support\Str;
+
+class AdminCategoriesController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $categories = Category::all();
+        return view('admin.categories.index', compact('categories'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin.categories.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'thumbnail' => 'mimes:png,jpg',
+        ]);
+
+        $inputs = $request->all();
+
+        if ($photo_file = $request->file('thumbnail')) {
+            $name_rename = time() . '-' . Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
+            $photo_file->move('images/category', $name_rename);
+            $inputs['thumbnail'] =  $name_rename;
+        }
+
+        Category::create($inputs);
+        session()->flash('category_action_msg', 'Category "'.$inputs['name'] .'" Created Successfully');
+        return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug)
+    {
+        $category = Category::findBySlugOrFail($slug);
+        $categories = Category::all();
+        return view('admin.categories.edit', compact('category', 'categories'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $slug)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'thumbnail' => 'mimes:png,jpg',
+        ]);
+
+        $inputs = $request->all();
+
+        if ($photo_file = $request->file('thumbnail')) {
+            $name_rename = time() . '-' . Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
+            $photo_file->move('images/category', $name_rename);
+            $inputs['thumbnail'] =  $name_rename;
+        }
+
+        $category = Category::findBySlugOrFail($slug);
+        $category->update($inputs);
+        session()->flash('category_action_msg', 'Category "'.$inputs['name'] .'" Updated Successfully');
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($slug)
+    {
+        $category = Category::findBySlugOrFail($slug);
+        if($category->thumbnail) {
+            $photo = $category->thumbnail;
+            unlink(public_path() . '/images/category/' . $photo);
+        }
+        $category->delete();
+        session()->flash('category_action_msg', 'Category Deleted Successfully');
+        return redirect()->route('categories.index');
+    }
+}
