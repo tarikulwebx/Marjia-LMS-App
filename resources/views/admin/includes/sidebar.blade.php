@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon">
             <i class="fa-solid fa-user-shield"></i>
         </div>
-        <div class="sidebar-brand-text ms-2"><img src="{{ asset('images/site-logo-white.svg') }}" class="img-fluid w-100" alt=""></div>
+        <div class="sidebar-brand-text ms-2"><img src="{{ asset('images/logo-white.png') }}" class="img-fluid w-100" alt=""></div>
     </a>
 
     <!-- Divider -->
@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('admin-dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -45,7 +45,7 @@
 
 
     <!-- Nav Item - Course Collapse Menu -->
-    <li class="nav-item {{ Request::is('admin/courses*') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ Request::is('admin/courses*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCourses"
             aria-expanded="true" aria-controls="collapseCourses">
             <i class="fa-solid fa-graduation-cap"></i>
@@ -59,7 +59,7 @@
                 <a class="collapse-item {{ Request::is('admin/courses/create') ? 'active' : '' }}" href="{{ route('courses.create') }}"><i class="fa-solid fa-square-plus me-2"></i>New Course</a>
             </div>
         </div>
-    </li>
+    </li> --}}
 
 
 
@@ -114,7 +114,7 @@
 
     <!-- Sidebar Message -->
     <div class="sidebar-card d-none d-lg-flex">
-        <img class="sidebar-card-illustration mb-2" src="{{ asset('images/undraw_rocket.svg') }}" alt="...">
+        <img class="sidebar-card-illustration mb-2" src="{{ asset('images/rocket-art.png') }}" alt="...">
         <p class="text-center mb-2"><strong>Marjia LMS</strong> is a personal e-learning platform developed by a team of CSE 8th intake, BRUR</p>
     </div>
 

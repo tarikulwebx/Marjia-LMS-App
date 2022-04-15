@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="video-box">
-                        <img src="images/intro-art.svg" alt="" class="img-fluid w-100">
+                        <img src="{{ asset('images/intro-art.png') }}" alt="" class="img-fluid w-100">
                         <a href="#" class="glightbox">
                             <span><i class="fa-solid fa-circle-play"></i></span>
                             <span class="border-animation border-animation--border-1"></span>

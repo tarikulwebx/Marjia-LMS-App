@@ -93,3 +93,13 @@ table.dataTable {
   box-shadow: none !important;
   outline: none;
 }
+
+/* Edit Circle Btn */
+.edit-circle-btn {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.edit-circle-btn:hover {
+  opacity: 0.8
+}

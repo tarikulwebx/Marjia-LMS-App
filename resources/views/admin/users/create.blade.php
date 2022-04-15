@@ -16,83 +16,121 @@
 
 @section('content')
 
+    @if (session('user_action_msg'))
+    <div class="alert alert-success d-flex align-items-center mb-3 alert-dismissible fade show" role="alert">
+        <div class="me-2 pe-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+        </div>
+        <div>
+            {{ session('user_action_msg') }}
+        </div>
+        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    
+    @if ($errors->all())
+        <div class="alert alert-danger  mb-3 alert-dismissible fade show" role="alert">
+            <strong>Fix following errors: </strong>
+            <ul class="m-0">
+                @foreach ($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">New User</h1>
-        <a href="{{ route('users.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fa-solid fa-user text-white-50 me-1"></i> All Users</a>
+        <a href="{{ route('users.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fa-solid fa-arrow-left text-white-50 me-1"></i> All Users</a>
     </div>
 
     <!-- ALL USERS TABLE -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">New User Form</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Create User</h6>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-xxl-10">
                     {!! Form::open(['method' => 'POST', 'route' => 'users.store', 'files'=>true]) !!}
                         <div class="row g-3">
-                            {{-- First name --}}
+                            <!-- Photo -->
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {!! Form::label('photo', 'Photo') !!}
+                                    <div>
+                                        <img id="previewImg" class="rounded-circle mb-2" src="{{ asset('images/profile-pic.jpg') }}" alt="">
+                                    </div>
+                                    {!! Form::file('photo', ['id'=> 'photo', 'class' => $errors->has('photo') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
+                                    <small class="text-danger">{{ $errors->first('photo') }}</small>
+                                </div>
+                            </div>
+                            <!-- First name -->
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     {!! Form::label('first_name', 'First name') !!}
-                                    {!! Form::text('first_name', null, ['class' => $errors->has('first_name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'First name']) !!}
+                                    {!! Form::text('first_name', null, ['class' => $errors->has('first_name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'First name', 'required' => 'required']) !!}
                                     <small class="text-danger">{{ $errors->first('first_name') }}</small>
                                 </div>
                             </div>
-                            {{-- Last name --}}
+                            <!-- Last name -->
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     {!! Form::label('last_name', 'Last name') !!}
-                                    {!! Form::text('last_name', null, ['class' => $errors->has('last_name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Last name']) !!}
+                                    {!! Form::text('last_name', null, ['class' => $errors->has('last_name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Last name', 'required' => 'required']) !!}
                                     <small class="text-danger">{{ $errors->first('last_name') }}</small>
                                 </div>
                             </div>
 
-                            {{-- Email --}}
+                            <!-- Email -->
                             <div class="col-12">
                                 <div class="form-group">
                                     {!! Form::label('email', 'Email') !!}
-                                    {!! Form::email('email', null, ['class' => $errors->has('email') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Email']) !!}
+                                    {!! Form::email('email', null, ['class' => $errors->has('email') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Email', 'required' => 'required']) !!}
                                     <small class="text-danger">{{ $errors->first('email') }}</small>
                                 </div>
                             </div>
 
 
-                            {{-- Roles --}}
+                            <!-- Roles -->
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    {!! Form::label('user_role', 'User role') !!}
-                                    {!! Form::select('user_role[]', $roles, 1, ['id' => 'multiselect', 'class' => $errors->has('user_role') ? 'form-control d-none is-invalid' : 'form-control d-none', 'multiple']) !!}
-                                    <small class="text-danger">{{ $errors->first('user_role') }}</small>
+                                    {!! Form::label('role_id', 'User role') !!}
+                                    {!! Form::select('role_id', $roles, 2, ['id' => 'multiselect', 'class' => $errors->has('role_id') ? 'form-control d-none is-invalid' : 'form-control d-none', 'required' => 'required']) !!}
+                                    <small class="text-danger">{{ $errors->first('role_id') }}</small>
                                 </div>
                             </div>
 
-                            {{-- Active/disabled --}}
+                            <!-- Active/disabled -->
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     {!! Form::label('is_active', 'Is Active?') !!}
-                                    {!! Form::select('is_active', [0=>'disabled', 1=>'active'], 1, ['id' => 'multiselect', 'class' => $errors->has('is_active') ? 'form-control is-invalid' : 'form-control']) !!}
+                                    {!! Form::select('is_active', [0=>'disabled', 1=>'active'], 1, ['id' => 'multiselect', 'class' => $errors->has('is_active') ? 'form-control is-invalid' : 'form-control', 'required' => 'required']) !!}
                                     <small class="text-danger">{{ $errors->first('is_active') }}</small>
                                 </div>
                             </div>
 
 
-                            {{-- Password --}}
+                            <!-- Password -->
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     {!! Form::label('password', 'Password') !!}
-                                    {!! Form::password('password', ['class' => $errors->has('password') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Password']) !!}
+                                    {!! Form::password('password', ['class' => $errors->has('password') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Password', 'required' => 'required']) !!}
                                     <small class="text-danger">{{ $errors->first('password') }}</small>
                                 </div>
                             </div>
 
-                            {{-- Password Confirm --}}
+                            <!-- Password Confirm -->
                             <div class="col-lg-6">
                                 <div class="form-group {{ $errors->has('passowrd-confirm') ? ' has-error' : '' }}">
                                     {!! Form::label('passowrd-confirm', 'Password Confirm') !!}
-                                    {!! Form::password('password_confirmation', ['id' => 'password-confirm', 'class' => $errors->has('password_confirmation') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Password confirm']) !!}
+                                    {!! Form::password('password_confirmation', ['id' => 'password-confirm', 'class' => $errors->has('password_confirmation') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Password confirm', 'required' => 'required']) !!}
                                     <small class="text-danger">{{ $errors->first('passowrd-confirm') }}</small>
                                 </div>
                             </div>
@@ -100,30 +138,20 @@
                             
 
 
-                            {{-- Collapse Fields --}}
+                            <!-- Collapse Fields -->
                             <div class="col-12">
                                 <div class="d-flex align-items-center mt-4 mb-3">
-                                    <h4 class="text-gray-700 mb-0"> Optional Fields</h4>
+                                    <h4 class="text-gray-700 mb-0"> Other Fields</h4>
                                     <strong><a class="ms-3" data-bs-toggle="collapse" href="#collapseFormFields" role="button" aria-expanded="false" aria-controls="collapseFormFields">Show/Hide<i class="fa-solid fa-caret-down ms-1"></i></a></strong>
                                 </div>
                                 <div class="collapse" id="collapseFormFields">
                                     <div class="row g-3">
-                                        {{-- More details --}}
+                                        <!-- More details -->
                                         <div class="col-12 mt-4 pt-2">
                                             <h5 class="m-0">More Details</h5>
                                         </div>
-                                        {{-- Photo --}}
-                                        <div class="col-12">
-                                            <div class="form-group {{ $errors->has('photo') ? ' has-error' : '' }}">
-                                                {!! Form::label('photo', 'Photo') !!}
-                                                <div>
-                                                    <img id="previewImg" class="rounded mb-2" src="{{ asset('images/profile-placeholder-image.png') }}" alt="">
-                                                </div>
-                                                {!! Form::file('photo', ['id'=> 'photo', 'class' => $errors->has('photo') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
-                                                <small class="text-danger">{{ $errors->first('photo') }}</small>
-                                            </div>
-                                        </div>
-                                        {{-- Phone --}}
+                                        
+                                        <!-- Phone -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('phone', 'Phone') !!}
@@ -131,7 +159,7 @@
                                                 <small class="text-danger">{{ $errors->first('phone') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Address --}}
+                                        <!-- Address -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('address', 'Address') !!}
@@ -139,7 +167,7 @@
                                                 <small class="text-danger">{{ $errors->first('address') }}</small>
                                             </div>
                                         </div>
-                                        {{-- About --}}
+                                        <!-- About -->
                                         <div class="col-12">
                                             <div class="form-group">
                                                 {!! Form::label('about', 'About') !!}
@@ -149,12 +177,12 @@
                                         </div>
 
 
-                                        {{-- Bachelor Degree --}}
+                                        <!-- Bachelor Degree -->
                                         <div class="col-12 mt-4 pt-2">
                                             <h5 class="m-0">Bachelor Degree</h5>
                                         </div>
 
-                                        {{-- Bachelor Department --}}
+                                        <!-- Bachelor Department -->
                                         <div class="col-12">
                                             <div class="form-group">
                                                 {!! Form::label('bachelor_degree_department', 'Department') !!}
@@ -162,7 +190,7 @@
                                                 <small class="text-danger">{{ $errors->first('bachelor_degree_department') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Bachelor Session --}}
+                                        <!-- Bachelor Session -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('bachelor_degree_session', 'Session') !!}
@@ -170,7 +198,7 @@
                                                 <small class="text-danger">{{ $errors->first('bachelor_degree_session') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Bachelor Passing Year --}}
+                                        <!-- Bachelor Passing Year -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('bachelor_degree_year', 'Passing Year') !!}
@@ -178,7 +206,7 @@
                                                 <small class="text-danger">{{ $errors->first('bachelor_degree_year') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Bachelor University --}}
+                                        <!-- Bachelor University -->
                                         <div class="col-12">
                                             <div class="form-group">
                                                 {!! Form::label('bachelor_degree_university', 'University') !!}
@@ -192,7 +220,7 @@
                                             <h5 class="m-0">Masters Degree</h5>
                                         </div>
 
-                                        {{-- Masters Department --}}
+                                        <!-- Masters Department -->
                                         <div class="col-12">
                                             <div class="form-group">
                                                 {!! Form::label('master_degree_department', 'Department') !!}
@@ -200,7 +228,7 @@
                                                 <small class="text-danger">{{ $errors->first('master_degree_department') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Masters Session --}}
+                                        <!-- Masters Session -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('master_degree_session', 'Session') !!}
@@ -208,7 +236,7 @@
                                                 <small class="text-danger">{{ $errors->first('master_degree_session') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Masters Passing Year --}}
+                                        <!-- Masters Passing Year -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('master_degree_year', 'Passing Year') !!}
@@ -216,7 +244,7 @@
                                                 <small class="text-danger">{{ $errors->first('master_degree_year') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Masters University --}}
+                                        <!-- Masters University -->
                                         <div class="col-12">
                                             <div class="form-group">
                                                 {!! Form::label('master_degree_university', 'University') !!}
@@ -227,11 +255,11 @@
 
 
 
-                                        {{-- Social profiles --}}
+                                        <!-- Social profiles -->
                                         <div class="col-12 mt-4 pt-2">
                                             <h5 class="m-0">Social Profiles</h5>
                                         </div>
-                                        {{-- Facebook --}}
+                                        <!-- Facebook -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('facebook', 'Facebook') !!}
@@ -239,7 +267,7 @@
                                                 <small class="text-danger">{{ $errors->first('facebook') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Twitter --}}
+                                        <!-- Twitter -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('twitter', 'Twitter') !!}
@@ -247,7 +275,7 @@
                                                 <small class="text-danger">{{ $errors->first('twitter') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Telegram --}}
+                                        <!-- Telegram -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('telegram', 'Telegram') !!}
@@ -255,7 +283,7 @@
                                                 <small class="text-danger">{{ $errors->first('telegram') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Github --}}
+                                        <!-- Github -->
                                         <div class="col-lg-6">
                                             <div class="form-group ">
                                                 {!! Form::label('github', 'Github') !!}
@@ -263,7 +291,7 @@
                                                 <small class="text-danger">{{ $errors->first('github') }}</small>
                                             </div>
                                         </div>
-                                        {{-- Linkedin --}}
+                                        <!-- Linkedin -->
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 {!! Form::label('linkedin', 'Linkedin') !!}
@@ -281,9 +309,9 @@
                             
 
 
-                            {{-- Submit Form --}}
+                            <!-- Submit Form -->
                             <div class="col-12 text-end py-3">
-                                {!! Form::button('<i class="fa-solid fa-plus me-2"></i>Create user', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                                {!! Form::button('<i class="fa-regular fa-check-circle me-2"></i>Create user', ['type' => 'submit', 'class' => 'btn btn-primary px-3 rounded-pill']) !!}
                             </div>
                         </div>
                         

@@ -28,17 +28,17 @@
     <!-- ALL USERS TABLE -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Users (Admin, Instructor, Student)</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Users Table</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered text-nowrap" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <td>Id</td>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Roles</th>
+                            <th>Role</th>
                             <th>Created</th>
                             <th>Actions</th>
                         </tr>
@@ -48,7 +48,7 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Roles</th>
+                            <th>Role</th>
                             <th>Created</th>
                             <th>Actions</th>
                         </tr>
@@ -57,29 +57,34 @@
                         @if ('users')
                             @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $user->id }}</td>
+                                    <td class="align-middle">
                                         <div class="d-flex align-items-center">
                                             <img src="@if ($user->photo)
-                                                {{ url('/') . '/images/profile/' . $user->photo }}
+                                                {{ url('/') .'/images/profile/' . $user->photo }}
                                                 @else
-                                                {{ asset('images/profile-placeholder-image.png') }}
-                                            @endif" class="me-2 rounded" width="32" height="auto" alt="{{ $user->first_name }} photo">
+                                                {{ asset('images/profile-pic.jpg') }}
+                                            @endif" class="me-2 rounded-circle" width="32" height="auto" alt="{{ $user->first_name }} photo">
                                             <div>
                                                 {{ $user->first_name }} {{ $user->last_name }}
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>
-                                        @foreach ($user->roles as $role)
-                                            <span class="text-capitalize">{{ $role->name }}@if(!$loop->last), @endif </span>
-                                        @endforeach
+                                    <td class="align-middle">{{ $user->email }}</td>
+                                    <td class="align-middle">
+                                        @if ($user->role->name == 'administrator')
+                                        <i class="fa-solid fa-user-tie fa-sm me-2"></i>{{ $user->role->name }}
+                                        @else
+                                        <i class="fa-solid fa-user-graduate fa-sm me-2"></i>{{ $user->role->name }} 
+                                        @endif
+                                        
                                     </td>
-                                    <td>{{ $user->created_at->diffForHumans() }}</td>
-                                    <td>
-                                        <a href="{{ route('users.edit', $user->slug) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
-                                        <a href="{{ route('users.show', $user->slug) }}" class="btn btn-sm btn-info"><i class="fa-solid fa-eye fa-sm"></i> Details</a>
+                                    <td class="align-middle">{{ $user->created_at->diffForHumans() }}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center">
+                                            <a href="{{ route('users.edit', $user->slug) }}" class="btn btn-sm btn-primary text-nowrap me-2"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
+                                            <a href="{{ route('users.show', $user->slug) }}" class="btn btn-sm btn-info text-nowrap"><i class="fa-solid fa-eye fa-sm"></i> Details</a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

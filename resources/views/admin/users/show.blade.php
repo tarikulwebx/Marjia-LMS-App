@@ -2,12 +2,23 @@
 
 @section('title', 'User')
 
+@section('styles')
+    <style>
+        .profile-thumb {
+            background-color: rgba(110, 66, 193, 0.5);
+            padding: 0.3rem;
+        }
+
+        
+    </style>
+@endsection
+
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">User Details</h1>
         <a href="{{ route('users.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fa-solid fa-user text-white-50 me-1"></i> All Users</a>
+                class="fa-solid fa-arrow-left text-white-50 me-1"></i> All Users</a>
     </div>
 
     <!-- User details -->
@@ -22,37 +33,31 @@
                     @if ($user->photo)
                         {{ url('/') . '/images/profile/'. $user->photo }}
                     @else
-                        {{ asset('images/profile-placeholder-image.png') }}
+                        {{ asset('images/profile-pic.jpg') }}
                     @endif
-                    " class="img-fluid w-100 rounded" alt="">
-                    <div class="list-inline mt-3">
+                    " class="profile-thumb img-fluid w-100 rounded-circle" alt="">
+                    <div class="list-inline mt-4">
                         @if ($user->facebook)
-                            <a href="{{ $user->facebook }}" class="list-inline-item mb-1"><i class="fab fa-facebook-f me-1"></i>Facebook</a>
+                            <a href="{{ $user->facebook }}" class="list-inline-item mb-2"><i class="fab fa-facebook-f me-1"></i>Facebook</a>
                         @endif
                         @if ($user->twitter)
-                            <a href="{{ $user->twitter }}" class="list-inline-item mb-1"><i class="fab fa-twitter me-1"></i>Twitter</a>
+                            <a href="{{ $user->twitter }}" class="list-inline-item mb-2"><i class="fab fa-twitter me-1"></i>Twitter</a>
                         @endif
                         @if ($user->github)
-                            <a href="{{ $user->github }}" class="list-inline-item mb-1"><i class="fab fa-github me-1"></i>Github</a>
+                            <a href="{{ $user->github }}" class="list-inline-item mb-2"><i class="fab fa-github me-1"></i>Github</a>
                         @endif
                         @if ($user->linkedin)
-                            <a href="{{ $user->linkedin }}" class="list-inline-item mb-1"><i class="fab fa-linkedin me-1"></i>Linkedin</a>
+                            <a href="{{ $user->linkedin }}" class="list-inline-item mb-2"><i class="fab fa-linkedin me-1"></i>Linkedin</a>
                         @endif
                         @if ($user->telegram)
-                            <a href="{{ $user->telegram }}" class="list-inline-item mb-1"><i class="fab fa-telegram me-1"></i>Telegram</a>
+                            <a href="{{ $user->telegram }}" class="list-inline-item mb-2"><i class="fab fa-telegram me-1"></i>Telegram</a>
                         @endif
                         
                     </div>
                 </div>
                 <div class="col-sm-8 col-lg-9">
-                    <h4 class="mb-1 text-gray-700">{{ $user->first_name }} {{ $user->last_name }}</h4>
-                    <ul class="list-inline">
-                        @foreach ($user->roles as $role)
-                            <li class="list-inline-item text-capitalize me-1">
-                                {{ $role->name }}@if (!$loop->last),@endif
-                            </li>
-                        @endforeach
-                    </ul>
+                    <h4 class="mb-0 text-gray-700">{{ $user->first_name }} {{ $user->last_name }} <a href="{{ route('users.edit', $user->slug) }}" class="btn h6 btn-primary bg-primary bg-opacity-10 ms-2 border-0 text-primary rounded-circle edit-circle-btn " title="Edit"><i class="fas fa-pencil" aria-hidden="true"></i></a></h4>
+                    <h5 class="text-capitalize text-muted fw-normal mb-3">{{ $user->role->name }}</h5>
                     <p>{{ $user->about }}</p>
                     <table>
                         <tr>
@@ -109,8 +114,6 @@
                             <td>{{ $user->master_degree_university }}</td>
                         </tr>
                     </table>
-
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary mt-4"><i class="fa-solid fa-pen-to-square  me-1"></i> Edit Profile</a>
                 </div>
             </div>
         </div>

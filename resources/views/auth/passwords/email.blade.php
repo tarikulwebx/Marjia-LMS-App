@@ -11,7 +11,7 @@
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block register__thumb">
-                        <img src="{{ asset('images/register-art.svg') }}" alt="">
+                        <img src="{{ asset('images/register-art.png') }}" alt="">
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">

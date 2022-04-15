@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    @yield('styles')
 </head>
 
 <body>
@@ -33,6 +35,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/libs.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
+
+    @yield('scripts')
 </body>
 
 </html>

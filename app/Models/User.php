@@ -8,9 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\CanResetPassword;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -24,13 +22,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'photo',
+        'role_id',
+        'is_active',
         'first_name',
         'last_name',
         'email',
-        'phone',
         'password',
+        'photo',
         'is_active',
+        'phone',
         'address',
         'about',
         'bachelor_degree_department',
@@ -46,7 +46,6 @@ class User extends Authenticatable
         'telegram',
         'github',
         'linkedin',
-        'slug',
     ];
 
     /**
@@ -69,25 +68,16 @@ class User extends Authenticatable
     ];
 
 
-    /**
-     * User-Role Relationship (User belongs to many roles)
-     * 
-     */
 
+    /**
+     *  User belongs to Role
+     */
     public function role() {
         return $this->belongsTo(Role::class);
     }
 
 
-    /**
-     * Has many course - relation
-     */
-    public function courses() {
-        return $this->hasMany(Course::class);
-    }
-
-
-    /**
+        /**
      * Is Admin?
      */
     public function isAdmin() {
@@ -98,20 +88,11 @@ class User extends Authenticatable
     }
 
 
-    /**
-     * Is Student?
-     */
-    public function isStudent() {
-        if ($this->role->name == 'student' && $this->is_active == 1) {
-            return true;
-        }
-        return false;
-    }
+
 
 
 
     
-
     /**
      * Return the sluggable configuration array for this model.
      *
