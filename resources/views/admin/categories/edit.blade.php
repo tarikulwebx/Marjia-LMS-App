@@ -49,53 +49,62 @@
                 class="fa-solid fa-arrow-left text-white-50 me-1"></i> Create category</a>
     </div>
 
+
+    <!-- Edit Course Card -->
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#collapseNewCourse" class="d-block card-header py-3" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseNewCourse">
+            <h6 class="m-0 font-weight-bold text-primary">Update category</h6>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse show" id="collapseNewCourse">
+            <div class="card-body">
+                <!-- Create Category Form -->
+                <div class="row">
+                    <div class="col-xl-8 col-xxl-7 pb-2">
+                        {!! Form::model($category, ['method' => 'PATCH', 'route' => ['categories.update', $category->slug], 'files'=>true]) !!}
+                            <div class="row g-3">
+                                <!-- Name -->
+                                <div class="col-12">
+                                    {!! Form::label('name', 'Category name') !!}
+                                    {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Category name', 'required' => 'required']) !!}
+                                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                                </div>
+                                <!-- Thumbnail -->
+                                <div class="col-12">
+                                    {!! Form::label('thumbnail', 'Thumbnail') !!}
+                                    <div>
+                                        <img id="previewImg" class="rounded mb-2" src="@if ($category->thumbnail)
+                                            {{ url('/') . '/images/category/' . $category->thumbnail }}
+                                            @else 
+                                            {{ asset('images/placeholde_7x5.jpg') }}
+                                        @endif" alt="preview">
+                                    </div>
+                                    {!! Form::file('thumbnail', ['id'=> 'photo', 'class' => $errors->has('thumbnail') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
+                                    <small class="text-warning">Dimension 600x370 and jpg/png thambnail</small>
+                                    <small class="text-danger">{{ $errors->first('thumbnail') }}</small>
+                                </div>
+
+                                <!-- Submit -->
+                                <div class="col-12 text-end">
+                                    {!! Form::button('<i class="fa-regular fa-check-circle me-2"></i>Update', ['type' => 'submit', 'class' => 'btn btn-primary px-3 rounded-pill']) !!}
+                                </div>
+                                
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- ALL USERS TABLE -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Categories</h6>
         </div>
         <div class="card-body">
-
-            <!-- Create Category Form -->
-            <div class="row mb-5">
-                <div class="col-xl-8">
-                    {!! Form::model($category, ['method' => 'PATCH', 'route' => ['categories.update', $category->slug], 'class' => 'bg-light rounded p-4', 'files'=>true]) !!}
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <h4 class="mb-0 text-primary">Edit Category</h4>
-                            </div>
-                            <!-- Name -->
-                            <div class="col-12">
-                                {!! Form::label('name', 'Category name') !!}
-                                {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Category name', 'required' => 'required']) !!}
-                                <small class="text-danger">{{ $errors->first('name') }}</small>
-                            </div>
-                            <!-- Thumbnail -->
-                            <div class="col-12">
-                                {!! Form::label('thumbnail', 'Thumbnail') !!}
-                                <div>
-                                    <img id="previewImg" class="rounded mb-2" src="@if ($category->thumbnail)
-                                        {{ url('/') . '/images/category/' . $category->thumbnail }}
-                                        @else 
-                                        {{ asset('images/placeholde_7x5.jpg') }}
-                                    @endif" alt="preview">
-                                </div>
-                                {!! Form::file('thumbnail', ['id'=> 'photo', 'class' => $errors->has('thumbnail') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
-                                <small class="text-warning">Dimension 600x370 and jpg/png thambnail</small>
-                                <small class="text-danger">{{ $errors->first('thumbnail') }}</small>
-                            </div>
-
-                            <!-- Submit -->
-                            <div class="col-12 text-end">
-                                {!! Form::button('<i class="fa-regular fa-check-circle me-2"></i>Update', ['type' => 'submit', 'class' => 'btn btn-primary px-3 rounded-pill']) !!}
-                            </div>
-                            
-                        </div>
-                        
-                    {!! Form::close() !!}
-                </div>
-            </div>
-
 
             <!-- Categories -->
             <div class="table-responsive mb-4">
