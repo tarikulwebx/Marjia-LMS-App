@@ -67,18 +67,18 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 {!! Form::label('name', 'Course name') !!}
-                                {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control invalid' : 'form-control h3', 'required' => 'required', 'placeholder' => 'Course name']) !!}
+                                {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control invalid' : 'form-control h3', 'placeholder' => 'Course name']) !!}
                                 <small class="text-danger">{{ $errors->first('name') }}</small>
                             </div>
                             
                             <div class="col-12">
                                 {!! Form::label('description', 'Description') !!}
-                                {!! Form::textarea('description', null, ['class' => $errors->has('description') ? 'form-control invalid' : 'form-control', 'rows' => '8', 'placeholder' => 'Course Description', 'required' => 'required']) !!}
+                                {!! Form::textarea('description', null, ['class' => $errors->has('description') ? 'form-control invalid' : 'form-control', 'rows' => '8', 'placeholder' => 'Course Description']) !!}
                                 <small class="text-danger">{{ $errors->first('description') }}</small>
                             </div>
                             <div class="col-12">
                                 {!! Form::label('short_description', 'Short Description: ') !!}
-                                {!! Form::textarea('short_description', null, ['class' => $errors->has('short_description') ? 'form-control invalid' : 'form-control', 'rows' => '3', 'placeholder' => 'Course short description', 'required' => 'required']) !!}
+                                {!! Form::textarea('short_description', null, ['class' => $errors->has('short_description') ? 'form-control invalid' : 'form-control', 'rows' => '3', 'placeholder' => 'Course short description']) !!}
                                 <small class="text-danger">{{ $errors->first('short_description') }}</small>
                             </div>
                             
@@ -89,7 +89,7 @@
                             </div>
                             <div class="col-lg-6">
                                 {!! Form::label('duration', 'Duration') !!}
-                                {!! Form::text('duration', '5h 30min', ['class' => $errors->has('duration') ? 'form-control invalid' : 'form-control', 'required' => 'required', 'placeholder' => 'Duration']) !!}
+                                {!! Form::text('duration', '5h 30min', ['class' => $errors->has('duration') ? 'form-control invalid' : 'form-control', 'placeholder' => 'Duration']) !!}
                                 <small class="text-danger">{{ $errors->first('duration') }}</small>
                             </div>
                             
@@ -98,9 +98,9 @@
                     <div class="col-lg-4">
                         <div class="row g-4">
                             <div class="col-12">
-                                {!! Form::label('categories', 'Category') !!}
-                                {!! Form::select('categories', $categories, null, ['id' => 'multiselectCategory', 'class' => $errors->has('categories') ? 'form-control is-invalid' : 'form-control']) !!}
-                                <small class="text-danger">{{ $errors->first('categories') }}</small>
+                                {!! Form::label('category_id', 'Category') !!}
+                                {!! Form::select('category_id', $categories, null, ['id' => 'multiselectCategory', 'class' => $errors->has('category_id') ? 'form-control is-invalid' : 'form-control']) !!}
+                                <small class="text-danger">{{ $errors->first('category_id') }}</small>
                             </div>
                             <div class="col-12">
                                 {!! Form::label('language', 'Language') !!}
@@ -109,28 +109,28 @@
                             </div>
                             
                             <div class="col-12">
-                                {!! Form::label('thumb', 'Thumnail') !!}
+                                {!! Form::label('thumbnail', 'Thumnail') !!}
                                 <div>
                                     <img id="previewImg" class="img-fluid w-75 rounded mb-2" src="{{ asset('images/placeholde-image-7-5.jpg') }}" alt="">
                                 </div>
-                                {!! Form::file('thumb', ['id'=> 'thumb', 'class' => $errors->has('thumb') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
-                                <small class="text-danger">{{ $errors->first('thumb') }}</small>
+                                {!! Form::file('thumbnail', ['id'=> 'thumbnail', 'class' => $errors->has('thumbnail') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
+                                <small class="text-danger">{{ $errors->first('thumbnail') }}</small>
                             </div>
                             <div class="col-12">
                                 <div>{!! Form::label('visibility', 'Visibility') !!}</div>
                                 <div class="form-check form-check-inline">
-                                    {!! Form::radio('visiblility', 'public',  true, ['id' => 'public', 'class' => 'form-check-input']) !!}
+                                    {!! Form::radio('visibility', 'public',  true, ['id' => 'public', 'class' => 'form-check-input']) !!}
                                     <label class="form-check-label text-primary" for="public">Public</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    {!! Form::radio('visiblility', 'private',  null, ['id' => 'private', 'class' => 'form-check-input']) !!}
+                                    {!! Form::radio('visibility', 'private',  null, ['id' => 'private', 'class' => 'form-check-input']) !!}
                                     <label class="form-check-label text-primary" for="private">Private</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    {!! Form::radio('visiblility', 'specific',  null, ['id' => 'specific', 'class' => 'form-check-input']) !!}
+                                    {!! Form::radio('visibility', 'specific',  null, ['id' => 'specific', 'class' => 'form-check-input']) !!}
                                     <label class="form-check-label text-primary" for="specific">Specific</label>
                                 </div>
-                                <small class="text-danger">{{ $errors->first('visibility') }}</small>
+                                <small class="text-danger d-block">{{ $errors->first('visibility') }}</small>
                             </div>
                             <div class="col-12">
                                 {!! Form::label('course_users', 'Specified Users') !!}

@@ -43,20 +43,20 @@ class AdminUsersController extends Controller
     public function store(AdminUsersRequest $request)
     {
 
-        $inputs = $request->all();
-        $inputs['password'] = bcrypt($request->password);
+        // $inputs = $request->all();
+        // $inputs['password'] = bcrypt($request->password);
 
-        if ($photo_file = $request->file('photo')) {
-            $name_rename = time().str_replace('-', ' ', $photo_file->getClientOriginalName());
-            $photo_file->move('images/profile', $name_rename);
-            $inputs['photo'] = $name_rename;
-        }
+        // if ($photo_file = $request->file('photo')) {
+        //     $name_rename = time().str_replace('-', ' ', $photo_file->getClientOriginalName());
+        //     $photo_file->move('images/profile', $name_rename);
+        //     $inputs['photo'] = $name_rename;
+        // }
 
 
-        $user = User::create($inputs);
-        $user->roles()->attach($inputs['user_role']);
-        session()->flash('user_action_msg', 'User "'.$inputs['first_name']. ' ' . $inputs['last_name'] .'" Created Successfully');
-        return redirect()->route('users.index');
+        // $user = User::create($inputs);
+        // $user->roles()->attach($inputs['user_role']);
+        // session()->flash('user_action_msg', 'User "'.$inputs['first_name']. ' ' . $inputs['last_name'] .'" Created Successfully');
+        // return redirect()->route('users.index');
     }
 
     /**

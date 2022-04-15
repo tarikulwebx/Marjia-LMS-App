@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\support\Str;
 
 class AdminCoursesController extends Controller
 {
@@ -41,7 +43,30 @@ class AdminCoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'  =>  'required|string|max:255',
+            'description'   => 'required',
+            'category_id'   => 'required',
+            'short_description' => 'required',
+            'thumbnail'    => 'nullable|mimes:png,jpg',
+            'visibility'    => 'required',
+            'level'    => 'required',
+            'certification'    => 'nullable',
+            'language'    => 'required',
+            'duration'    => 'required',
+        ]);
+
+        $inputs = $request->all();
+
+        if ($photo_file = $request->file('thumbnail')) {
+            $name_rename = time().'-'.Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
+            $photo_file->move('images/course-thumbnails', $name_rename);
+            $inputs['thumbnail'] = '/images/course-thumbnails/' . $name_rename;
+        }
+
+        $user = Auth::user();
+        $user->courses()->create($inputs);
+        return "Course created"; 
     }
 
     /**

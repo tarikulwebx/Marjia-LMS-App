@@ -74,8 +74,16 @@ class User extends Authenticatable
      * 
      */
 
-    public function roles() {
-        return $this->belongsToMany(Role::class);
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+
+
+    /**
+     * Has many course - relation
+     */
+    public function courses() {
+        return $this->hasMany(Course::class);
     }
 
 
@@ -83,23 +91,8 @@ class User extends Authenticatable
      * Is Admin?
      */
     public function isAdmin() {
-        foreach($this->roles()->get() as $role) {
-            if($role->name == 'administrator' && $this->is_active == 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * Is Instructor?
-     */
-    public function isInstructor() {
-        foreach($this->roles()->get() as $role) {
-            if($role->name == 'instructor' && $this->is_active == 1) {
-                return true;
-            }
+        if ($this->role->name == 'administrator' && $this->is_active == 1) {
+            return true;
         }
         return false;
     }
@@ -109,17 +102,15 @@ class User extends Authenticatable
      * Is Student?
      */
     public function isStudent() {
-        foreach($this->roles()->get() as $role) {
-            if($role->name == 'student' && $this->is_active == 1) {
-                return true;
-            }
+        if ($this->role->name == 'student' && $this->is_active == 1) {
+            return true;
         }
         return false;
     }
 
 
 
-
+    
 
     /**
      * Return the sluggable configuration array for this model.

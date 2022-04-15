@@ -18,12 +18,11 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $user = User::firstOrCreate([   
             'first_name' => 'Tarikul',
+            'role_id'   => 1,
             'last_name' => 'Islam',
             'email' => 'tarikul.cse.bru@gmail.com',
             'is_active' => 1,
             'password' => bcrypt('123456')
         ]);
-
-        $user->roles()->attach(1);
     }
 }

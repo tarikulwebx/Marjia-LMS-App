@@ -25,7 +25,6 @@ return new class extends Migration
             // Common Roles for as website inclusion automatically
             DB::table('roles')->insert([
                 ['name' => 'administrator', 'created_at'=> Carbon::now(), 'updated_at'=> Carbon::now()],
-                ['name' => 'instructor', 'created_at'=> Carbon::now(), 'updated_at'=> Carbon::now()],
                 ['name' => 'student', 'created_at'=> Carbon::now(), 'updated_at'=> Carbon::now()],
             ]);
         }

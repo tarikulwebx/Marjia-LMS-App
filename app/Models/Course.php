@@ -14,7 +14,6 @@ class Course extends Model
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'instructor_id',
         'category_id',
         'name',
         'short_description',
@@ -23,7 +22,8 @@ class Course extends Model
         'level',
         'language',
         'duration',
-        'certification'
+        'certification',
+        'thumbnail',
     ];
 
 
@@ -33,6 +33,14 @@ class Course extends Model
      */
     public function category() {
         return $this->belongsTo(Category::class);
+    }
+
+
+    /**
+     * Course - user relationship
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
 
