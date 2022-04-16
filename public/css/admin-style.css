@@ -103,3 +103,10 @@ table.dataTable {
 .edit-circle-btn:hover {
   opacity: 0.8
 }
+
+
+/* Rounded right 0 */
+.rounded-right-0 {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}

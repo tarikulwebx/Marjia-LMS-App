@@ -26,6 +26,13 @@
             text-transform: lowercase !important;
         }
 
+        #imgPreviewHolder img {
+            height: auto !important;
+            width: 75% !important; 
+            border-radius: 0.3rem;
+        }
+        
+
     </style>
 @endsection
 
@@ -142,11 +149,18 @@
                             <!-- Input: Thumbnail -->
                             <div class="col-12">
                                 {!! Form::label('thumbnail', 'Thumbnail') !!}
-                                <div>
-                                    <img id="previewImg" class="img-fluid w-75 rounded mb-2" src="{{ asset('images/placeholde_7x5.jpg') }}" alt="preview">
+                                <div id="imgPreviewHolder" class="mb-2">
+                                    <img src="{{ asset('images/placeholde_7x5.jpg') }}" alt="">
                                 </div>
-                                {!! Form::file('thumbnail', ['class' => $errors->has('thumbnail') ? ' form-control is-invalid' : ' form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])"]) !!}
-                                <em class="d-block"><small class="help-block text-warning">Thumbnail dimension 600x360 and jpg/png</small></em>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                    <a id="lfm" data-input="thumbnail" data-preview="imgPreviewHolder" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
+                                        <i class="fa-solid fa-image fa-sm me-2"></i>Choose
+                                    </a>
+                                    </span>
+                                    {!! Form::text('thumbnail', null, ['class' => $errors->has('thumbnail') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Thumbnail url']) !!}
+                                </div>
+                                <em class="d-block"><small class="help-block text-warning">Thumbnail dimension 600x370 and jpg/png</small></em>
                                 <small class="text-danger d-block">{{ $errors->first('thumbnail') }}</small>
                             </div>
                             <!-- Input: Visiblility -->
@@ -191,6 +205,7 @@
 
 
 @section('scripts')
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     <script type="text/javascript">
         jQuery(function(){
             $('#multiselectCategories, #multiselectLanguage, #multiselectLevel, #multiselectLevel').multiselect({
@@ -209,9 +224,13 @@
                 includeSelectAllOption: true
             });
 
-            
+            $('#lfm').filemanager('image');
+
         });
     </script>
-
+    
     @include('admin.includes.tinymce-config');
+
+
+
 @endsection

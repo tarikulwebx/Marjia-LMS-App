@@ -61,6 +61,15 @@
         </div>
     </li>
 
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        File manager
+    </div>
+
     <!-- Nav Item - Media Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMedia"
