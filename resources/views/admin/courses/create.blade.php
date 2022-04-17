@@ -4,11 +4,6 @@
 
 @section('styles')
     <style>
-        /* #previewImg {
-            width: 180px;
-            max-width: 180px;
-            height: auto;
-        } */
 
         .multi-select-with-search .multiselect-container .multiselect-filter>input.multiselect-search {
             background: transparent
@@ -69,7 +64,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">New Course</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+        <a href="{{ route('courses.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fa-solid fa-arrow-left text-white-50 me-1"></i> Courses</a>
     </div>
 
@@ -142,7 +137,7 @@
                         <div class="row g-3">
                             <!-- Input: Category -->
                             <div class="col-12">
-                                {!! Form::label('category_id', 'Categories') !!}
+                                {!! Form::label('category_id', 'Category') !!}
                                 {!! Form::select('category_id', $categories, null, ['id' => 'multiselectCategories', 'class' => $errors->has('category_id') ? ' form-control is-invalid' : ' form-control']) !!}
                                 <small class="text-danger">{{ $errors->first('category_id') }}</small>
                             </div>
@@ -182,9 +177,9 @@
                             </div>
                             <!-- Input: Defined users -->
                             <div class="col-12">
-                                {!! Form::label('defined_users', 'Defined Users') !!}
-                                {!! Form::select('defined_users[]', $students, null, ['id' => 'multiselectDefinedUsers', 'class' => $errors->has('defined_users') ? ' form-control is-invalid d-none' : ' form-control d-none', 'multiple']) !!}
-                                <small class="text-danger">{{ $errors->first('defined_users') }}</small>
+                                {!! Form::label('student_enrolls', 'Student Enrolls') !!}
+                                {!! Form::select('student_enrolls[]', $students, null, ['id' => 'multiselectDefinedUsers', 'class' => $errors->has('student_enrolls') ? ' form-control is-invalid d-none' : ' form-control d-none', 'multiple']) !!}
+                                <small class="text-danger">{{ $errors->first('student_enrolls') }}</small>
                             </div>
                             <!-- Input: Submit -->
                             <div class="col-12 text-end">

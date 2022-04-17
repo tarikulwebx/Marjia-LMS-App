@@ -23,6 +23,7 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/assets/css/style.css',
     ], 'public/css/libs.css')
     .scripts([
+        'resources/assets/js/bootstrap.bundle.min.js',
         'resources/assets/js/jquery-3.6.0.min.js',
         'resources/assets/js/glightbox.min.js',
         'resources/assets/js/chart.min.js',

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +15,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $latest_public_courses = Course::where('visibility', 'public')->latest()->take(8)->get();
+        $categories = Category::all();
+        return view('home', compact('latest_public_courses', 'categories'));
     }
 
     /**

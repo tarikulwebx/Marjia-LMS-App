@@ -39,6 +39,24 @@ class Course extends Model
 
 
     /**
+     *  Course belongs to Category
+     */
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+
+
+
+    /**
+     * Course has many Enrollments
+     */
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class, 'course_id', 'id');
+    }
+
+
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array

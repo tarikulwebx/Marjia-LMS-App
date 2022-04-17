@@ -85,6 +85,14 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * User has many Enroll
+     */
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class, 'user_id', 'id');
+    }
+
+
         /**
      * Is Admin?
      */
