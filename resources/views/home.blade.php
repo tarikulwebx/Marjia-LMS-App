@@ -399,7 +399,7 @@
                             <img src="{{ $course->thumbnail }}" class="card-img-top course__thumbnail" alt="Thumb">
                             <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <a href="course-category.html" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category->name }}</a>
+                                    <a href="course-category.html" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category ? $course->category->name : ' ' }}</a>
                                     <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
                                         <i class="fa fa-share-alt" aria-hidden="true"></i>
                                     </button>
@@ -628,7 +628,7 @@
     <section class="course-explore">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fill-opacity="1" d="M0,192L48,181.3C96,171,192,149,288,170.7C384,192,480,256,576,266.7C672,277,768,235,864,202.7C960,171,1056,149,1152,165.3C1248,181,1344,235,1392,261.3L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg> -->
         <div class="container text-center">
-            <p class="lead fw-bold course-explore__text">12345+ more courses you can explore</p>
+            <p class="lead fw-bold course-explore__text">{{ $latest_public_courses->count(); }}+ more courses you can explore</p>
             <a href="courses.html" class="btn course-explore__btn">Explore All Courses</a>
         </div>
         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="course-category.htmlffffff" fill-opacity="1" d="M0,192L48,181.3C96,171,192,149,288,170.7C384,192,480,256,576,266.7C672,277,768,235,864,202.7C960,171,1056,149,1152,165.3C1248,181,1344,235,1392,261.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg> -->
@@ -641,80 +641,31 @@
         <!-- Category section heading -->
         <div class="container">
             <div class="d-block text-center position-relative mb-3">
-                <img class="title-bg position-absolute" src="images/rainbow-art.png" alt="">
+                <img class="title-bg position-absolute" src="{{ asset('images/rainbow-art.png') }}" alt="...">
             <h2 class="category-section__title text-dark text-center d-inline-block">Categories you can enroll now</h2>
             </div>
         </div>
         <div class="container">
             <div class="categories row g-4">
-                <!-- Category Item -->
-                <div class="category col-sm-12 col-md-6 col-lg-4">
-                    <div class="card bg-dark text-white">
-                        <img src="images/category-thumb/cath_programming.jpg" class="card-img" alt="Category 1">
-                        <a href="course-category.html" class="category__overlay card-img-overlay">
-                            <div class="d-flex flex-row align-items-end h-100">
-                                <h5 class="category__title card-title">Programming</h5>
+                @if ($categories)
+                    @foreach ($categories as $category)
+                        <!-- Category Item -->
+                        <div class="category col-sm-12 col-md-6 col-lg-4">
+                            <div class="card bg-dark text-white">
+                                <img src="@if ($category->thumbnail)
+                                    {{ $category->thumbnail }}
+                                    @else
+                                    {{ asset('images/placeholder_category.jpg') }}
+                                @endif" class="card-img" alt="...">
+                                <a href="course-category.html" class="category__overlay card-img-overlay">
+                                    <div class="d-flex flex-row align-items-end h-100">
+                                        <h5 class="category__title card-title">{{ $category->name }}</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Category Item -->
-                <div class="category col-sm-12 col-md-6 col-lg-4">
-                    <div class="card bg-dark text-white">
-                        <img src="images/category-thumb/cath_frontend_web_development.jpg" class="card-img" alt="Category 1">
-                        <a href="course-category.html" class="category__overlay card-img-overlay">
-                            <div class="d-flex flex-row align-items-end h-100">
-                                <h5 class="category__title card-title">Web Front-end</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Category Item -->
-                <div class="category col-sm-12 col-md-6 col-lg-4">
-                    <div class="card bg-dark text-white">
-                        <img src="images/category-thumb/cath_backend_web_development.jpg" class="card-img" alt="Category 1">
-                        <a href="course-category.html" class="category__overlay card-img-overlay">
-                            <div class="d-flex flex-row align-items-end h-100">
-                                <h5 class="category__title card-title">Web Back-end</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Category Item -->
-                <div class="category col-sm-12 col-md-6 col-lg-4">
-                    <div class="card bg-dark text-white">
-                        <img src="images/category-thumb/cath_artificial_intelligence.jpg" class="card-img" alt="Category 1">
-                        <a href="course-category.html" class="category__overlay card-img-overlay">
-                            <div class="d-flex flex-row align-items-end h-100">
-                                <h5 class="category__title card-title">Artificial Intelligence</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Category Item -->
-                <div class="category col-sm-12 col-md-6 col-lg-4">
-                    <div class="card bg-dark text-white">
-                        <img src="images/category-thumb/cath_algorithm.jpg" class="card-img" alt="Category 1">
-                        <a href="course-category.html" class="category__overlay card-img-overlay">
-                            <div class="d-flex flex-row align-items-end h-100">
-                                <h5 class="category__title card-title">Algorithm</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Category Item -->
-                <div class="category col-sm-12 col-md-6 col-lg-4">
-                    <div class="card bg-dark text-white">
-                        <img src="images/category-thumb/cath_mathematics.jpg" class="card-img" alt="Category 1">
-                        <a href="course-category.html" class="category__overlay card-img-overlay">
-                            <div class="d-flex flex-row align-items-end h-100">
-                                <h5 class="category__title card-title">Mathemetics</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>

@@ -145,7 +145,7 @@
                             <div class="col-12">
                                 {!! Form::label('thumbnail', 'Thumbnail') !!}
                                 <div id="imgPreviewHolder" class="mb-2">
-                                    <img src="{{ asset('images/placeholde_7x5.jpg') }}" alt="">
+                                    <img src="{{ asset('images/placeholder_600x370.jpg') }}" alt="thumb">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-btn">

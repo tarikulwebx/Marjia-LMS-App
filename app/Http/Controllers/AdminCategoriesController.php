@@ -40,16 +40,10 @@ class AdminCategoriesController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'thumbnail' => 'mimes:png,jpg',
+            'thumbnail' => 'nullable',
         ]);
 
         $inputs = $request->all();
-
-        if ($photo_file = $request->file('thumbnail')) {
-            $name_rename = time() . '-' . Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
-            $photo_file->move('images/category', $name_rename);
-            $inputs['thumbnail'] =  $name_rename;
-        }
 
         Category::create($inputs);
         session()->flash('category_action_msg', 'Category "'.$inputs['name'] .'" Created Successfully');
@@ -93,16 +87,10 @@ class AdminCategoriesController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'thumbnail' => 'mimes:png,jpg',
+            'thumbnail' => 'nullable',
         ]);
 
         $inputs = $request->all();
-
-        if ($photo_file = $request->file('thumbnail')) {
-            $name_rename = time() . '-' . Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
-            $photo_file->move('images/category', $name_rename);
-            $inputs['thumbnail'] =  $name_rename;
-        }
 
         $category = Category::findBySlugOrFail($slug);
         $category->update($inputs);
@@ -119,10 +107,6 @@ class AdminCategoriesController extends Controller
     public function destroy($slug)
     {
         $category = Category::findBySlugOrFail($slug);
-        if($category->thumbnail) {
-            $photo = $category->thumbnail;
-            unlink(public_path() . '/images/category/' . $photo);
-        }
         $category->delete();
         session()->flash('category_action_msg', 'Category Deleted Successfully');
         return redirect()->route('categories.index');

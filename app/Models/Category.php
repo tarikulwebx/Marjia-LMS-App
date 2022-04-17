@@ -19,6 +19,14 @@ class Category extends Model
     ];
 
 
+    /**
+     * Category hasMany Courses
+     */
+    public function courses() {
+        return $this->hasMany(Course::class);
+    }
+
+
 
     /**
      * Return the sluggable configuration array for this model.

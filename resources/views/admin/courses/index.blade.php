@@ -74,12 +74,13 @@
                                             <img src="{{ $course->thumbnail }}" class="me-2 rounded" width="80" height="auto" alt="thumbnail">
                                             <div class="ps-1">
                                                 <h6 class="mb-1"><a href="{{ route('courses.edit', $course->slug) }}">{{ $course->name }}</a></h6>
-                                                <small class="me-2" style="font-size: 0.825rem;"><i class="fa-solid fa-user fa-sm text-gray-400 me-1"></i>{{ $course->user->first_name }}</small>
-                                                <small style="font-size: 0.825rem;"><i class="fa-regular fa-eye fa-sm text-gray-400 me-1"></i>{{ $course->visibility }}</small>
+                                                <small class="me-2" style="font-size: 0.825rem;"><i class="fa-solid fa-user-tie fa-sm text-gray-400 me-1"></i>{{ $course->user->first_name }}</small>
+                                                <small class="me-2" style="font-size: 0.825rem;"><i class="fa-regular fa-eye fa-sm text-gray-400 me-1"></i>{{ $course->visibility }}</small>
+                                                <small style="font-size: 0.825rem;"><i class="fa-solid fa-users fa-sm text-gray-400 me-1"></i>{{ $course->enrollments->count() }} enrolled</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="align-middle">{{ $course->category->name }}</td>
+                                    <td class="align-middle">{{ $course->category ? $course->category->name : '...' }}</td>
                                     <td class="align-middle">{{ $course->created_at->diffForHumans() }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center">

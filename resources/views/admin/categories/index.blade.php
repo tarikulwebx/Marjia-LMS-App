@@ -4,10 +4,10 @@
 
 @section('styles')
     <style>
-        #previewImg {
-            width: 180px;
-            max-width: 180px;
-            height: auto;
+        #imgPreviewHolder img {
+            height: auto !important;
+            max-width: 180px !important; 
+            border-radius: 0.3rem;
         }
     </style>
 @endsection
@@ -72,12 +72,19 @@
                                 <!-- Thumbnail -->
                                 <div class="col-12">
                                     {!! Form::label('thumbnail', 'Thumbnail') !!}
-                                    <div>
-                                        <img id="previewImg" class="rounded mb-2" src="{{ asset('images/placeholde_7x5.jpg') }}" alt="preview">
+                                    <div id="imgPreviewHolder" class="mb-2">
+                                        <img src="{{ asset('images/placeholder_600x370.jpg') }}" alt="thumb">
                                     </div>
-                                    {!! Form::file('thumbnail', ['id'=> 'photo', 'class' => $errors->has('thumbnail') ? 'form-control is-invalid' : 'form-control', 'oninput'=>"previewImg.src=window.URL.createObjectURL(this.files[0])", 'placeholder' => 'Photo']) !!}
-                                    <small class="text-warning">Dimension 600x370 and jpg/png thambnail</small>
-                                    <small class="text-danger">{{ $errors->first('thumbnail') }}</small>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                        <a id="lfm" data-input="thumbnail" data-preview="imgPreviewHolder" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
+                                            <i class="fa-solid fa-image fa-sm me-2"></i>Choose
+                                        </a>
+                                        </span>
+                                        {!! Form::text('thumbnail', null, ['class' => $errors->has('thumbnail') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Thumbnail url']) !!}
+                                    </div>
+                                    <em class="d-block"><small class="help-block text-warning">Thumbnail dimension 600x370 and jpg/png</small></em>
+                                    <small class="text-danger d-block">{{ $errors->first('thumbnail') }}</small>
                                 </div>
 
                                 <!-- Submit -->
@@ -106,8 +113,8 @@
                     <thead>
                         <tr>
                             <td>Id</td>
-                            <th>Thumbnail</th>
-                            <th>Category</th>
+                            <th>Category name</th>
+                            <th>Slug</th>
                             <th>Created</th>
                             <th>Actions</th>
                         </tr>
@@ -115,8 +122,8 @@
                     <tfoot>
                         <tr>
                             <td>Id</td>
-                            <th>Thumbnail</th>
-                            <th>Category</th>
+                            <th>Category name</th>
+                            <th>Slug</th>
                             <th>Created</th>
                             <th>Actions</th>
                         </tr>
@@ -127,19 +134,26 @@
                                 <tr>
                                     <td class="align-middle">{{ $category->id }}</td>
                                     <td class="align-middle">
-                                        <img src="@if ($category->thumbnail)
-                                                {{ url('/') .'/images/category/' . $category->thumbnail }}
-                                                @else
-                                                {{ asset('images/placeholde_7x5.jpg') }}
-                                                @endif" 
-                                        class="me-2 rounded" width="60" height="auto" alt="thumb">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ $category->thumbnail ? $category->thumbnail : asset('images/placeholder_600x370.jpg') }}" class="me-2 rounded" height="44" alt="thumb">
+                                            <div class="ps-1">
+                                                <h6 class="mb-0"><a href="{{ route('categories.edit', $category->slug) }}">{{ $category->name }}</a></h6>
+                                                <small class="me-2" style="font-size: 0.825rem;"><i class="fa-solid fa-graduation-cap fa-sm text-gray-400 me-1"></i>{{ $category->courses()->count() }} courses</small>
+                                            </div>
+                                        </div>
+                                        
                                     </td>
-                                    <td class="align-middle">{{ $category->name }}</td>
+                                    <td class="align-middle">{{ $category->slug }}</td>
                                     <td class="align-middle">{{ $category->created_at->diffForHumans() }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center">
                                             <a href="{{ route('categories.edit', $category->slug) }}" class="btn btn-sm btn-primary text-nowrap me-2"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
-                                            <a href="{{ route('categories.destroy', $category->slug) }}" class="btn btn-sm btn-danger text-nowrap" onclick="event.preventDefault(); document.getElementById('delete-category-form-{{ $category->id }}').submit();"><i class="fa-solid fa-trash-alt fa-sm"></i> Delete</a>
+                                            @if ($category->courses()->count() > 0)
+                                                <a href="{{ route('categories.destroy', $category->slug) }}" class="btn btn-sm btn-danger text-nowrap" onclick="event.preventDefault(); toastr.warning('Make sure no courses linked to this category.', 'Cannot Delete');"><i class="fa-solid fa-trash-alt fa-sm"></i> Delete</a>
+                                            @else 
+                                                <a href="{{ route('categories.destroy', $category->slug) }}" class="btn btn-sm btn-danger text-nowrap" onclick="event.preventDefault(); document.getElementById('delete-category-form-{{ $category->id }}').submit();"><i class="fa-solid fa-trash-alt fa-sm"></i> Delete</a>
+                                            @endif
+                                            
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $category->slug], 'id' => 'delete-category-form-'.$category->id, 'class' => 'd-none']) !!}
                                             {!! Form::close() !!}
                                         </div>
@@ -160,9 +174,11 @@
 
 
 @section('scripts')
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     <script type="text/javascript">
         jQuery(function(){
             $('#dataTable').DataTable();
+            $('#lfm').filemanager('image');
         });
     </script>
 @endsection

@@ -86,13 +86,17 @@ table.dataTable {
 .btn {
   color: #fff;
 }
-.btn:hover {
+
+.btn:active,
+.btn:hover,
+.btn:focus {
   color: #fff;
 }
 .btn:focus {
   box-shadow: none !important;
   outline: none;
 }
+
 
 /* Edit Circle Btn */
 .edit-circle-btn {
