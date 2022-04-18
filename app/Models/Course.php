@@ -46,12 +46,27 @@ class Course extends Model
     }
 
 
-
     /**
      * Course has many Enrollments
      */
     public function enrollments() {
         return $this->hasMany(Enrollment::class, 'course_id', 'id');
+    }
+
+
+    /**
+     * Course hasMany Lesson Groups
+     */
+    public function groups() {
+        return $this->hasMany(Group::class);
+    }
+
+
+    /**
+     * Course hasMany Lessons
+     */
+    public function lessons() {
+        return $this->hasMany(Lesson::class);
     }
 
 

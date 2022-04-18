@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminLessonGroupController;
+use App\Http\Controllers\AdminLessonsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
@@ -45,6 +47,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Courses CRUD
     Route::resource('admin/courses', AdminCoursesController::class);
+
+    // Lesson group CRUD
+    Route::resource('admin/courses/{slug}/groups', AdminLessonGroupController::class);
+
+    // Lesson CRUD
+    Route::resource('admin/courses/{slug}/lessons', AdminLessonsController::class);
 
 });
 
