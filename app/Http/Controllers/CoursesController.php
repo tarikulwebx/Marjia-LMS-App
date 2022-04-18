@@ -15,7 +15,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        $courses = Course::where('visibility', 'public')->get();
+        $courses = Course::where('visibility', 'public')->paginate(12);
         $categories = Category::all();
         return view('courses', compact('courses', 'categories'));
     }

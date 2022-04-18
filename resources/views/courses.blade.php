@@ -98,7 +98,7 @@
                             <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">{{ $course->category->name }}</a> 
-                                    <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
+                                    <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://www.facebook.com/sharer/sharer.php?u={{ route('single-course', $course->slug) }}' class='social facebook' target='_blank'  rel='noopener'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com/intent/tweet?url={{ route('single-course', $course->slug) }}' class='social twitter' target='_blank'  rel='noopener'><i class='fa-brands fa-twitter'></i></a><a href='{{ route('single-course', $course->slug) }}' data-href='{{ route('single-course', $course->slug) }}' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
                                         <i class="fa fa-share-alt" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -138,27 +138,8 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="container">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center flex-wrap mt-5">
-                            <li class="page-item disabled">
-                                <a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link" href="#">7</a></li>
-                            <li class="page-item"><a class="page-link" href="#">8</a></li>
-                            <li class="page-item"><a class="page-link" href="#">9</a></li>
-                            <li class="page-item"><a class="page-link" href="#">10</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="fa-solid fa-chevron-right"></i></a>
-                            </li>
-                        </ul>
-                    </nav>
+                <div class="container mt-5">
+                    {{ $courses->links() }}
                 </div>
 
 

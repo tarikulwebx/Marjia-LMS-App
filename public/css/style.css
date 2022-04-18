@@ -25,3 +25,27 @@
 .category-filter-dropdown .dropdown-item.active .badge {
     background-color: #fff !important;
 }
+
+
+
+/* Pagination customization */
+@media screen and (max-width: 575.98px) {
+    .pagination .page-item .page-link.previous-btn,
+    .pagination .page-item .page-link.next-btn{
+        border-radius: 0.25rem !important; 
+        line-height: 1rem; 
+        width: 90px; 
+        font-size: 1rem;
+        height: auto;
+        padding: 0.5rem 0.75rem !important;
+        margin: 0;
+        background-color: #6f42c1;
+        color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link.previous-btn,
+    .pagination .page-item.disabled .page-link.next-btn {
+        background-color: #fff;
+        color: #ccc;
+    }
+}
