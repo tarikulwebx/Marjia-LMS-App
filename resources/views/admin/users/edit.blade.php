@@ -285,7 +285,14 @@
                                                 <small class="text-danger">{{ $errors->first('linkedin') }}</small>
                                             </div>
                                         </div>
-                                        
+                                        <!-- Instagram -->
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                {!! Form::label('instagram', 'Instagram') !!}
+                                                {!! Form::url('instagram', null, ['class' => $errors->has('instagram') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Instagram link']) !!}
+                                                <small class="text-danger">{{ $errors->first('instagram') }}</small>
+                                            </div>
+                                        </div>
                                         
                                     </div>
                                 </div>

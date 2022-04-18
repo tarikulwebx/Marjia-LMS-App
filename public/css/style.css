@@ -4,3 +4,24 @@
 .navbar-toggler.collapsed .bottom-bar {
     background-color: #eee !important;
 }
+
+
+.category-filter-dropdown .category-thumb {
+    width: 35px;
+    height: 26px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.category-filter-dropdown .dropdown-menu {
+    padding: 0.5rem;
+}
+
+.category-filter-dropdown .dropdown-item {
+    border-radius: 0.25rem;
+    padding: 0.4rem 0.5rem;
+}
+
+.category-filter-dropdown .dropdown-item.active .badge {
+    background-color: #fff !important;
+}

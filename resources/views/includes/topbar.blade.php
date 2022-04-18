@@ -76,7 +76,7 @@
                     <a class="nav-link" aria-current="page" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="courses.html">Courses</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('courses') }}">Courses</a>
                 </li>
 
                 <li class="nav-item">

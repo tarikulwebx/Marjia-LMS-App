@@ -46,6 +46,7 @@ class User extends Authenticatable
         'telegram',
         'github',
         'linkedin',
+        'instagram',
     ];
 
     /**

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', [HomeController::class, 'index']);
+
+// Courses Routes
+Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
+Route::get('/courses/{slug}', [CoursesController::class, 'show'])->name('single-course');
+
+
 
 /**
  * Admin Routes
