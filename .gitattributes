@@ -5,9 +5,6 @@
 *.html diff=html
 *.md diff=markdown
 *.php diff=php
-*.sql linguist-detectable=true
-*.linguist-vendored
-*.js linguist-vendored=false
 
 /.github export-ignore
 CHANGELOG.md export-ignore
