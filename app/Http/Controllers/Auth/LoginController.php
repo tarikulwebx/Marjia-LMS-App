@@ -35,6 +35,11 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        // Custom code start: Return to previous page after login
+        session(['url.intended' => url()->previous()]);
+        $this->redirectTo = session()->get('url.intended');
+        // Custom code end
+
         $this->middleware('guest')->except('logout');
     }
 }

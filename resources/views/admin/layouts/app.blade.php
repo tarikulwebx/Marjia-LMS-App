@@ -65,7 +65,6 @@
     {{-- JS Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/admin-libs.js') }}"></script>
-    <script src="{{ asset('js/admin-scripts.js') }}"></script>
     @yield('scripts')
 </body>
 

@@ -49,12 +49,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('admin/courses', AdminCoursesController::class);
 
     // Lesson group CRUD
-    Route::resource('admin/courses/{slug}/groups', AdminLessonGroupController::class);
+    Route::resource('admin/courses/{course_slug}/groups', AdminLessonGroupController::class);
+    Route::get('get-lesson-groups/{course_id}', [AdminLessonGroupController::class, 'get_course_lesson_groups']);
+    Route::post('create-lesson-group', [AdminLessonGroupController::class, 'create_new_course_lesson_group']);
 
     // Lesson CRUD
     Route::resource('admin/courses/{slug}/lessons', AdminLessonsController::class);
 
 });
+
+
+
+
+
+
+
+
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {

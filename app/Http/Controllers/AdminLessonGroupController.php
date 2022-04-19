@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Group;
 use Illuminate\Http\Request;
 
 class AdminLessonGroupController extends Controller
@@ -11,9 +13,15 @@ class AdminLessonGroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($course_slug)
     {
-        //
+        
+    }
+
+    public function get_course_lesson_groups($course_id) {
+        $course = Course::findOrFail($course_id);
+        $lesson_groups = json_encode($course->groups->all());
+        return $lesson_groups;
     }
 
     /**
@@ -36,6 +44,25 @@ class AdminLessonGroupController extends Controller
     {
         //
     }
+
+    public function create_new_course_lesson_group(Request $request) {
+        
+        $course_id = $request->input('course_id');
+        $name = $request->input('input_group_name');
+
+        // $course = Course::findOrFail($course_id);
+        $result = Group::create([
+            'course_id' => $course_id,
+            'name'  => $name,
+        ]);
+        if ($result) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -77,8 +104,12 @@ class AdminLessonGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($course_slug, $group_slug)
     {
-        //
+        $group = Group::findBySlugOrFail($group_slug);
+        $group->delete();
+        session()->flash('group_action_msg', 'Group Deleted Successfully');
+        return redirect()->route('lessons.index', $course_slug);
     }
+
 }

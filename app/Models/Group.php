@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
 
 class Group extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use SluggableScopeHelpers;
 
     protected $fillable = [
         'name',
@@ -26,5 +30,21 @@ class Group extends Model
      */
     public function lessons() {
         return $this->hasMany(Lesson::class);
+    }
+
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+                'onUpdate' => 'true'
+            ]
+        ];
     }
 }

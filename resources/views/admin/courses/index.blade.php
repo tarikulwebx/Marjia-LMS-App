@@ -85,7 +85,7 @@
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center">
                                             <a href="{{ route('courses.edit', $course->slug) }}" class="btn btn-sm btn-primary text-nowrap me-2"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
-                                            <a href="#" class="btn btn-sm btn-info text-nowrap"><i class="fa-solid fa-eye fa-sm"></i> Preview</a>
+                                            <a href="{{ route('lessons.index', $course->slug) }}" class="btn btn-sm btn-info text-nowrap"><i class="fa-solid fa-book-open fa-sm"></i> Lessons</a>
                                         </div>
                                     </td>
                                 </tr>

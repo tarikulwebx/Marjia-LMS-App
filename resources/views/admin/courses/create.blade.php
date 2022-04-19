@@ -26,8 +26,6 @@
             width: 75% !important; 
             border-radius: 0.3rem;
         }
-        
-
     </style>
 @endsection
 
@@ -224,7 +222,7 @@
         });
     </script>
     
-    @include('admin.includes.tinymce-config');
+    @include('admin.includes.tinymce-config')
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class AdminLessonsController extends Controller
@@ -11,9 +12,12 @@ class AdminLessonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($course_slug)
     {
-        //
+        $course = Course::findBySlugOrFail($course_slug);
+        $groups = $course->groups->all();
+        $lessons = $course->lessons;
+        return view('admin.lessons.index', compact('course', 'groups', 'lessons'));
     }
 
     /**
@@ -21,9 +25,12 @@ class AdminLessonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($course_slug)
     {
-        //
+        $course = Course::findBySlugOrFail($course_slug);
+        $groups = $course->groups->pluck('name', 'id');
+        
+        return view('admin.lessons.create', compact('course', 'groups'));
     }
 
     /**
@@ -32,9 +39,21 @@ class AdminLessonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $slug)
     {
-        //
+        $request->validate([
+            'title'     => 'required|string|max:255',
+            'body'      => 'required',
+            'group_id'  => 'required',
+            'video'     => 'nullable|url',
+        ]);
+
+        $course = Course::findBySlugOrFail($slug);
+        $inputs = $request->all();
+        
+        $course->lessons()->create($inputs);
+        session()->flash('lesson_action_msg', 'New Lesson "'.$inputs['title'] .'" Created Successfully');
+        return redirect()->route('lessons.index', $course->slug);
     }
 
     /**
