@@ -71,7 +71,7 @@
                                     <td class="align-middle">{{ $course->id }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ $course->thumbnail }}" class="me-2 rounded" width="80" height="auto" alt="thumbnail">
+                                            <img src="{{ $course->thumbnail }}" class="me-2 rounded" width="100" height="auto" alt="thumbnail">
                                             <div class="ps-1">
                                                 <h6 class="mb-1"><a href="{{ route('courses.edit', $course->slug) }}">{{ $course->name }}</a></h6>
                                                 <small class="me-2" style="font-size: 0.825rem;"><i class="fa-solid fa-user-tie fa-sm text-gray-400 me-1"></i>{{ $course->user->first_name }}</small>
@@ -85,7 +85,7 @@
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center">
                                             <a href="{{ route('courses.edit', $course->slug) }}" class="btn btn-sm btn-primary text-nowrap me-2"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
-                                            <a href="{{ route('lessons.index', $course->slug) }}" class="btn btn-sm btn-info text-nowrap"><i class="fa-solid fa-book-open fa-sm"></i> Lessons</a>
+                                            <a href="{{ route('lessons.index', $course->slug) }}" class="btn btn-sm btn-secondary text-nowrap"><i class="fa-solid fa-book-open fa-sm"></i> Lessons <small>({{ $course->lessons->count() }})</small></a>
                                         </div>
                                     </td>
                                 </tr>

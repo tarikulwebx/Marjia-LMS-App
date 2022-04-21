@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', $lesson->title)
+@section('title', 'Create Lesson')
 
 @section('content')
     @if (session('lesson_action_msg'))
@@ -30,20 +30,21 @@
         </div>
     @endif
 
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Course: "{{ $course->name }}"</h1>
-        <a href="{{ route('lessons.index', $course->slug) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-arrow-left text-white-50 me-1"></i> All Lessons</a>
+        <h1 class="h3 mb-0 text-gray-800">Course: <span class="fw-bold">"{{ $course->name }}"</span></h1>
+        <a href="{{ route('lessons.index', $course->slug) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-arrow-left text-white-50 me-1"></i> Lessons</a>
     </div>
 
 
     <!-- Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Edit lesson <i class="fas fa-arrow-right"></i> ({{ $lesson->title }})</h6>
+            <h6 class="m-0 font-weight-bold text-primary">New lesson (Group: {{ $group->name }})</h6>
         </div>
         <div class="card-body pb-5">
-            {!! Form::model($lesson, ['method' => 'PATCH', 'route' => ['lessons.update', $course->slug, $lesson->slug], 'files' => true]) !!}
+            {!! Form::open(['method' => 'POST', 'route' => ['store_lesson_by_group', [$course->slug, $group->slug]], 'files' => true]) !!}
                 <div class="row g-3">
                     <!-- Input: Title -->
                     <div class="col-12">
@@ -61,7 +62,7 @@
                     <!-- Input: Group -->
                     <div class="col-lg-6">
                         <label for="group_id">Lesson group</label>
-                        {!! Form::select('group_id', $groups, null, ['id' => 'multiselectGroup', 'class' => $errors->has('group_id') ? ' form-control form-select is-invalid' : ' form-control form-select']) !!}
+                        {!! Form::select('group_id', $groups, $group->id, ['id' => 'multiselectGroup', 'class' => $errors->has('group_id') ? ' form-control form-select is-invalid' : ' form-control form-select', 'disabled' => 'disabled']) !!}
                         <small class="text-danger">{{ $errors->first('group_id') }}</small>
                     </div>
 
@@ -81,7 +82,7 @@
 
                     <!-- Input: Submit -->
                     <div class="col-12 text-end">
-                        {!! Form::button('<i class="fa-regular fa-check-circle me-2"></i>Update lesson', ['type' => 'submit', 'class' => 'btn btn-primary px-3 rounded-pill']) !!}
+                        {!! Form::button('<i class="fa-regular fa-check-circle me-2"></i>Create Lesson', ['type' => 'submit', 'class' => 'btn btn-primary px-3 rounded-pill']) !!}
                     </div>
                     
                 </div>
@@ -90,6 +91,7 @@
     </div>
 
 @endsection
+
 
 
 @section('scripts')

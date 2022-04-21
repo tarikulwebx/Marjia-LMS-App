@@ -55,7 +55,9 @@ class AdminLessonGroupController extends Controller
             'course_id' => $course_id,
             'name'  => $name,
         ]);
+        
         if ($result) {
+            session()->flash('group_action_msg', 'Group Created Successfully');
             return 1;
         } else {
             return 0;
@@ -78,10 +80,11 @@ class AdminLessonGroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $course_slug
+     * @param  string  $group_slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($course_slug, $group_slug)
     {
         //
     }
@@ -93,9 +96,21 @@ class AdminLessonGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $course_slug, $group_slug)
     {
-        //
+        $group = Group::findBySlugOrFail($group_slug);
+        $name = $request->input('group_name');
+
+        $result = $group->update([
+            'name' =>  $name,
+        ]);
+
+        if ($result) {
+            session()->flash('group_action_msg', 'Group Updated Successfully');
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**

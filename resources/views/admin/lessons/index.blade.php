@@ -69,7 +69,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Course: "{{ $course->name }}"</h1>
-        <a href="{{ route('lessons.create', $course->slug) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-plus text-white-50 me-1"></i> Add lesson</a>
+        <a href="{{ route('courses.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-arrow-left text-white-50 me-1"></i> Courses</a>
     </div>
 
     <!-- Card -->
@@ -106,9 +106,13 @@
                                         <div class="d-flex flex-column  @if($loop->first) mt-4 @else mt-5  @endif">
                                             <h5 class="m-0"><a href="#">{{ $group->name }} ({{ $group->lessons->count() }})</a></h5>
                                             <div>
-                                                <a href="{{ route('groups.edit', [$course->slug, $group->slug]) }}" class="text-primary small group-edit-link"><i class="fas fa-edit fa-sm"></i> Edit</a>
-                                                <a href="{{ route('groups.destroy', [$course->slug, $group->slug]) }}" class="text-danger small group-delete-link ms-2"><i class="fas fa-trash-alt fa-sm"></i> Delete</a>
-                                                {!! Form::open(['method' => 'POST', 'route' => ['groups.destroy', [$course->slug, $group->slug]], 'class' => 'd-none']) !!}
+                                                <a href="javascript:void()" class="lesson_edit_link text-primary small group-edit-link" data-slug="{{ $group->slug }}" data-name="{{ $group->name }}"><i class="fas fa-edit fa-sm"></i> Edit</a>
+                                                @if ($group->lessons->count() > 0)
+                                                    <a href="{{ route('groups.destroy', [$course->slug, $group->slug]) }}" class="text-danger small group-delete-link ms-2" onclick="event.preventDefault(); toastr.warning('This group contains lesson!', 'Cannot Delete');"><i class="fas fa-trash-alt fa-sm"></i> Delete</a>
+                                                @else
+                                                    <a href="{{ route('groups.destroy', [$course->slug, $group->slug]) }}" class="text-danger small group-delete-link ms-2" onclick="event.preventDefault(); document.getElementById('delete-group-form-{{ $group->id }}').submit();"><i class="fas fa-trash-alt fa-sm"></i> Delete</a>
+                                                @endif
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['groups.destroy', [$course->slug, $group->slug]], 'id' => 'delete-group-form-'.$group->id, 'class' => 'd-none']) !!}
                                                 {!! Form::close() !!}
                                             </div>
                                         </div>
@@ -124,15 +128,15 @@
                                             <td>{{ $lesson->updated_at->diffForHumans() }}</td>
                                             <td style="width: 100px">
                                                 <div class="d-flex align-items-center">
-                                                    <a href="#" class="btn btn-sm btn-primary text-nowrap me-2"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-info text-nowrap"><i class="fa-solid fa-eye fa-sm"></i> Preview</a>
+                                                    <a href="{{ route('lessons.edit', [$course->slug, $lesson->slug ]) }}" class="btn btn-sm btn-primary text-nowrap me-2"><i class="fa-solid fa-pen-to-square fa-sm"></i> Edit</a>
+                                                    <a href="javascript:void()" class="delete-lesson-btn btn btn-sm btn-danger text-nowrap" data-slug="{{ $lesson->slug }}" data-title="{{ $lesson->title }}"><i class="fa-solid fa-trash-alt fa-sm"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @endif
                                 <tr>
-                                    <td colspan="5"><a href="#" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add lesson</a></td>
+                                    <td colspan="5"><a href="{{ route('create-lesson-by-group', [$course->slug, $group->slug]) }}" class="btn btn-sm btn-primary @if($loop->last) mb-4 @endif"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add lesson</a></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -143,7 +147,7 @@
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal: Group Create -->
     <div class="modal fade" id="lessonCreateGroupModal" tabindex="-1" aria-labelledby="lessonCreateGroupModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -161,6 +165,54 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button id="create_group_submit_btn" type="button" class="btn btn-primary"><i class="far fa-check-circle fa-sm me-1"></i>Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal: Group edit -->
+    <div class="modal fade" id="lessonEditGroupModal" tabindex="-1" aria-labelledby="lessonEditGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" name="course_slug" id="course_slug" value="{{ $course->slug }}">
+                    <input type="hidden" name="group_slug" id="group_slug">
+                    <h5 class="modal-title" id="lessonEditGroupModalLabel">Edit Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="edit_input_group_name">Group name</label>
+                    <input type="text" class="form-control" id="edit_input_group_name" name="edit_input_group_name"  placeholder="Group name">
+                    <small id="edit_input_group_name_error" class="text-danger d-none"></small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="update_group_submit_btn" type="button" class="btn btn-primary"><i class="far fa-check-circle fa-sm me-1"></i>Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal: Lesson Delete -->
+    <div class="modal fade" id="lessonDeleteModal" tabindex="-1" aria-labelledby="lessonDeleteModallLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="d-none" id="lessonSlug"></h1>
+                    <h1 class="d-none" id="courseSlug">{{ $course->slug }}</h1>
+                    <h5 class="modal-title text-danger" id="lessonDeleteModalLabel">Delete Lesson</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to delete "<span id="lessonTitle"></span>" lesson?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="delete_lesson_confirm_btn" type="button" class="btn btn-danger"><i class="fas fa-trash-alt fa-sm me-2"></i>Delete</button>
                 </div>
             </div>
         </div>
@@ -189,7 +241,6 @@
                     .then(res => {
                         if (res.status == 200) {
                             if (res.data == 1) {
-                                toastr.success('New group created', 'Success');
                                 $('#lessonGroupModal').modal('hide');
                                 location.reload();
                             } else {
@@ -204,6 +255,87 @@
                     })
                 }
             });
+
+            // Edit Group
+            $('.lesson_edit_link').on('click', function(){
+                $('#group_slug').val($(this).data('slug'));
+                $('#edit_input_group_name').val($(this).data('name'));
+                $('#lessonEditGroupModal').modal('show');
+            });
+
+            // Update group
+            $('#update_group_submit_btn').on('click', function(){
+                let courseSlug = $('#course_slug').val();
+                let groupSlug = $('#group_slug').val();
+                let groupName = $('#edit_input_group_name').val().trim();
+                
+                $('edit_input_group_name_error').addClass('d-none');
+                if(groupName.length == 0) {
+                    $('edit_input_group_name_error').removeClass('d-none');
+                    $('edit_input_group_name_error').html('Name field is empty');
+                } else {
+                    axios.put('/admin/courses/'+courseSlug+'/groups/'+groupSlug, {
+                        group_name: groupName,
+                    })
+                    .then(res => {
+                        if (res.status == 200) {
+                            if (res.data == 1) {
+                                $('#lessonEditGroupModal').modal('hide');
+                                location.reload();
+                            } else {
+                                toastr.error('Something went wrong', 'Failed');
+                            }
+                        } else {
+                            toastr.error('Something went wrong', 'Failed');
+                        }
+                        console.log(res)
+                    })
+                    .catch(err => {
+                        console.error(err); 
+                    });
+                }
+
+            });
+
+
+
+            
+            /*
+            * Delete Lesson 
+            */
+            $('.delete-lesson-btn').on('click', function(e){
+                e.preventDefault();
+                $('#lessonTitle').html($(this).data('title'));
+                $('#lessonSlug').html($(this).data('slug'));
+                $('#lessonDeleteModal').modal('show');
+            });
+
+            // Delete Lesson Confirm
+            $('#delete_lesson_confirm_btn').on('click', function(){
+                let lessonSlug = $('#lessonSlug').html();
+                let courseSlug = $('#courseSlug').html();
+                axios.delete('/admin/courses/'+courseSlug+'/lessons/'+lessonSlug, {
+
+                })
+                .then(res => {
+                    if (res.status == 200) {
+                        if (res.data == 1) {
+                            $('#lessonDeleteModal').modal('hide');
+                            location.reload();
+                        } else {
+                            toastr.error('Lesson delete failed!', 'Error');
+                        }
+                       
+                    } else {
+                        toastr.error('Lesson delete failed!', 'Error');
+                    }
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            });
+
+
         });
     </script>
 @endsection

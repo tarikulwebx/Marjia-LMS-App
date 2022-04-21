@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Group;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 
 class AdminLessonsController extends Controller
@@ -33,6 +35,14 @@ class AdminLessonsController extends Controller
         return view('admin.lessons.create', compact('course', 'groups'));
     }
 
+
+    public function create_by_group($course_slug, $group_slug) {
+        $course = Course::findBySlugOrFail($course_slug);
+        $group = Group::findBySlugOrFail($group_slug);
+        $groups = $course->groups->pluck('name', 'id');
+        return view('admin.lessons.create_by_group', compact('course', 'group', 'groups'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -56,6 +66,27 @@ class AdminLessonsController extends Controller
         return redirect()->route('lessons.index', $course->slug);
     }
 
+
+    public function store_by_group(Request $request, $course_slug, $group_slug) {
+        $request->validate([
+            'title'     => 'required|string|max:255',
+            'body'      => 'required',
+            'video'     => 'nullable|url',
+        ]);
+
+        $course = Course::findBySlugOrFail($course_slug);
+        $group = Group::findBySlugOrFail($group_slug);
+        $lesson = $course->lessons()->create([
+            'title' => $request->input('title'),
+            'body' => $request->input('body'),
+            'video' => $request->input('video'),
+            'group_id' => $group->id,
+        ]);
+
+        session()->flash('lesson_action_msg', 'New Lesson "'. $lesson['title'] .'" Created');
+        return redirect()->route('lessons.index', $course_slug);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -70,24 +101,41 @@ class AdminLessonsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $course_slug
+     * @param  string  $lesson_slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($course_slug, $lesson_slug)
     {
-        //
+        $course = Course::findBySlugOrFail($course_slug);
+        $lesson = Lesson::findBySlugOrFail($lesson_slug);
+        $groups = $course->groups->pluck('name', 'id')->all();
+
+        return view('admin.lessons.edit', compact('course', 'lesson', 'groups'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $course_slug
+     * @param  string  $lesson_slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $course_slug, $lesson_slug)
     {
-        //
+        $request->validate([
+            'title'     => 'required|string|max:255',
+            'body'      => 'required',
+            'group_id'  => 'required',
+            'video'     => 'nullable|url',
+        ]);
+
+        $inputs = $request->all();
+        $lesson = Lesson::findBySlugOrFail($lesson_slug);
+        $lesson->update($inputs);
+        session()->flash('lesson_action_msg', 'Lesson Updated Successfully');
+        return redirect()->route('lessons.edit', [$course_slug, $lesson_slug]);
     }
 
     /**
@@ -96,8 +144,16 @@ class AdminLessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($course_slug, $lesson_slug)
     {
-        //
+        $lesson = Lesson::findBySlugOrFail($lesson_slug);
+        $result = $lesson->delete();
+
+        if ($result == true) {
+            session()->flash('lesson_action_msg', 'Lesson Deleted Successfully');
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

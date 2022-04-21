@@ -71,7 +71,7 @@
     <!-- Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Update course</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Update course <i class="fa fa-arrow-right"></i> ({{ $course->name }})</h6>
         </div>
         <div class="card-body pb-5">
             {!! Form::model($course, ['method' => 'PATCH', 'route' => ['courses.update', $course->slug], 'files' => true]) !!}
@@ -213,7 +213,7 @@
                             </div>
                             <div class="col-md-8 align-self-center">
                                 <div class="form-check">
-                                    {!! Form::checkbox('delete_agreement', '1', null, ['id' => 'delete_agreement', 'class' => 'form-check-input']) !!}
+                                    {!! Form::checkbox('delete_agreement', '1', null, ['id' => 'delete_agreement', 'class' => 'form-check-input', 'required']) !!}
                                     <label class="form-check-label text-primary" for="delete_agreement">
                                         Yes, I understand and want to permanently delete this course
                                     </label>

@@ -29,6 +29,9 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{slug}', [CoursesController::class, 'show'])->name('single-course');
 
+//Lessons Route
+
+
 
 
 /**
@@ -48,13 +51,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Courses CRUD
     Route::resource('admin/courses', AdminCoursesController::class);
 
-    // Lesson group CRUD
+    // Group CRUD
     Route::resource('admin/courses/{course_slug}/groups', AdminLessonGroupController::class);
     Route::get('get-lesson-groups/{course_id}', [AdminLessonGroupController::class, 'get_course_lesson_groups']);
     Route::post('create-lesson-group', [AdminLessonGroupController::class, 'create_new_course_lesson_group']);
 
     // Lesson CRUD
-    Route::resource('admin/courses/{slug}/lessons', AdminLessonsController::class);
+    Route::resource('admin/courses/{course_slug}/lessons', AdminLessonsController::class);
+    Route::get('admin/courses/{course_slug}/groups/{group_slug}/lessons/create', [AdminLessonsController::class, 'create_by_group'])->name('create-lesson-by-group');
+    Route::post('admin/courses/{course_slug}/groups/{group_slug}/lessons/store', [AdminLessonsController::class, 'store_by_group'])->name('store_lesson_by_group');
 
 });
 
