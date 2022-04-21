@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminLessonsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,8 @@ Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{slug}', [CoursesController::class, 'show'])->name('single-course');
 
 //Lessons Route
-
+Route::get('courses/{course_slug}/lessons', [LessonsController::class, 'index'])->name('course-lessons');
+Route::get('courses/{course_slug}/lessons/{lesson_slug}', [LessonsController::class, 'show'])->name('lesson-single');
 
 
 

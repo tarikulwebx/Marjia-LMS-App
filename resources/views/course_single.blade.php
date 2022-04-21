@@ -556,7 +556,7 @@
                                             <a href="#" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
                                         @endif
                                     @elseif (Auth::user() && Auth::user()->role->name == 'administrator')
-                                        <a href="#" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-angles-right fa-sm me-2"></i>Lessons</a>
+                                        <a href="{{ route('course-lessons', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-angles-right fa-sm me-2"></i>Lessons</a>
                                     @else
                                         <a href="#" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
                                     @endif

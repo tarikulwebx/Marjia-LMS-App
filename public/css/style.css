@@ -26,8 +26,6 @@
     background-color: #fff !important;
 }
 
-
-
 /* Pagination customization */
 @media screen and (max-width: 575.98px) {
     .pagination .page-item .page-link.previous-btn,
@@ -48,4 +46,10 @@
         background-color: #fff;
         color: #ccc;
     }
+}
+
+
+/* Lesson sidebar */
+.lesson__sidenav .offcanvas {
+    padding: 0.1rem;
 }

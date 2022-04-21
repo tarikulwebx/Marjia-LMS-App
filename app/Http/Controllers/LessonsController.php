@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 
 class LessonsController extends Controller
@@ -9,11 +11,14 @@ class LessonsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  string  $course_slug
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($course_slug)
     {
-        //
+        $course = Course::findBySlugOrFail($course_slug);
+        $groups = $course->groups->all();
+        return view('lessons', compact('course', 'groups'));
     }
 
     /**
@@ -43,9 +48,12 @@ class LessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($course_slug, $lesson_slug)
     {
-        //
+        $course = Course::findBySlugOrFail($course_slug);
+        $current_lesson = Lesson::findBySlugOrFail($lesson_slug);
+        $groups = $course->groups->all();
+        return view('lesson_single', compact('course', 'groups', 'current_lesson'));
     }
 
     /**
