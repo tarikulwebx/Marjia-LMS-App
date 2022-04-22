@@ -12201,22 +12201,22 @@ mark {
 }
 @media (max-width: 575.98px) {
   .courses {
-    grid-template-columns: auto;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
 @media (min-width: 576px) {
   .courses {
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (min-width: 992px) {
   .courses {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 @media (min-width: 1200px) {
   .courses {
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 .courses .course {
@@ -12315,12 +12315,12 @@ mark {
 @media (min-width: 576px) {
   .courses.horizontal-list {
     gap: 30px;
-    grid-template-columns: auto;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
 @media (min-width: 576px) and (min-width: 1200px) {
   .courses.horizontal-list {
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (min-width: 576px) {
