@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->integer('group_id')->unsigned()->nullable();
                 $table->string('title');
                 $table->longText('body');
-                $table->string('video')->nullable();
+                $table->string('files')->nullable();
                 $table->string('slug')->nullable();
                 $table->timestamps();
             });

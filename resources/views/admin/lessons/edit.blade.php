@@ -65,19 +65,22 @@
                         <small class="text-danger">{{ $errors->first('group_id') }}</small>
                     </div>
 
-                    <!-- Input: Video -->
+                    <!-- Input: Files -->
                     <div class="col-lg-6">
-                        {!! Form::label('video', 'Video') !!}
+                        {!! Form::label('files', 'Download files') !!}
                         <div class="input-group">
                             <span class="input-group-btn">
-                            <a id="lfm" data-input="video" data-preview="imgPreviewHolder" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
+                            <a id="lfm" data-input="files" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
                                 <i class="fa-solid fa-image fa-sm me-2"></i>Choose
                             </a>
                             </span>
-                            {!! Form::text('video', null, ['class' => $errors->has('video') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Video url']) !!}
+                            {!! Form::text('files', null, ['class' => $errors->has('files') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Files url (multiple)']) !!}
+                            <em class="small text-info">Please, make sure, filename doesn't contain comma(,) and files url separated with comma(,)</em>
                         </div>
-                        <small class="text-danger d-block">{{ $errors->first('video') }}</small>
+                        <small class="text-danger d-block">{{ $errors->first('files') }}</small>
                     </div>
+
+                    
 
                     <!-- Input: Submit -->
                     <div class="col-12 text-end">
@@ -103,6 +106,7 @@
             });
 
             $('#lfm').filemanager('file');
+            $('#lfm-files').filemanager('file');
 
         });
     </script>

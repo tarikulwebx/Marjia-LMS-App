@@ -34,7 +34,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Course: <span class="fw-bold">"{{ $course->name }}"</span></h1>
-        <a href="{{ route('lessons.index', $course->slug) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-arrow-left text-white-50 me-1"></i> Lessons</a>
+        <a href="{{ route('lessons.index', $course->slug) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-arrow-left text-white-50 me-1"></i> All Lessons</a>
     </div>
 
 
@@ -66,18 +66,19 @@
                         <small class="text-danger">{{ $errors->first('group_id') }}</small>
                     </div>
 
-                    <!-- Input: Video -->
+                    <!-- Input: Files -->
                     <div class="col-lg-6">
-                        {!! Form::label('video', 'Video') !!}
+                        {!! Form::label('files', 'Download files') !!}
                         <div class="input-group">
                             <span class="input-group-btn">
-                            <a id="lfm" data-input="video" data-preview="imgPreviewHolder" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
+                            <a id="lfm" data-input="files" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
                                 <i class="fa-solid fa-image fa-sm me-2"></i>Choose
                             </a>
                             </span>
-                            {!! Form::text('video', null, ['class' => $errors->has('video') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Video url']) !!}
+                            {!! Form::text('files', null, ['class' => $errors->has('files') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Files url (multiple)']) !!}
                         </div>
-                        <small class="text-danger d-block">{{ $errors->first('video') }}</small>
+                        <em class="small text-info">Please, make sure, filename doesn't contain comma(,) and files url separated with comma(,)</em>
+                        <small class="text-danger d-block">{{ $errors->first('files') }}</small>
                     </div>
 
                     <!-- Input: Submit -->

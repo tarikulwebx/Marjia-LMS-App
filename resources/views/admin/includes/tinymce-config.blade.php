@@ -8,8 +8,7 @@
 		extended_valid_elements: [
 			'table[class=table table-bordered]',
 			'ul[class=list]',
-			'ol[class=list]'
-
+			'ol[class=list]',
 		],
 		content_style: 'body { font-family:Heebo, sans-serif; font-size:16px; line-height: 1.5; color: #495057;  }',
 		height: 500,

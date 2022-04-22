@@ -18,7 +18,8 @@ class Lesson extends Model
         'body',
         'video',
         'course_id',
-        'group_id'
+        'group_id',
+        'files',
     ];
 
     /**
@@ -34,8 +35,6 @@ class Lesson extends Model
     public function group() {
         return $this->belongsTo(Group::class);
     }
-
-
 
 
     /**

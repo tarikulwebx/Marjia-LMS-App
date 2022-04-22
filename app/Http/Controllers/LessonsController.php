@@ -53,7 +53,18 @@ class LessonsController extends Controller
         $course = Course::findBySlugOrFail($course_slug);
         $current_lesson = Lesson::findBySlugOrFail($lesson_slug);
         $groups = $course->groups->all();
-        return view('lesson_single', compact('course', 'groups', 'current_lesson'));
+
+        $files = [];
+
+        if ($current_lesson->files) {
+            $files_url = explode(',', $current_lesson->files);
+            foreach($files_url as $file_url) {
+                $file_name = explode('/', $file_url);
+                $files[ $file_url] = end($file_name);
+            }
+        }
+                
+        return view('lesson_single', compact('course', 'groups', 'current_lesson', 'files'));
     }
 
     /**

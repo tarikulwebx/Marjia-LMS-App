@@ -82,7 +82,7 @@
                 <table class="table table-bordered text-nowrap align-middle" id="" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Group/ Lessons <a href="#" class="btn btn-sm btn-primary rounded-pill ms-2" data-bs-toggle="modal" data-bs-target="#lessonCreateGroupModal"><i class="fas fa-plus"></i> Add group</a></th>
+                            <th>Group/ Lessons <a href="javascript:void()" class="btn btn-sm btn-primary rounded-pill ms-2" data-bs-toggle="modal" data-bs-target="#lessonCreateGroupModal"><i class="fas fa-plus"></i> Add group</a></th>
                             <th>Readers</th>
                             <th>Created</th>
                             <th>Updated</th>
@@ -104,7 +104,7 @@
                                 <tr>
                                     <td colspan="5">
                                         <div class="d-flex flex-column  @if($loop->first) mt-4 @else mt-5  @endif">
-                                            <h5 class="m-0"><a href="#">{{ $group->name }} ({{ $group->lessons->count() }})</a></h5>
+                                            <h5 class="m-0"><a href="javascript:void()" class="lesson_edit_link" data-slug="{{ $group->slug }}" data-name="{{ $group->name }}">{{ $group->name }} ({{ $group->lessons->count() }})</a></h5>
                                             <div>
                                                 <a href="javascript:void()" class="lesson_edit_link text-primary small group-edit-link" data-slug="{{ $group->slug }}" data-name="{{ $group->name }}"><i class="fas fa-edit fa-sm"></i> Edit</a>
                                                 @if ($group->lessons->count() > 0)
@@ -122,7 +122,7 @@
                                 @if ($group->lessons)
                                     @foreach ($group->lessons as $lesson)
                                         <tr>
-                                            <td><a href="#">{{ $lesson->title }}</a></td>
+                                            <td><a href="{{ route('lessons.edit', [$course->slug, $lesson->slug ]) }}">{{ $lesson->title }}</a></td>
                                             <td>--</td>
                                             <td>{{ $lesson->created_at->diffForHumans() }}</td>
                                             <td>{{ $lesson->updated_at->diffForHumans() }}</td>

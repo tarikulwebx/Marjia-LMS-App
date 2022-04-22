@@ -68,13 +68,36 @@
 
                         <div class="lesson__content__files downloadable-files border-top py-4">
                             <h4 class="mb-4"><i class="fa-solid fa-download me-2"></i> Files Included</h4>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-image me-2 fa-2x"></i> Image file.jpg</a>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-pdf me-2 fa-2x"></i> PDf file.pdf</a>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-word me-2 fa-2x"></i> Word file.doc</a>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-excel me-2 fa-2x"></i> Excel file.xlsx</a>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-powerpoint me-2 fa-2x"></i> Powerpoint file.ppt</a>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-video me-2 fa-2x"></i> Video file.mp4</a>
-                            <a href="images/dummy-pdf_2.pdf" class="btn btn-light" download="Download pdf"><i class="fa-solid fa-file-zipper me-2 fa-2x"></i> Zip file.zip</a>
+                            @if ($files && !empty($files))
+                                @foreach ($files as $file_url => $file_name)
+                                    @php
+                                        $extension = explode('.', $file_name);
+                                        $extension = end($extension);
+                                    @endphp
+                                    <a href="{{ $file_url }}" class="btn btn-light" download="{{ $file_name }}">
+                                        @if ($extension == 'pdf')
+                                            <i class="fa-solid fa-file-pdf me-2 fa-2x"></i>
+                                        @elseif ($extension == 'doc' || $extension == 'docx')
+                                            <i class="fa-solid fa-file-word me-2 fa-2x"></i>
+                                        @elseif ($extension == 'xls' || $extension == 'xlsx')
+                                            <i class="fa-solid fa-file-excel me-2 fa-2x"></i>
+                                        @elseif ($extension == 'ppt' || $extension == 'pptx')
+                                            <i class="fa-solid fa-file-powerpoint me-2 fa-2x"></i>
+                                        @elseif ($extension == 'gif' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png')
+                                            <i class="fa-solid fa-file-image me-2 fa-2x"></i>
+                                        @elseif ($extension == 'zip')
+                                            <i class="fa-solid fa-file-zipper me-2 fa-2x"></i>
+                                        @elseif ($extension == 'mp4')
+                                            <i class="fa-solid fa-file-video me-2 fa-2x"></i>
+                                        @else
+                                            <i class="fa-solid fa-file-lines me-2 fa-2x"></i>
+                                        @endif 
+                                        {{ $file_name }}
+                                    </a>
+                                @endforeach
+                            @else
+                            <div class="text-muted">No files included</div>
+                            @endif
                         </div>
 
                         <div class="d-flex d-xl-block justify-content-between border-top border-bottom py-4">
@@ -100,7 +123,9 @@
 @section('scripts')
     <script type="text/javascript">
         jQuery(function(){
-            $("p iframe:first-of-type").parent().addClass("ratio ratio-16x9 rounded overflow-hidden");
+            $("p iframe:first-of-type").parent().addClass("player ratio ratio-16x9 rounded-3 overflow-hidden");
+            $("p video, p audio").addClass('player').parent().addClass("rounded-3 overflow-hidden");
+            const player = Plyr.setup('.player');
         });
     </script>
 @endsection

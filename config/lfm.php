@@ -55,13 +55,19 @@ return [
             'thumb_height' => 80,
             'valid_mime'   => [
                 'image/jpeg',
-                'image/pjpeg',
                 'image/png',
                 'image/gif',
                 'application/pdf',
                 'text/plain',
                 'video/mp4',
-                'video/mpeg',
+                'doc',
+                'docx',
+                'xls',
+                'xlsx',
+                'zip',
+                'ppt',
+                'pptx',
+
             ],
         ],
         'image' => [
@@ -73,7 +79,6 @@ return [
             'thumb_height' => 80,
             'valid_mime'   => [
                 'image/jpeg',
-                'image/pjpeg',
                 'image/png',
                 'image/gif',
             ],

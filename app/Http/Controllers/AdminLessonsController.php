@@ -55,7 +55,7 @@ class AdminLessonsController extends Controller
             'title'     => 'required|string|max:255',
             'body'      => 'required',
             'group_id'  => 'required',
-            'video'     => 'nullable|url',
+            'files'     => 'nullable',
         ]);
 
         $course = Course::findBySlugOrFail($slug);
@@ -71,7 +71,7 @@ class AdminLessonsController extends Controller
         $request->validate([
             'title'     => 'required|string|max:255',
             'body'      => 'required',
-            'video'     => 'nullable|url',
+            'files'     => 'nullable',
         ]);
 
         $course = Course::findBySlugOrFail($course_slug);
@@ -79,7 +79,7 @@ class AdminLessonsController extends Controller
         $lesson = $course->lessons()->create([
             'title' => $request->input('title'),
             'body' => $request->input('body'),
-            'video' => $request->input('video'),
+            'files' => $request->input('files'),
             'group_id' => $group->id,
         ]);
 
@@ -128,7 +128,7 @@ class AdminLessonsController extends Controller
             'title'     => 'required|string|max:255',
             'body'      => 'required',
             'group_id'  => 'required',
-            'video'     => 'nullable|url',
+            'files'     => 'nullable',
         ]);
 
         $inputs = $request->all();
