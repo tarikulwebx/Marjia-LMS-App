@@ -35,8 +35,8 @@
                                                 <!-- Lesson item -->
                                                 @if ($group->lessons)
                                                     @foreach ($group->lessons as $lesson)
-                                                        <li class="nav-item">
-                                                            <a href="{{ route('lesson-single', [$course->slug, $lesson->slug]) }}" class="nav-link"><span><i class="fa-brands fa-readme"></i></span> <span>{{ $lesson->title }}</span></a>
+                                                        <li class="nav-item{{ Request::is('courses/'.$course->slug.'/lessons/'.$lesson->slug) ? ' active' : '' }} {{ Auth::user()->isRead($lesson->id) ? ' read' : '' }}">
+                                                            <a href="{{ route('lesson-single', [$course->slug, $lesson->slug]) }}" class="nav-link"><span>@if(Auth::user()->isRead($lesson->id)) <i class="fa-solid fa-circle-check"></i> @else <i class="fa-brands fa-readme"></i> @endif</span> <span>{{ $lesson->title }}</span></a>
                                                         </li>
                                                     @endforeach
                                                 @endif

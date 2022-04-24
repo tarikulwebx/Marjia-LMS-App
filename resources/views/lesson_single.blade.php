@@ -36,8 +36,8 @@
                                                 <!-- Lesson item -->
                                                 @if ($group->lessons)
                                                     @foreach ($group->lessons as $lesson)
-                                                        <li class="nav-item{{ Request::is('courses/'.$course->slug.'/lessons/'.$lesson->slug) ? ' active' : '' }}">
-                                                            <a href="{{ route('lesson-single', [$course->slug, $lesson->slug]) }}" class="nav-link"><span><i class="fa-brands fa-readme"></i></span> <span>{{ $lesson->title }}</span></a>
+                                                        <li class="nav-item{{ Request::is('courses/'.$course->slug.'/lessons/'.$lesson->slug) ? ' active' : '' }} {{ Auth::user()->isRead($lesson->id) ? ' read' : '' }}">
+                                                            <a href="{{ route('lesson-single', [$course->slug, $lesson->slug]) }}" class="nav-link"><span>@if(Auth::user()->isRead($lesson->id)) <i class="fa-solid fa-circle-check"></i> @else <i class="fa-brands fa-readme"></i> @endif</span> <span>{{ $lesson->title }}</span></a>
                                                         </li>
                                                     @endforeach
                                                 @endif
@@ -63,8 +63,19 @@
                             <div class="d-flex d-xl-block justify-content-between">
                                 <button type="button" id="showSidebarBtn" class="btn btn-sm rounded btn-light bg-primary bg-opacity-10 text-primary d-xl-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="fa-solid fa-sliders"></i> Lessons</button>
                                 <div class="navigation d-flex justify-content-between align-items-center">
-                                    <a href="#" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 me-3"><i class="fas fa-chevron-left"></i> <span>Previous</span></a>
-                                    <a href="#" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0"><span>Next</span> <i class="fas fa-chevron-right"></i></a>
+                                    @if (!is_null($previous_lesson_slug))
+                                        <a href="{{ route('lesson-single', [$course->slug, $previous_lesson_slug]) }}" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 me-3"><i class="fas fa-chevron-left"></i> <span>Previous</span></a>
+                                        @else
+                                        <a href="{{ route('lessons.index', $course->slug) }}" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 me-3 disabled"><i class="fas fa-chevron-left"></i> <span>Previous</span></a>
+                                    @endif
+
+                                    @if (!is_null($next_lesson_slug))
+                                        <a href="{{ route('lesson-single', [$course->slug, $next_lesson_slug]) }}" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0"><span>Next</span> <i class="fas fa-chevron-right"></i></a>
+                                        @else
+                                        <a href="{{ route('lessons.index', $course->slug) }}" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 disabled"><span>Next</span> <i class="fas fa-chevron-right"></i></a>
+                                    @endif
+                                    
+                                    
                                 </div>
                             </div>
                             <hr class="my-4 bg-primary">

@@ -38,6 +38,14 @@ class Lesson extends Model
 
 
     /**
+     * Lesson has many reads
+     */
+    public function reads() {
+        return $this->hasMany(Read::class, 'lesson_id', 'id');
+    }
+
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array

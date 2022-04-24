@@ -37,9 +37,14 @@
                             <div class="card-header bg-white">
                                 <ul class="course-details__nav nav nav-pills p-2" id="pills-tab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="pills-overview-tab" data-bs-toggle="pill"
+                                        <button class="nav-link" id="pills-overview-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview"
                                             aria-selected="true">Overview</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-curriculum-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-curriculum" type="button" role="tab" aria-controls="pills-curriculum"
+                                            aria-selected="true">Curriculum</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="pills-instructor-tab" data-bs-toggle="pill"
@@ -56,7 +61,7 @@
                             <div class="card-body p-4">
                                 <div class="tab-content" id="pills-tabContent">
                                     <!-- Course Overview Tab -->
-                                    <div class="tab-pane fade show active" id="pills-overview" role="tabpanel"
+                                    <div class="tab-pane fade" id="pills-overview" role="tabpanel"
                                         aria-labelledby="pills-overview-tab">
                                         <!-- Description -->
                                         <div class="course-details__description">
@@ -65,9 +70,9 @@
                                         </div>
 
                                         <!-- What you'll learn -->
-                                        <div class="course-details__learnings">
+                                        <div class="course-details__learnings mb-0">
                                             <h3>What you'll learn</h3>
-                                            <ul class="list-group list-group-borderless">
+                                            <ul class="list-group list-group-borderless ms-2">
                                                 @php
                                                     $string = $course->learning; 
                                                     $arry = explode(';', $string); 
@@ -79,187 +84,57 @@
                                                 @endforeach
                                             </ul>
                                         </div>
+                                    </div>
 
-
+                                    <!-- Curriculums Tab -->
+                                    <div class="tab-pane fade" id="pills-curriculum" role="tabpanel"
+                                        aria-labelledby="pills-curriculum-tab">
                                         <!-- Curriculums -->
-                                        <div class="course-details__curriculums">
-                                            <h3 class="mb-3">Curriculum</h3>
-                                            <div class="accordion" id="accordionPanelsStayOpenExample">
-                                                <!-- Accordion Item 1 -->
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                                        <button class="accordion-button rounded" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsStayOpen-collapseOne"
-                                                            aria-expanded="true"
-                                                            aria-controls="panelsStayOpen-collapseOne">
-                                                            Introduction of Web Development <span class="d-inline-block ms-2">(123 lecture)</span>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseOne"
-                                                        class="accordion-collapse collapse show"
-                                                        aria-labelledby="panelsStayOpen-headingOne">
-                                                        <div class="accordion-body bg-transparent">
-                                                            <ul class="list-group list-group-flush">
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            Introduction
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>What is Front-end Development</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>Back-end overview</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>What is Full Stack JS</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                
-                                                            </ul>
+                                        <div class="course-details__curriculums mb-0">
+                                            
+                                            <div class="accordion" id="accordionCurriculumn">
+                                                @if ($course->groups)
+                                                    @foreach ($course->groups as $group)
+                                                        <!-- Accordion Item 1 -->
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="heading-{{ $group->id }}">
+                                                                <button class="accordion-button rounded collapsed" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapse-{{ $group->id }}"
+                                                                    aria-expanded="true"
+                                                                    aria-controls="collapse-{{ $group->id }}">
+                                                                    {{ $group->name }} <span class="d-inline-block ms-2">({{ $group->lessons->count() }} lectures)</span>
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapse-{{ $group->id }}"
+                                                                class="accordion-collapse collapse"
+                                                                aria-labelledby="heading-{{ $group->id }}" data-bs-parent="#accordionCurriculumn">
+                                                                <div class="accordion-body bg-transparent">
+                                                                    <ul class="list-group list-group-flush">
+                                                                        @if ($group->lessons)
+                                                                            @foreach ($group->lessons as $lesson)
+                                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                                                    <div class="ms-2 me-auto">
+                                                                                        <div>
+                                                                                            <i class="fa-brands fa-readme"></i>
+                                                                                            {{ $lesson->title }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <span class="read-time">{{ $lesson->created_at->format('d-M-Y') }}</span>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Accordion Item 2 -->
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                                        <button class="accordion-button rounded collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsStayOpen-collapseTwo"
-                                                            aria-expanded="false"
-                                                            aria-controls="panelsStayOpen-collapseTwo">
-                                                            Let's Start development <span class="ms-2">(123 lectures)</span>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseTwo"
-                                                        class="accordion-collapse collapse"
-                                                        aria-labelledby="panelsStayOpen-headingTwo">
-                                                        <div class="accordion-body bg-transparent">
-                                                            <ul class="list-group list-group-flush">
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            Introduction
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>What is Front-end Development</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>Back-end overview</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>What is Full Stack JS</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Accordion Item 3 -->
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                                        <button class="accordion-button rounded collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsStayOpen-collapseThree"
-                                                            aria-expanded="false"
-                                                            aria-controls="panelsStayOpen-collapseThree">
-                                                            Basic Web Development <span class="ms-2">(123 lecture)</span>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseThree"
-                                                        class="accordion-collapse collapse"
-                                                        aria-labelledby="panelsStayOpen-headingThree">
-                                                        <div class="accordion-body bg-transparent">
-                                                            <ul class="list-group list-group-flush">
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            Introduction
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>What is Front-end Development</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>Back-end overview</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div>
-                                                                            <i class="fa-brands fa-readme"></i>
-                                                                            <span>What is Full Stack JS</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="read-time">37 min</span>
-                                                                </li>
-                                                                
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
 
                                     </div>
+
                                     <!-- Instructor Tab -->
                                     <div class="tab-pane fade" id="pills-instructor" role="tabpanel"
                                         aria-labelledby="pills-instructor-tab">
@@ -810,4 +685,21 @@
 
 @section('scripts')
     <script src="https://platform.twitter.com/widgets.js"></script>
+    <script type="text/javascript">
+        jQuery(function(){
+            $('button[data-bs-toggle="pill"]').on('click', function() {
+                let activeTab = $(this).attr('aria-controls');
+                localStorage.setItem('activeTab', activeTab);
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            $('.table-pane').removeClass('show active');
+            if(activeTab){
+                $('#'+activeTab+'-tab').addClass('active');
+                $('#'+ activeTab).addClass('show active');
+            } else {
+                $('#pills-overview-tab').addClass('active');
+                $('#pills-overview').addClass('show active');
+            }
+        });
+    </script>
 @endsection

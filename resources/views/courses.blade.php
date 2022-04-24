@@ -122,7 +122,7 @@
                                         </span>
                                         <span class="h6 course__meta__lessons m-0">
                                             <i class="fa-brands fa-readme"></i>
-                                            74 lessons
+                                            {{ $course->lessons->count() }} lessons
                                         </span>
                                     </div>
                                 </div>

@@ -19,7 +19,7 @@ class LessonsController extends Controller
     {
         $course = Course::findBySlugOrFail($course_slug);
         $groups = $course->groups->all();
-        if (Auth::user()->isEnrolled($course->id)) {
+        if (Auth::user()->isEnrolled($course->id) || Auth::user()->isAdmin()) {
             return view('lessons', compact('course', 'groups'));
         } else {
             return redirect()->route('single-course', $course_slug);
@@ -60,8 +60,8 @@ class LessonsController extends Controller
         $current_lesson = Lesson::findBySlugOrFail($lesson_slug);
         $groups = $course->groups->all();
 
+        // Separate file urls from string
         $files = [];
-
         if ($current_lesson->files) {
             $files_url = explode(',', $current_lesson->files);
             foreach($files_url as $file_url) {
@@ -70,8 +70,37 @@ class LessonsController extends Controller
             }
         }
 
-        if (Auth::user()->isEnrolled($course->id)) {
-            return view('lesson_single', compact('course', 'groups', 'current_lesson', 'files'));
+        // Next and Previous Lesson
+        $all_lessons_slugs = [];
+        foreach($groups as $group) {
+            if ($group->lessons->count()> 0) {
+                $lessons = $group->lessons;
+                foreach($lessons as $lesson) {
+                    $all_lessons_slugs[] = $lesson['slug'];
+                }
+            }
+        }
+
+        $previous_lesson_slug = null;
+        $next_lesson_slug = null;
+        for($i = 0; $i<sizeof($all_lessons_slugs); ++$i) {
+            if ($all_lessons_slugs[$i] == $lesson_slug) {
+                if (isset($all_lessons_slugs[$i-1])) {
+                    $previous_lesson_slug = $all_lessons_slugs[$i-1];
+                }
+                
+                if (isset($all_lessons_slugs[$i+1])) {
+                    $next_lesson_slug = $all_lessons_slugs[$i+1];
+                }
+            }
+        }
+
+
+        // If user is enrolled to this course then go to lessons
+        if (Auth::user()->isEnrolled($course->id) || Auth::user()->isAdmin()) {
+            // User read this lesson
+            Auth::user()->reads()->UpdateOrCreate(['lesson_id' => $current_lesson['id']]);
+            return view('lesson_single', compact('course', 'groups', 'current_lesson', 'files', 'previous_lesson_slug', 'next_lesson_slug'));
         } else {
             return redirect()->route('single-course', $course_slug);
         }

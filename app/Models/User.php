@@ -93,6 +93,12 @@ class User extends Authenticatable
         return $this->hasMany(Enrollment::class, 'user_id', 'id');
     }
 
+    /**
+     * User has many Reads
+     */
+    public function reads() {
+        return $this->hasMany(Read::class, 'user_id', 'id');
+    }
 
     /**
      * Is Admin?
@@ -117,7 +123,17 @@ class User extends Authenticatable
         return false;
     }
 
-
+    /**
+     * Is read the lesson
+     */
+    public function isRead($lesson_id) {
+        foreach($this->reads as $read) {
+            if($read->lesson_id == $lesson_id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     
