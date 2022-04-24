@@ -29,11 +29,13 @@ Route::get('/', [HomeController::class, 'index']);
 // Courses Routes
 Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{slug}', [CoursesController::class, 'show'])->name('single-course');
+Route::get('/course/{course_slug}/enroll', [CoursesController::class, 'user_enroll_course'])->middleware('auth')->name('user-enroll-course');
 
 //Lessons Route
-Route::get('courses/{course_slug}/lessons', [LessonsController::class, 'index'])->name('course-lessons');
-Route::get('courses/{course_slug}/lessons/{lesson_slug}', [LessonsController::class, 'show'])->name('lesson-single');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('courses/{course_slug}/lessons', [LessonsController::class, 'index'])->name('course-lessons');
+    Route::get('courses/{course_slug}/lessons/{lesson_slug}', [LessonsController::class, 'show'])->name('lesson-single');
+});
 
 
 /**
@@ -78,7 +80,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth',
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::middleware(['auth', 'web'])->group(function () {
+Route::middleware(['auth', 'web', 'admin'])->group(function () {
     Route::get('admin/media/images', function () {
         return view('admin.media.images');
     });

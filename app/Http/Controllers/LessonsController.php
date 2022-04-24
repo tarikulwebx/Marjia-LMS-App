@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonsController extends Controller
 {
@@ -18,7 +19,12 @@ class LessonsController extends Controller
     {
         $course = Course::findBySlugOrFail($course_slug);
         $groups = $course->groups->all();
-        return view('lessons', compact('course', 'groups'));
+        if (Auth::user()->isEnrolled($course->id)) {
+            return view('lessons', compact('course', 'groups'));
+        } else {
+            return redirect()->route('single-course', $course_slug);
+        }
+        
     }
 
     /**
@@ -63,8 +69,14 @@ class LessonsController extends Controller
                 $files[ $file_url] = end($file_name);
             }
         }
+
+        if (Auth::user()->isEnrolled($course->id)) {
+            return view('lesson_single', compact('course', 'groups', 'current_lesson', 'files'));
+        } else {
+            return redirect()->route('single-course', $course_slug);
+        }
                 
-        return view('lesson_single', compact('course', 'groups', 'current_lesson', 'files'));
+        
     }
 
     /**

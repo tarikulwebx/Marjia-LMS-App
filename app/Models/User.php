@@ -94,7 +94,7 @@ class User extends Authenticatable
     }
 
 
-        /**
+    /**
      * Is Admin?
      */
     public function isAdmin() {
@@ -105,6 +105,17 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * Is Enrolled to course
+     */
+    public function isEnrolled($course_id) {
+        foreach($this->enrollments as $enrollment) {
+            if($enrollment->course_id == $course_id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

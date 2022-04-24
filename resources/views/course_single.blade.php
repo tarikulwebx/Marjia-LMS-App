@@ -532,35 +532,17 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    @if (Auth::user() && !Auth::user()->role->name == 'administrator')
-                                        @php
-                                            $is_enrolled = 0;
-                                        @endphp
-                                        @if (Auth::user()->enrollments)
-                                            
-                                            @foreach (Auth::user()->enrollments as $enrollment)
-                                                @if ($enrollment->course_id == $course->id)
-                                                    <a href="#" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Continue</a>
-                                                    
-                                                    @php
-                                                        $is_enrolled = 1;
-                                                    @endphp
-
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                            
-                                        @endif
-
-                                        @if ($is_enrolled == 0)
-                                            <a href="#" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
+                                    @if (Auth::user() && Auth::user()->role->name == 'student')
+                                        @if (Auth::user()->isEnrolled($course->id))
+                                            <a href="{{ route('course-lessons', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-angles-right fa-sm me-2"></i>Lessons</a>
+                                            @else
+                                            <a href="{{ route('user-enroll-course', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
                                         @endif
                                     @elseif (Auth::user() && Auth::user()->role->name == 'administrator')
                                         <a href="{{ route('course-lessons', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-angles-right fa-sm me-2"></i>Lessons</a>
                                     @else
-                                        <a href="#" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
+                                        <a href="{{ route('user-enroll-course', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
                                     @endif
-                                   
                                 </div>
                             </div>
 

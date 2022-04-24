@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoursesController extends Controller
 {
@@ -76,6 +77,20 @@ class CoursesController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+    public function user_enroll_course($course_slug) {
+        $course = Course::findBySlugOrFail($course_slug);
+        $user = Auth::user();
+        $course->enrollments()->UpdateOrCreate(['user_id' => $user['id']]);
+        if($user->isEnrolled($course['id'])) {
+            session()->flash('course_action_msg', 'Hi '.$user['first_name'].', you already enrolled this course. Continue leaning..');
+        } else {
+            session()->flash('course_action_msg', 'Hi '.$user['first_name'].', you enrolled this course successfully!');
+        }
+       
+        return redirect()->route('course-lessons', $course_slug);
     }
 
     /**

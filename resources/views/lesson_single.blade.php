@@ -59,14 +59,22 @@
                 <div class="col-xl-9">
                     <div class="col-sm-12 lesson__content">
                         <div class="lesson__content__head">
-                            <h1 class="mt-2 mb-3 pb-2 border-bottom text-primary">{{ $current_lesson->title }}</h2>
+                            <h1 class="text-primary">{{ $current_lesson->title }}</h2>
+                            <div class="d-flex d-xl-block justify-content-between">
+                                <button type="button" id="showSidebarBtn" class="btn btn-sm rounded btn-light bg-primary bg-opacity-10 text-primary d-xl-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="fa-solid fa-sliders"></i> Lessons</button>
+                                <div class="navigation d-flex justify-content-between align-items-center">
+                                    <a href="#" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 me-3"><i class="fas fa-chevron-left"></i> <span>Previous</span></a>
+                                    <a href="#" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0"><span>Next</span> <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                            <hr class="my-4 bg-primary">
                         </div>
     
                         <div class="lesson__content__body">
                             {!! $current_lesson->body !!}
                         </div>
 
-                        <div class="lesson__content__files downloadable-files border-top py-4">
+                        <div class="lesson__content__files downloadable-files border-top pt-4">
                             <h4 class="mb-4"><i class="fa-solid fa-download me-2"></i> Files Included</h4>
                             @if ($files && !empty($files))
                                 @foreach ($files as $file_url => $file_name)
@@ -99,15 +107,6 @@
                             <div class="text-muted">No files included</div>
                             @endif
                         </div>
-
-                        <div class="d-flex d-xl-block justify-content-between border-top border-bottom py-4">
-                            <button type="button" id="showSidebarBtn" class="btn btn-light d-xl-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="fa-solid fa-sliders"></i> Lessons</button>
-                            <div class="navigation d-flex justify-content-between align-items-center">
-                                <a href="#" class="btn btn-primary rounded gradient-bg border-0 me-3"><i class="fas fa-chevron-left"></i> <span>Previous</span></a>
-                                <a href="#" class="btn btn-primary rounded gradient-bg border-0"><span>Next</span> <i class="fas fa-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    
                     </div>
                 </div>
             </div>
