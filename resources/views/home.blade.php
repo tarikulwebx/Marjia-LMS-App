@@ -72,12 +72,12 @@
                             <img src="{{ $course->thumbnail }}" class="card-img-top course__thumbnail" alt="Thumb">
                             <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <a href="course-category.html" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category ? $course->category->name : ' ' }}</a>
+                                    <a href="{{ route('category.courses', $course->category->slug) }}" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category ? $course->category->name : ' ' }}</a>
                                     <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://www.facebook.com/sharer/sharer.php?u={{ route('single-course', $course->slug) }}' class='social facebook' target='_blank'  rel='noopener'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com/intent/tweet?url={{ route('single-course', $course->slug) }}' class='social twitter' target='_blank'  rel='noopener'><i class='fa-brands fa-twitter'></i></a><a href='{{ route('single-course', $course->slug) }}' data-href='{{ route('single-course', $course->slug) }}' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
                                         <i class="fa fa-share-alt" aria-hidden="true"></i>
                                     </button>
                                 </div>
-                                <h3 class="card-title course__title"><a href="course-single.html">{{ $course->name }}</a></h3>
+                                <h3 class="card-title course__title"><a href="{{ route('single-course', $course->slug) }}">{{ $course->name }}</a></h3>
                                 <div class="course__rating mb-2 d-flex align-items-center">
                                     @if ($course->averageRating() == floor($course->averageRating()))
                                         @for ($i=0; $i<$course->averageRating(); $i++)
@@ -158,12 +158,12 @@
                             <img src="{{ $course->thumbnail }}" class="card-img-top course__thumbnail" alt="Thumb">
                             <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <a href="course-category.html" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category ? $course->category->name : ' ' }}</a>
+                                    <a href="{{ route('category.courses', $course->category->slug) }}" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category ? $course->category->name : ' ' }}</a>
                                     <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://www.facebook.com/sharer/sharer.php?u={{ route('single-course', $course->slug) }}' class='social facebook' target='_blank'  rel='noopener'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com/intent/tweet?url={{ route('single-course', $course->slug) }}' class='social twitter' target='_blank'  rel='noopener'><i class='fa-brands fa-twitter'></i></a><a href='{{ route('single-course', $course->slug) }}' data-href='{{ route('single-course', $course->slug) }}' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
                                         <i class="fa fa-share-alt" aria-hidden="true"></i>
                                     </button>
                                 </div>
-                                <h3 class="card-title course__title"><a href="course-single.html">{{ $course->name }}</a></h3>
+                                <h3 class="card-title course__title"><a href="{{ route('single-course', $course->slug) }}">{{ $course->name }}</a></h3>
                                 <div class="course__rating mb-2 d-flex align-items-center">
                                     @if ($course->averageRating() == floor($course->averageRating()))
                                         @for ($i=0; $i<$course->averageRating(); $i++)
@@ -295,7 +295,7 @@
         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fill-opacity="1" d="M0,192L48,181.3C96,171,192,149,288,170.7C384,192,480,256,576,266.7C672,277,768,235,864,202.7C960,171,1056,149,1152,165.3C1248,181,1344,235,1392,261.3L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg> -->
         <div class="container text-center">
             <p class="lead fw-bold course-explore__text">{{ $latest_public_courses->count(); }}+ more courses you can explore</p>
-            <a href="courses.html" class="btn course-explore__btn">Explore All Courses</a>
+            <a href="{{ route('courses') }}" class="btn course-explore__btn">Explore All Courses</a>
         </div>
         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="course-category.htmlffffff" fill-opacity="1" d="M0,192L48,181.3C96,171,192,149,288,170.7C384,192,480,256,576,266.7C672,277,768,235,864,202.7C960,171,1056,149,1152,165.3C1248,181,1344,235,1392,261.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg> -->
     </section>
@@ -323,7 +323,7 @@
                                     @else
                                     {{ asset('images/placeholder_category.jpg') }}
                                 @endif" class="card-img" alt="...">
-                                <a href="course-category.html" class="category__overlay card-img-overlay">
+                                <a href="{{ route('category.courses', $category->slug) }}" class="category__overlay card-img-overlay">
                                     <div class="d-flex flex-row align-items-end h-100">
                                         <h5 class="category__title card-title">{{ $category->name }}</h5>
                                     </div>

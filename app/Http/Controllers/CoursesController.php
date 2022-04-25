@@ -21,6 +21,13 @@ class CoursesController extends Controller
         return view('courses', compact('courses', 'categories'));
     }
 
+    public function courses_by_category($category_slug) {
+        $category = Category::findBySlugOrFail($category_slug);
+        $courses = $category->courses()->where('visibility', 'public')->paginate(12);
+        $categories = Category::all();
+        return view('category', compact('courses', 'categories', 'category'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -55,7 +62,9 @@ class CoursesController extends Controller
         $reviews = $course->reviews;
         $reviews_with_pagination = $course->reviews()->paginate(10);
 
-        return view('course_single', compact('course', 'categories', 'reviews', 'reviews_with_pagination'));
+        $popular_public_courses = Course::withCount('reviews')->orderBy('reviews_count', 'desc')->take(4)->get();
+
+        return view('course_single', compact('course', 'categories', 'reviews', 'reviews_with_pagination', 'popular_public_courses'));
     }
 
     /**

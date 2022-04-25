@@ -16,13 +16,15 @@
         <!-- PAGE HEAD -->
         <div class="page-head text-white">
             <div class="container">
+                <h5 class="text-white fw-500 mb-1">Courses by Category: </h5>
                 <div class="d-flex align-items-center justify-content-between">
-                    <h1 class="page-head__title">All Courses</h1>
+                    
+                    <h1 class="page-head__title">{{ $category->name }}</h1>
                     <div>
                         
                     </div>
                 </div>
-                <p class="page-head__page-description lead m-0">Check out all live courses available for you. Yoy can enroll any course that available bellow.</p>
+                <p class="page-head__page-description lead m-0">Check out all available courses under this category. Yoy can enroll any course that available bellow.</p>
             </div>
             <!-- Filter -->
             <div class="course-filter mt-4 pt-2">
@@ -31,7 +33,7 @@
                         <div class="col-sm-6">
                             <div class="dropdown category-filter-dropdown">
                                 <a class="btn btn-light text-gray-700 dropdown-toggle fw-500" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid text-primary fa-rectangle-list me-2"></i>Courses by Category
+                                    <i class="fa-solid text-primary fa-rectangle-list me-2"></i>Choose Category
                                 </a>
                               
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">

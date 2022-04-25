@@ -33,6 +33,9 @@ Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{slug}', [CoursesController::class, 'show'])->name('single-course');
 Route::get('/course/{course_slug}/enroll', [CoursesController::class, 'user_enroll_course'])->middleware('auth')->name('user-enroll-course');
 
+Route::get('/courses/categories/{category_slug}', [CoursesController::class, 'courses_by_category'])->name('category.courses');
+
+
 //Lessons Route
 Route::middleware(['auth'])->group(function () {
     Route::get('courses/{course_slug}/lessons', [LessonsController::class, 'index'])->name('course-lessons');
