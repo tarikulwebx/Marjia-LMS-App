@@ -203,13 +203,69 @@
                                             <div class="reviews__raging-info mb-5">
                                                 <div class="row">
                                                     <div class="col-md-4 mb-3 mb-md-0 text-center">
-                                                        <h2 class="mb-0 text-dark">4.5</h2>
+                                                        <h2 class="mb-0 text-dark">
+                                                            @php
+                                                                $total_rating = 0;
+                                                                $average_rating = 0;
+
+                                                                $total_5_rating = 0;
+                                                                $total_4_rating = 0;
+                                                                $total_3_rating = 0;
+                                                                $total_2_rating = 0;
+                                                                $total_1_rating = 0;
+                                                            @endphp
+
+                                                            @if ($reviews)
+                                                                @foreach ($reviews as $review)
+                                                                    @php
+                                                                        $total_rating = $total_rating + $review->rating;
+
+                                                                        if ($review->rating == 5) {
+                                                                            $total_5_rating += 1;
+                                                                        }
+                                                                        if ($review->rating == 4) {
+                                                                            $total_4_rating += 1;
+                                                                        }
+                                                                        if ($review->rating == 3) {
+                                                                            $total_3_rating += 1;
+                                                                        }
+                                                                        if ($review->rating == 2) {
+                                                                            $total_2_rating += 1;
+                                                                        }
+                                                                        if ($review->rating == 1) {
+                                                                            $total_1_rating += 1;
+                                                                        }
+                                                                    @endphp
+                                                                @endforeach
+                                                                
+                                                                @php
+                                                                    if($reviews->count()> 0) {
+                                                                        $average_rating = $total_rating/$reviews->count();
+                                                                    }
+                                                                @endphp
+                                                                {{ round($average_rating, 1, PHP_ROUND_HALF_UP)  }}
+                                                            @endif
+                                                        </h2>
                                                         <ul class="list-inline text-warning mb-2">
-                                                            <li class="list-inline-item me-0"><i class="fas fa-star"></i></li>
-                                                            <li class="list-inline-item me-0"><i class="fas fa-star"></i></li>
-                                                            <li class="list-inline-item me-0"><i class="fas fa-star"></i></li>
-                                                            <li class="list-inline-item me-0"><i class="fas fa-star"></i></li>
-                                                            <li class="list-inline-item me-0"><i class="fa-solid fa-star-half-stroke"></i></li>
+                                                            @if (floor($average_rating) == $average_rating)
+                                                                @for ($i=0; $i<floor($average_rating); $i++ )
+                                                                    <li class="list-inline-item me-0"><i class="fas fa-star"></i></li>
+                                                                @endfor
+                                                                @for ($i=0; $i<5-floor($average_rating); $i++ )
+                                                                    <li class="list-inline-item me-0"><i class="fa-regular fa-star"></i></li>
+                                                                @endfor
+
+                                                                @else
+                                                                    @for ($i=0; $i<floor($average_rating); $i++ )
+                                                                        <li class="list-inline-item me-0"><i class="fas fa-star"></i></li>
+                                                                    @endfor
+                                                                    <li class="list-inline-item me-0"><i class="fa-solid fa-star-half-stroke"></i></li>
+                                                                    
+                                                                    @for ($i=0; $i<4-floor($average_rating); $i++ )
+                                                                        <li class="list-inline-item me-0"><i class="fa-regular fa-star"></i></li>
+                                                                    @endfor
+                                                            @endif
+                                                            
                                                         </ul>
                                                         <p class="mb-0">(Based on average review)</p>
                                                     </div>
@@ -217,7 +273,7 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-6 col-sm-8">
                                                                 <div class="progress w-100" style="height: 5px;">
-                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $reviews->count() > 0 ?  ($total_5_rating/$reviews->count())*100 : 0 }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6 col-sm-4">
@@ -233,7 +289,7 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-6 col-sm-8">
                                                                 <div class="progress" style="height: 5px;">
-                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $reviews->count() > 0 ?  ($total_4_rating/$reviews->count())*100 : 0 }}%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6 col-sm-4">
@@ -249,7 +305,7 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-6 col-sm-8">
                                                                 <div class="progress" style="height: 5px;">
-                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $reviews->count() > 0 ?  ($total_3_rating/$reviews->count())*100 : 0 }}%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6 col-sm-4">
@@ -265,7 +321,7 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-6 col-sm-8">
                                                                 <div class="progress" style="height: 5px;">
-                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $reviews->count() > 0 ?  ($total_2_rating/$reviews->count())*100 : 0 }}%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6 col-sm-4">
@@ -281,7 +337,7 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-6 col-sm-8">
                                                                 <div class="progress" style="height: 5px;">
-                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $reviews->count() > 0 ? ($total_1_rating/$reviews->count())*100 : 0 }}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6 col-sm-4">
@@ -299,81 +355,66 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Review Item -->
-                                            <div class="reviews__review d-md-flex">
-                                                <img src="images/avatar-female.png" class="reviews__review__thumb rounded-circle mb-2 mb-md-0" width="100" alt="thumb">
-                                                <div>
-                                                    <h5 class="reviews__review__name">John Mann</h5>
-                                                    <ul class="reviews__review__rating list-inline text-warning mt-0">
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fa-regular fa-star"></i></i></li>
-                                                    </ul>
-                                                    <p class="reviews__review__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis cupiditate ad animi? Rerum similique nostrum illo? Dicta, dolore aut porro cumque aperiam error animi eaque quibusdam voluptatem libero consequuntur facere totam id veniam praesentium fugiat aliquam adipisci nemo recusandae aliquid.</p>
-                                                    <span class="reviews__review__date">- 3 days ago</span>
-                                                </div>
-                                            </div>
 
-                                            <!-- Review Item -->
-                                            <div class="reviews__review d-md-flex">
-                                                <img src="images/avatar.png" class="reviews__review__thumb rounded-circle  mb-2 mb-md-0" width="100" alt="thumb">
-                                                <div>
-                                                    <h5 class="reviews__review__name">Federico Lewis</h5>
-                                                    <ul class="reviews__review__rating list-inline text-warning mt-0">
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fa-regular fa-star"></i></i></li>
-                                                    </ul>
-                                                    <p class="reviews__review__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis cupiditate ad animi? Rerum similique nostrum illo? Dicta, dolore aut porro cumque aperiam error animi eaque quibusdam voluptatem libero consequuntur facere totam id veniam praesentium fugiat aliquam adipisci nemo recusandae aliquid.</p>
-                                                    <span class="reviews__review__date">- 3 days ago</span>
-                                                </div>
-                                            </div>
-                                            <!-- Review Item -->
-                                            <div class="reviews__review d-md-flex">
-                                                <img src="images/avatar-female.png" class="reviews__review__thumb rounded-circle  mb-2 mb-md-0" width="100" alt="thumb">
-                                                <div>
-                                                    <h5 class="reviews__review__name">Victor Miller</h5>
-                                                    <ul class="reviews__review__rating list-inline text-warning mt-0">
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
-                                                        <li class="list-inline-item small me-0"><i class="fa-regular fa-star"></i></i></li>
-                                                    </ul>
-                                                    <p class="reviews__review__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis cupiditate ad animi? Rerum similique nostrum illo? Dicta, dolore aut porro cumque aperiam error animi eaque quibusdam voluptatem libero consequuntur facere totam id veniam praesentium fugiat aliquam adipisci nemo recusandae aliquid.</p>
-                                                    <span class="reviews__review__date">- 3 days ago</span>
-                                                </div>
-                                            </div>
+                                            @if ($reviews_with_pagination)
+                                                @foreach ($reviews_with_pagination as $review)
+                                                    <!-- Review Item -->
+                                                    <div class="reviews__review d-md-flex">
+                                                        <img src="{{ $review->user->photo ? $review->user->photo : asset('images/profile-pic.jpg') }}" class="reviews__review__thumb rounded-circle mb-2 mb-md-0" width="100" alt="...">
+                                                        <div>
+                                                            <h5 class="reviews__review__name">{{ $review->user->first_name }} {{ $review->user->last_name }}</h5>
+                                                            <ul class="reviews__review__rating list-inline text-warning mt-0">
+                                                                @for ($i=0; $i<$review->rating; $i++)
+                                                                    <li class="list-inline-item small me-0"><i class="fas fa-star"></i></li>
+                                                                @endfor
+                                                                @for ($j=0; $j < 5 - $review->rating; $j++)
+                                                                    <li class="list-inline-item small me-0"><i class="fa-regular fa-star"></i></i></li>
+                                                                @endfor
+                                                            </ul>
+                                                            <p class="reviews__review__text">{{ $review->body }}</p>
+                                                            <span class="reviews__review__date">- {{ $review->created_at->diffForHumans() }}</span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
 
+                                            <!-- Pagination -->
+                                            <div class="mt-0 mb-3">
+                                                {{ $reviews_with_pagination->links() }}
+                                            </div>
 
                                             <!-- Review Form -->
                                             <div class="reviews__review-form">
-                                                <h4 class="mb-4">Leave a Review</h4>
+                                                <h4 class="mb-1">Leave a Review</h4>
                                                 <form action="#">
                                                     <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <input class="form-control" type="text" placeholder="Name" >
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <input class="form-control" type="text" placeholder="Email" >
+                                                        
+                                                        <div class="col-12">
+                                                            @if (Auth::user())
+                                                                <p class="m-0">Hi <a href="">{{ Auth::user()->first_name }}</a>, rate and leave a review for this course.</p>
+                                                                @else
+                                                                <p class="m-0">Hi there, rate and leave a review for this course. <a href="{{ route('login') }}">Login</a> required</p>
+                                                            @endif
+                                                            <h1 id="userId" class="d-none">@if(Auth::user()){{ Auth::user()->id }}@endif</h1>
+                                                            <h1 id="courseId" class="d-none">{{ $course->id }}</h1>
+                                                            <div id="loginRequiredError" class="alert alert-danger py-2 px-3 m-0 d-none"></div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-control">
                                                                 <div class="d-flex">
                                                                     <div id="reviewRating"></div>
                                                                     <input id="reviewRatingInput" type="hidden" name="">
+                                                                    
                                                                 </div>
                                                             </div>
+                                                            <small id="reviewRatingInputError" class="text-danger d-none"></small>
                                                         </div>
                                                         <div class="col-12">
-                                                            <textarea class="form-control" name="review_text" rows="4" placeholder="Your review"></textarea>
+                                                            <textarea id="reviewTextInput" class="form-control" name="review_text" rows="4" placeholder="Your review"></textarea>
+                                                            <small id="reviewTextInputError" class="text-danger d-none"></small>
                                                         </div>
-                                                        <div class="col-12">
-                                                            <button class="btn btn-primary" type="submit">Post Review</button>
+                                                        <div class="col-12 text-end">
+                                                            <button id="reviewSubmitBtn" class="btn btn-primary" type="button">Post Review</button>
                                                         </div>
                                                         
                                                     </div>
@@ -687,6 +728,10 @@
     <script src="https://platform.twitter.com/widgets.js"></script>
     <script type="text/javascript">
         jQuery(function(){
+
+            /*
+            *  Active tab save to localStorage
+            */
             $('button[data-bs-toggle="pill"]').on('click', function() {
                 let activeTab = $(this).attr('aria-controls');
                 localStorage.setItem('activeTab', activeTab);
@@ -700,6 +745,59 @@
                 $('#pills-overview-tab').addClass('active');
                 $('#pills-overview').addClass('show active');
             }
+
+
+
+            /*
+            *   Reviews CRUD
+            */
+            if (localStorage.getItem('responseStatus')) {
+                toastr.success('Your review submitted successfully', 'Success');
+                localStorage.removeItem('responseStatus');
+            }
+
+            $('#reviewSubmitBtn').on('click', function(){
+                let userId = $('#userId').html();
+                let courseId = $('#courseId').html();
+                let rating = $('#reviewRatingInput').val().trim();
+                let review = $('#reviewTextInput').val().trim();
+
+                $('#loginRequiredError').addClass('d-none');
+                $('#reviewRatingInputError').addClass('d-none');
+                $('#reviewTextInputError').addClass('d-none');
+
+                if (userId.length == 0) {
+                    $('#loginRequiredError').removeClass('d-none').html('Login required to post a review.');
+                } else if (rating.length == 0) {
+                    $('#reviewRatingInputError').removeClass('d-none').html('Rate field is empty');
+                } else if (review.length == 0) {
+                    $('#reviewTextInputError').removeClass('d-none').html('Review field is empty');
+                } else {
+                    axios.post('/courses/'+courseId+'/reviews', {
+                        rating: rating,
+                        review: review,
+                    })
+                    .then(res => {
+                        if (res.status == 200) {
+                            if (res.data == "rating-exists") {
+                                toastr.warning('You already submitted a review.', 'Review Exists!');
+                            }
+                            else if (res.data == 1) {
+                                localStorage.setItem("responseStatus", 'success');
+                                window.location.reload();
+                            } else {
+                                toastr.error('Review submission failed. Try again...', 'Failed');
+                            }
+                        } else {
+                            toastr.error('Review submission failed. Try again...', 'Failed');
+                        }
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.error(err); 
+                    })
+                }
+            });
         });
     </script>
 @endsection

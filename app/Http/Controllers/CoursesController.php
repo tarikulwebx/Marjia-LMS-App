@@ -52,8 +52,10 @@ class CoursesController extends Controller
     {
         $course = Course::findBySlugOrFail($slug);
         $categories = Category::all();
+        $reviews = $course->reviews;
+        $reviews_with_pagination = $course->reviews()->paginate(10);
 
-        return view('course_single', compact('course', 'categories'));
+        return view('course_single', compact('course', 'categories', 'reviews', 'reviews_with_pagination'));
     }
 
     /**

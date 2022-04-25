@@ -53,6 +53,14 @@ class Course extends Model
         return $this->hasMany(Enrollment::class, 'course_id', 'id');
     }
 
+    /**
+     * Course has many Reviews
+     */
+    public function reviews() {
+        return $this->hasMany(Review::class, 'course_id', 'id');
+    }
+
+
 
     /**
      * Course hasMany Lesson Groups

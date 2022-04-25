@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonsController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReviewsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,10 @@ Route::get('/course/{course_slug}/enroll', [CoursesController::class, 'user_enro
 Route::middleware(['auth'])->group(function () {
     Route::get('courses/{course_slug}/lessons', [LessonsController::class, 'index'])->name('course-lessons');
     Route::get('courses/{course_slug}/lessons/{lesson_slug}', [LessonsController::class, 'show'])->name('lesson-single');
+
+    // Review Routes
+    Route::get('courses/{course_id}/reviews', [ReviewsController::class, 'index'])->name('course.reviews');
+    Route::post('courses/{course_id}/reviews', [ReviewsController::class, 'store'])->name('course.reviews.store');
 });
 
 

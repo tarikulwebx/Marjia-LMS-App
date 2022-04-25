@@ -22,6 +22,7 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/assets/css/prism.css',
         'resources/assets/css/bootstrap-multiselect.min.css',
         'resources/assets/css/style.css',
+        'resources/assets/css/toastr.min.css',
     ], 'public/css/libs.css')
     .scripts([
         'resources/assets/js/bootstrap.bundle.min.js',
@@ -33,6 +34,8 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/assets/js/prism.js',
         'resources/assets/js/rating.js',
         'resources/assets/js/bootstrap-multiselect.js',
+        'resources/assets/js/axios.min.js',
+        'resources/assets/js/toastr.min.js',
         'resources/assets/js/main.js',
     ], 'public/js/libs.js')
     .styles([

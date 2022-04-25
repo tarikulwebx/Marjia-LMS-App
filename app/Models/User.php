@@ -101,6 +101,17 @@ class User extends Authenticatable
     }
 
     /**
+     * User has many Reviews
+     */
+    public function reviews() {
+        return $this->hasMany(Review::class, 'user_id', 'id');
+    }
+
+    
+
+
+
+    /**
      * Is Admin?
      */
     public function isAdmin() {
@@ -122,6 +133,8 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    
 
     /**
      * Is read the lesson
