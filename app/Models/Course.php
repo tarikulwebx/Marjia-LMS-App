@@ -78,6 +78,25 @@ class Course extends Model
     }
 
 
+    /**
+     * Average Rating
+     */
+    public function averageRating() {
+        $total_rating = 0;
+        $average_rating = 0;
+        foreach($this->reviews as $review) {
+            $total_rating += $review['rating'];
+        }
+
+        if ($this->reviews->count() > 0) {
+            $average_rating = $total_rating/$this->reviews->count();
+            $average_rating = round($average_rating, 1, PHP_ROUND_HALF_UP);
+        }
+        
+        return $average_rating;
+    }
+
+
 
     /**
      * Return the sluggable configuration array for this model.

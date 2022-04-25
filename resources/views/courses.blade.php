@@ -111,7 +111,7 @@
                                     <small><i class="fa-solid fa-star"></i></small>
                                     <small><i class="fa-solid fa-star"></i></small>
                                     <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                                    <span>4.5/5</span>
+                                    <span>{{ $course->averageRating() }}/5</span>
                                 </div>
                                 <p class="card-text course__description">{{ Str::limit($course->short_description, 150, '...') }}</p>
                                 <div class="card-footer bg-transparent mt-auto px-0">

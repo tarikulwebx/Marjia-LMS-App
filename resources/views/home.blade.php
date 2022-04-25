@@ -64,303 +64,62 @@
         <!-- Courses -->
         <div class="container">
             <div class="courses">
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_algorithm.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Algorithm</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Learn Algorithm A to Z</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    72 lessons
-                                </span>
+
+                @if ($popular_public_courses)
+                    @foreach ($popular_public_courses as $course)
+                        <!-- Course Item -->
+                        <div class="card course shadow border-0 h-100">
+                            <img src="{{ $course->thumbnail }}" class="card-img-top course__thumbnail" alt="Thumb">
+                            <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <a href="course-category.html" class="course__category badge text-success bg-success bg-opacity-10 text-decoration-none">{{ $course->category ? $course->category->name : ' ' }}</a>
+                                    <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://www.facebook.com/sharer/sharer.php?u={{ route('single-course', $course->slug) }}' class='social facebook' target='_blank'  rel='noopener'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com/intent/tweet?url={{ route('single-course', $course->slug) }}' class='social twitter' target='_blank'  rel='noopener'><i class='fa-brands fa-twitter'></i></a><a href='{{ route('single-course', $course->slug) }}' data-href='{{ route('single-course', $course->slug) }}' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
+                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <h3 class="card-title course__title"><a href="course-single.html">{{ $course->name }}</a></h3>
+                                <div class="course__rating mb-2 d-flex align-items-center">
+                                    @if ($course->averageRating() == floor($course->averageRating()))
+                                        @for ($i=0; $i<$course->averageRating(); $i++)
+                                            <small><i class="fa-solid fa-star"></i></small>
+                                        @endfor
+
+                                        @for ($i=0; $i<5-$course->averageRating(); $i++)
+                                            <small><i class="fa-regular fa-star"></i></small>
+                                        @endfor
+
+                                        
+
+                                        @else
+                                            @for ($i=0; $i<floor($course->averageRating()); $i++)
+                                                <small><i class="fa-solid fa-star"></i></small>
+                                            @endfor
+                                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
+                                            @for ($i=0; $i<4-floor($course->averageRating()); $i++)
+                                                <small><i class="fa-solid fa-star"></i></small>
+                                            @endfor
+                                    @endif
+                                    
+                                    <span>{{ $course->averageRating() }}/5</span>
+                                </div>
+                                <p class="card-text course__description">{{ Str::limit($course->short_description, 150, '...') }}</p>
+                                <div class="card-footer bg-transparent mt-auto px-0">
+                                    <div class="course__meta align-items-center d-flex justify-content-between ">
+                                        <span class="h6 course__meta__readtime m-0">
+                                            <i class="fa-solid fa-users"></i>
+                                            {{ $course->enrollments->count() }} enrolled
+                                        </span>
+                                        <span class="h6 course__meta__lessons m-0">
+                                            <i class="fa-brands fa-readme"></i>
+                                            {{ $course->lessons->count() }} lessons
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_bootstrap.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Web Front-end</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Learn Bootstrap 5</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_c_programming.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Programming</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">C Programming Basic</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_css.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Web front-end</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Advanced CSS</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_html.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Web Front-end</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Learn HTML</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_java_programming.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Programming</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Learn Java Programming</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_javascript.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Web Front-end</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Learn Basic Javascript</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Course Item -->
-                <div class="card course shadow border-0 h-100">
-                    <img src="images/course-thumbs/ct_jquery.jpg" class="card-img-top course__thumbnail" alt="Thumb">
-                    <div class="card-body pb-0 h-100 d-flex flex-column align-content-between">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="course-category.html" class="course__category badge text-secondary bg-secondary bg-opacity-10 text-decoration-none">Web Front-end</a> 
-                            <button type="button" class="course__share btn text-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-html="true" data-bs-content="<a href='https://facebookcom' class='social facebook'><i class='fa-brands fa-facebook-f'></i></a><a href='https://twitter.com' class='social twitter'><i class='fa-brands fa-twitter'></i></a><a href='https://google.com' data-href='https://google.com' class='copyClipBoardBtn social copy'><i class='fa-solid fa-copy'></i></a>">
-                                <i class="fa fa-share-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <h3 class="card-title course__title">
-                            <a href="course-single.html">Learn JQuery Framework</a>
-                        </h3>
-                        <div class="course__rating mb-2 d-flex align-items-center">
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star"></i></small>
-                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                            <span>4.5/5</span>
-                        </div>
-                        <p class="card-text course__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quos illo voluptate aperiam dolorem molestiae maiores repudiandae non, iusto quibusdam!</p>
-                        <div class="card-footer bg-transparent mt-auto px-0">
-                            <div class="course__meta align-items-center d-flex justify-content-between ">
-                                <span class="h6 course__meta__readtime m-0">
-                                    <i class="fa-regular fa-clock text-danger"></i>
-                                    17h 30m
-                                </span>
-                                <span class="h6 course__meta__lessons m-0">
-                                    <i class="fa-brands fa-readme"></i>
-                                    74 lessons
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </section>
@@ -406,12 +165,28 @@
                                 </div>
                                 <h3 class="card-title course__title"><a href="course-single.html">{{ $course->name }}</a></h3>
                                 <div class="course__rating mb-2 d-flex align-items-center">
-                                    <small><i class="fa-solid fa-star"></i></small>
-                                    <small><i class="fa-solid fa-star"></i></small>
-                                    <small><i class="fa-solid fa-star"></i></small>
-                                    <small><i class="fa-solid fa-star"></i></small>
-                                    <small><i class="fa-solid fa-star-half-stroke"></i></small>
-                                    <span>4.5/5</span>
+                                    @if ($course->averageRating() == floor($course->averageRating()))
+                                        @for ($i=0; $i<$course->averageRating(); $i++)
+                                            <small><i class="fa-solid fa-star"></i></small>
+                                        @endfor
+
+                                        @for ($i=0; $i<5-$course->averageRating(); $i++)
+                                            <small><i class="fa-regular fa-star"></i></small>
+                                        @endfor
+
+                                        
+
+                                        @else
+                                            @for ($i=0; $i<floor($course->averageRating()); $i++)
+                                                <small><i class="fa-solid fa-star"></i></small>
+                                            @endfor
+                                            <small><i class="fa-solid fa-star-half-stroke"></i></small>
+                                            @for ($i=0; $i<4-floor($course->averageRating()); $i++)
+                                                <small><i class="fa-solid fa-star"></i></small>
+                                            @endfor
+                                    @endif
+                                    
+                                    <span>{{ $course->averageRating() }}/5</span>
                                 </div>
                                 <p class="card-text course__description">{{ Str::limit($course->short_description, 150, '...') }}</p>
                                 <div class="card-footer bg-transparent mt-auto px-0">
@@ -422,7 +197,7 @@
                                         </span>
                                         <span class="h6 course__meta__lessons m-0">
                                             <i class="fa-brands fa-readme"></i>
-                                            74 lessons
+                                            {{ $course->lessons->count() }} lessons
                                         </span>
                                     </div>
                                 </div>
@@ -455,11 +230,11 @@
                     <div>
                         <div class="d-flex flex-nowrap align-items-center">
                             <div class="owl-dots">
-                                <button role="button" class="bg-transparent p-0 border-0 text-muted owl-dot active"><span><i class="fa-solid fa-circle"></i></span></button>
-                                <button role="button" class="bg-transparent p-0 border-0 text-muted owl-dot"><span><i class="fa-solid fa-circle"></i></span></button>
-                                <button role="button" class="bg-transparent p-0 border-0 text-muted owl-dot"><span><i class="fa-solid fa-circle"></i></span></button>
-                                <button role="button" class="bg-transparent p-0 border-0 text-muted owl-dot"><span><i class="fa-solid fa-circle"></i></span></button>
-                                <button role="button" class="bg-transparent p-0 border-0 text-muted owl-dot"><span><i class="fa-solid fa-circle"></i></span></button>
+                                @if ($reviews)
+                                    @foreach ($reviews as $review)
+                                        <button role="button" class="bg-transparent p-0 border-0 text-muted owl-dot @if($loop->first) active @endif"><span><i class="fa-solid fa-circle"></i></span></button>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -470,152 +245,43 @@
         <div class="container">
 
             <div class="reviews owl-carousel owl-theme">
-                <div>
-                    <!-- Review Item -->
-                    <div class="review card active">
-                        <div class="review__body card-body">
-                            <p class="review__text card-text lead">
-                                <i class="fa-solid fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aut ratione alias deserunt atque vel commodi autem nulla recusandae non rerum, nihil quasi error aliquam minus officia itaque dicta tenetur.
-                                <i class="fa-solid fa-quote-right"></i>
-                            </p>
-                            <div class="review__ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <span>3.5/5</span>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <img src="images/user-thumbs/pp_khalid.jpg" class="review__thumb img-fluid rounded-circle" alt="Avatar">
-                                <div>
-                                    <h4 class="review__title card-title">AB Khalid</h4>
-                                    <h5 class="review__subtitle card-subtitle text-muted">Student</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <!-- Review Item -->
-                    <div class="review card">
-                        <div class="review__body card-body">
-                            <p class="review__text card-text lead">
-                                <i class="fa-solid fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aut ratione alias deserunt atque vel commodi autem nulla recusandae non rerum, nihil quasi error aliquam minus officia itaque dicta tenetur.
-                                <i class="fa-solid fa-quote-right"></i>
-                            </p>
-                            <div class="review__ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <span>3.5/5</span>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <img src="images/user-thumbs/pp_tarikul.jpg" class="review__thumb img-fluid rounded-circle" alt="Avatar">
-                                <div>
-                                    <h4 class="review__title card-title">Tarikul Islam</h4>
-                                    <h5 class="review__subtitle card-subtitle text-muted">Student</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <!-- Review Item -->
-                    <div class="review card">
-                        <div class="review__body card-body">
-                            <p class="review__text card-text lead">
-                                <i class="fa-solid fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aut ratione alias deserunt atque vel commodi autem nulla recusandae non rerum, nihil quasi error aliquam minus officia itaque dicta tenetur.
-                                <i class="fa-solid fa-quote-right"></i>
-                            </p>
-                            <div class="review__ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <span>3.5/5</span>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <img src="images/user-thumbs/pp_samit.jpg" class="review__thumb img-fluid rounded-circle" alt="Avatar">
-                                <div>
-                                    <h4 class="review__title card-title">Saddam Hossen</h4>
-                                    <h5 class="review__subtitle card-subtitle text-muted">Student</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <!-- Review Item -->
-                    <div class="review card">
-                        <div class="review__body card-body">
-                            <p class="review__text card-text lead">
-                                <i class="fa-solid fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aut ratione alias deserunt atque vel commodi autem nulla recusandae non rerum, nihil quasi error aliquam minus officia itaque dicta tenetur.
-                                <i class="fa-solid fa-quote-right"></i>
-                            </p>
-                            <div class="review__ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <span>3.5/5</span>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <img src="images/user-thumbs/pp_ritu.jpg" class="review__thumb img-fluid rounded-circle" alt="Avatar">
-                                <div>
-                                    <h4 class="review__title card-title">Sabnaj Meherin</h4>
-                                    <h5 class="review__subtitle card-subtitle text-muted">Student</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <!-- Review Item -->
-                    <div class="review card">
-                        <div class="review__body card-body">
-                            <p class="review__text card-text lead">
-                                <i class="fa-solid fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aut ratione alias deserunt atque vel commodi autem nulla recusandae non rerum, nihil quasi error aliquam minus officia itaque dicta tenetur.
-                                <i class="fa-solid fa-quote-right"></i>
-                            </p>
-                            <div class="review__ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <span>3.5/5</span>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <img src="images/user-thumbs/pp_rumu.jpg" class="review__thumb img-fluid rounded-circle" alt="Avatar">
-                                <div>
-                                    <h4 class="review__title card-title">Selina Aktar</h4>
-                                    <h5 class="review__subtitle card-subtitle text-muted">Student</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
+                    @if ($reviews)
+                        @foreach ($reviews as $review)
+                        <div>
+                            <!-- Review Item -->
+                            <div class="review card @if($loop->first) active @endif">
+                                <div class="review__body card-body">
+                                    <p class="review__text card-text lead">
+                                        <i class="fa-solid fa-quote-left"></i>
+                                        {{ $review->body }}
+                                        <i class="fa-solid fa-quote-right"></i>
+                                    </p>
+                                    <div class="review__ratings">
+                                        @for ($i=0; $i<$review->rating; $i++)
+                                            <i class="fa-solid fa-star"></i>
+                                        @endfor
+                                        @for ($i=0; $i<5-$review->rating; $i++)
+                                            <i class="fa-regular fa-star"></i>
+                                        @endfor
+                                        <span>{{ $review->rating }}/5</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ $review->user->photo ? $review->user->photo : asset('images/profile-pic.jpg') }}" class="review__thumb img-fluid rounded-circle" alt="Avatar">
+                                        <div>
+                                            <h4 class="review__title card-title">{{ $review->user->first_name }} {{ $review->user->last_name }}</h4>
+                                            <h6 class="review__subtitle card-subtitle text-muted text-capitalize">{{ $review->user->role->name }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                    
                 
+
             </div>
 
             

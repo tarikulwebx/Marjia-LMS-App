@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,8 +17,10 @@ class HomeController extends Controller
     public function index()
     {
         $latest_public_courses = Course::where('visibility', 'public')->latest()->take(8)->get();
+        $popular_public_courses = Course::withCount('reviews')->orderBy('reviews_count', 'desc')->take(12)->get();
         $categories = Category::all();
-        return view('home', compact('latest_public_courses', 'categories'));
+        $reviews = Review::inRandomOrder()->take(5)->get();
+        return view('home', compact('latest_public_courses', 'popular_public_courses', 'categories', 'reviews'));
     }
 
     /**
