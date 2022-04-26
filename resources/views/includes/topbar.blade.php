@@ -144,8 +144,8 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        @if (Auth::user())
-                            {{-- <li><a class="dropdown-item" href="{{ route('instructor.show', Auth::user()->slug) }}">My Profile <i class="fa-solid fa-user"></i></a></li> --}}
+                        @if (Auth::user()->isStudent())
+                            <li><a class="dropdown-item" href="{{ route('profile.show', Auth::user()->slug) }}">My Profile <i class="fa-solid fa-user"></i></a></li>
                         @endif
                         
                         @if (Auth::user()->isAdmin())

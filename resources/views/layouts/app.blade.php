@@ -31,7 +31,6 @@
 
 
 
-    {{-- <script type="text/javascript" src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('js/libs.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     @yield('scripts')

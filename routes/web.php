@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonsController;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewsController;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,13 @@ Route::middleware(['auth'])->group(function () {
     // Review Routes
     Route::get('courses/{course_id}/reviews', [ReviewsController::class, 'index'])->name('course.reviews');
     Route::post('courses/{course_id}/reviews', [ReviewsController::class, 'store'])->name('course.reviews.store');
+
+    // Profile Routes
+    Route::get('profile', [ProfilesController::class, 'show'])->name('profile.show');
+    Route::get('profile/edit', [ProfilesController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile/update', [ProfilesController::class, 'update'])->name('profile.update');
+    Route::post('profile/reset-read/{course_id}', [ProfilesController::class, 'reset_course_read'])->name('profile.reset-course-read');
+
 });
 
 

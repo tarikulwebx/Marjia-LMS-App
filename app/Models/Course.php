@@ -98,6 +98,21 @@ class Course extends Model
 
 
 
+    public function completedLecturesCount($user_id) {
+        $count = 0;
+        foreach($this->lessons as $lesson) {
+            foreach($lesson->reads as $read) {
+                if ($read['user_id'] == $user_id) {
+                    $count++;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+
+
     /**
      * Return the sluggable configuration array for this model.
      *

@@ -121,6 +121,16 @@ class User extends Authenticatable
         return false;
     }
 
+    /**
+     * Is Student?
+     */
+    public function isStudent() {
+        if ($this->role->name == 'student' && $this->is_active == 1) {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Is Enrolled to course
@@ -148,6 +158,30 @@ class User extends Authenticatable
         return false;
     }
 
+
+
+    /**
+     * Completed Course Count
+     */
+    public function completedCourseCount() {
+        $count = 0;
+        foreach($this->enrollments as $enrollment) {
+            $lesson_read_count = 0;
+            foreach($enrollment->course->lessons as $lesson){
+                foreach ($lesson->reads as $read) {
+                    if ($read['user_id'] == $this->id) {
+                        $lesson_read_count++;
+                    }
+                }
+            }
+
+            if ($enrollment->course->lessons->count() == $lesson_read_count) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
 
     
     /**

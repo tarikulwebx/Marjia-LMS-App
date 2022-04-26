@@ -53,3 +53,9 @@
 .lesson__sidenav .offcanvas {
     padding: 0.1rem;
 }
+
+
+/*  */
+.profile__content__courses .course__thumb {
+    height: 4.2rem;
+}
