@@ -19,7 +19,7 @@ class LessonsController extends Controller
     {
         $course = Course::findBySlugOrFail($course_slug);
         $groups = $course->groups->all();
-        if (Auth::user()->isEnrolled($course->id) || Auth::user()->isAdmin()) {
+        if (Auth::user()->isEnrolled($course->id)) {
             return view('lessons', compact('course', 'groups'));
         } else {
             return redirect()->route('single-course', $course_slug);
@@ -97,7 +97,7 @@ class LessonsController extends Controller
 
 
         // If user is enrolled to this course then go to lessons
-        if (Auth::user()->isEnrolled($course->id) || Auth::user()->isAdmin()) {
+        if (Auth::user()->isEnrolled($course->id)) {
             // User read this lesson
             Auth::user()->reads()->UpdateOrCreate(['lesson_id' => $current_lesson['id']]);
             return view('lesson_single', compact('course', 'groups', 'current_lesson', 'files', 'previous_lesson_slug', 'next_lesson_slug'));

@@ -15,7 +15,7 @@
                 <div class="card border-0 p-0">
                     <div class="row d-block d-sm-flex">
                         <div class="col-auto">
-                            <img src="{{ $user->photo ? $user->photo : asset('images/profile-pic.jpg') }}" class="img-fluid shadow" width="100" alt="pp">
+                            <img src="{{ $user->photo ? url('/').'/images/profile/'.$user->photo : asset('images/profile-pic.jpg') }}" class="img-fluid shadow" width="100" alt="pp">
                         </div>
                         <div class="col align-self-center">
                             <div class="user-info d-md-flex align-items-center">
@@ -23,11 +23,11 @@
                                     <h2 class="user-info__name mt-3 mt-sm-5">{{ $user->first_name }} {{ $user->last_name }}</h2>
                                     <ul class="user-info__list list-inline p-0 m-0">
                                         <li class="list-inline-item">
-                                            <span class="h6"><i class="fas fa-graduation-cap text-primary me-1"></i>{{ $user->enrollments->count() }}</span> 
+                                            <span class="h6"><i class="fas fa-graduation-cap text-primary me-1"></i> {{ $user->enrollments->count() }}</span> 
                                             <span class="text">Enrolled Courses</span>
                                         </li>
                                         <li class="list-inline-item">
-                                            <span class="h6"><i class="fa-brands fa-readme text-secondary me-1"></i>{{ $user->reads->count() }}</span> 
+                                            <span class="h6"><i class="fa-solid fa-book-open-reader text-secondary me-1"></i> {{ $user->reads->count() }}</span> 
                                             <span class="text">Completed Lessons</span>
                                         </li>
                                     </ul>
@@ -65,7 +65,7 @@
                                             <a class="list-group-item {{ Request::is('profile') ? 'active' : '' }}" href="{{ route('profile.show') }}"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
                                             <a class="list-group-item" href="{{ route('profile.edit') }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
                                             <a class="list-group-item" href="{{ route('profile.show') }}?#courses"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
-                                            <a class="list-group-item" href="student-profile-reviews.html"><i class="fa-solid fa-star me-2"></i>Reviews</a>
+                                            <a class="list-group-item" href="{{ route('profile.reviews') }}"><i class="fa-solid fa-star me-2"></i>Reviews</a>
                                             <a class="list-group-item" href="student-profile-delete.html"><i class="fa-solid fa-trash-can me-2"></i>Delete Profile</a>
                                             <a class="list-group-item text-danger bg-danger-soft-hover" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</a>
                                         </div>
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
                                     <div class="d-flex h-100 justify-content-center align-items-center bg-success bg-opacity-10 text-success p-4 rounded-3">
-                                        <div class=""><i class="fa-brands fa-readme text-success fa-3x"></i></div>
+                                        <div class=""><i class="fa-solid fa-book-open-reader text-success fa-3x"></i></div>
                                         <div class="ms-4 text-dark">
                                             <h4 class="mb-0">{{ $user->reads->count() }}</h4>
                                             <p class="mb-0">Completed Lessons</p>

@@ -37,21 +37,24 @@ Route::get('/course/{course_slug}/enroll', [CoursesController::class, 'user_enro
 Route::get('/courses/categories/{category_slug}', [CoursesController::class, 'courses_by_category'])->name('category.courses');
 
 
-//Lessons Route
+
 Route::middleware(['auth'])->group(function () {
+    //Lessons Route
     Route::get('courses/{course_slug}/lessons', [LessonsController::class, 'index'])->name('course-lessons');
     Route::get('courses/{course_slug}/lessons/{lesson_slug}', [LessonsController::class, 'show'])->name('lesson-single');
 
     // Review Routes
     Route::get('courses/{course_id}/reviews', [ReviewsController::class, 'index'])->name('course.reviews');
     Route::post('courses/{course_id}/reviews', [ReviewsController::class, 'store'])->name('course.reviews.store');
+    Route::post('update_review', [ReviewsController::class, 'update_review']);
+    Route::post('delete_review', [ReviewsController::class, 'delete_review']);
 
     // Profile Routes
     Route::get('profile', [ProfilesController::class, 'show'])->name('profile.show');
     Route::get('profile/edit', [ProfilesController::class, 'edit'])->name('profile.edit');
     Route::patch('profile/update', [ProfilesController::class, 'update'])->name('profile.update');
     Route::post('profile/reset-read/{course_id}', [ProfilesController::class, 'reset_course_read'])->name('profile.reset-course-read');
-
+    Route::get('profile/reviews', [ProfilesController::class, 'reviews'])->name('profile.reviews');
 });
 
 

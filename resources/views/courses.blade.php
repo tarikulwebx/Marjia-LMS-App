@@ -128,7 +128,7 @@
                                             {{ $course->enrollments->count() }} enrolled
                                         </span>
                                         <span class="h6 course__meta__lessons m-0">
-                                            <i class="fa-brands fa-readme"></i>
+                                            <i class="fa-solid fa-book-open"></i>
                                             {{ $course->lessons->count() }} lessons
                                         </span>
                                     </div>

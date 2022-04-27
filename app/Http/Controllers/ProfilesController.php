@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\support\Str;
 
 class ProfilesController extends Controller
 {
@@ -52,6 +53,13 @@ class ProfilesController extends Controller
         return view('profile.student-profile', compact('user'));
     }
 
+    public function reviews()
+    {
+        $user = Auth::user();
+        $reviews = $user->reviews()->orderBy('id', 'desc')->paginate(4);
+        return view('profile.student-profile-reviews', compact('user', 'reviews'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -73,10 +81,35 @@ class ProfilesController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $user = Auth::user();
+
+        $request->validate([
+            'photo' => 'mimes:png,jpg|max:300',
+            'first_name'    => 'required|string|max:255',
+            'last_name'    => 'required|string|max:255',
+        ]);
+
+        $inputs = $request->all();
+
+        if ($photo_file = $request->file('photo')) {
+            $name_rename = time() . '-' . Str::lower(str_replace(' ', '-', $photo_file->getClientOriginalName()));
+            // Delete old photo if exists
+            if($user->photo) {
+                $old_photo = $user->photo;
+                unlink(public_path() . '/images/profile/' . $old_photo);
+            }
+            // Upload photo
+            $photo_file->move('images/profile', $name_rename);
+            $inputs['photo'] =  $name_rename;
+        }
+
+        $user->update($inputs);
+        session()->flash('user_action_msg', 'User Details Updated Successfully');
+        return back();
     }
 
 
+    // Reset Course reads
     public function reset_course_read($course_id) {
         $course = Course::findOrFail($course_id);
 

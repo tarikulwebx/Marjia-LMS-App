@@ -95,6 +95,25 @@ class ReviewsController extends Controller
         //
     }
 
+    public function update_review(Request $request) {
+        $user = Auth::user();
+        $review = Review::findOrFail($request->input('review_id'));
+
+        if ($review['user_id'] == $user['id']) {
+            $result = $review->update([
+                'body' => $request->input('review_body'),
+            ]);
+
+            if ($result == true) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } 
+
+        return 0;
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -104,5 +123,23 @@ class ReviewsController extends Controller
     public function destroy($course_id, $id)
     {
         //
+    }
+
+
+    public function delete_review(Request $request) {
+        $user = Auth::user();
+        $review = Review::findOrFail($request->input('review_id'));
+
+        if ($review['user_id'] == $user['id']) {
+            $result = $review->delete();
+
+            if ($result == true) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } 
+
+        return 0;
     }
 }

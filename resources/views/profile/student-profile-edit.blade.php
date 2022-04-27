@@ -2,6 +2,21 @@
 
 @section('title', 'Profile')
 
+@section('styles')
+    <style>
+        .profile-picture-change-badge {
+            width: 1.3rem;
+            height: 1.3rem;
+            line-height: 1.3rem;
+            text-align: center;
+            font-size: 0.65rem !important;
+            top: 0.55rem;
+            left: 80%;
+            cursor: pointer;
+        }
+    </style> 
+@endsection
+
 @section('content')
 
     <!-- PROFILE SECTION: START -->
@@ -15,7 +30,7 @@
                 <div class="card border-0 p-0">
                     <div class="row d-block d-sm-flex">
                         <div class="col-auto">
-                            <img src="{{ $user->photo ? $user->photo : asset('images/profile-pic.jpg') }}" class="img-fluid shadow" width="100" alt="pp">
+                            <img src="{{ $user->photo ? url('/').'/images/profile/'.$user->photo : asset('images/profile-pic.jpg') }}" class="img-fluid shadow" width="100" alt="pp">
                         </div>
                         <div class="col align-self-center">
                             <div class="user-info d-md-flex align-items-center">
@@ -23,11 +38,11 @@
                                     <h2 class="user-info__name mt-3 mt-sm-5">{{ $user->first_name }} {{ $user->last_name }}</h2>
                                     <ul class="user-info__list list-inline p-0 m-0">
                                         <li class="list-inline-item">
-                                            <span class="h6"><i class="fas fa-graduation-cap text-primary me-1"></i>{{ $user->enrollments->count() }}</span> 
+                                            <span class="h6"><i class="fas fa-graduation-cap text-primary me-1"></i> {{ $user->enrollments->count() }}</span> 
                                             <span class="text">Enrolled Courses</span>
                                         </li>
                                         <li class="list-inline-item">
-                                            <span class="h6"><i class="fa-brands fa-readme text-secondary me-1"></i>{{ $user->reads->count() }}</span> 
+                                            <span class="h6"><i class="fa-solid fa-book-open-reader text-secondary me-1"></i> {{ $user->reads->count() }}</span> 
                                             <span class="text">Completed Lessons</span>
                                         </li>
                                     </ul>
@@ -65,7 +80,7 @@
                                             <a class="list-group-item" href="{{ route('profile.show') }}"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
                                             <a class="list-group-item active" href="{{ route('profile.edit') }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
                                             <a class="list-group-item" href="{{ route('profile.show') }}?#courses"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
-                                            <a class="list-group-item" href="student-profile-reviews.html"><i class="fa-solid fa-star me-2"></i>Reviews</a>
+                                            <a class="list-group-item" href="{{ route('profile.reviews') }}"><i class="fa-solid fa-star me-2"></i>Reviews</a>
                                             <a class="list-group-item" href="student-profile-delete.html"><i class="fa-solid fa-trash-can me-2"></i>Delete Profile</a>
                                             <a class="list-group-item text-danger bg-danger-soft-hover" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</a>
                                         </div>
@@ -79,22 +94,23 @@
                         <div class="card profile__content__editprofile rounded-3">
                             <h3 class="card-header py-3 bg-white fw-700">Edit Profile</h3>
                             <div class="card-body">
-                                {!! Form::model($user, ['route' => 'profile.update', 'method' => 'PATCH', 'class' => 'editform']) !!}
+                                {!! Form::model($user, ['route' => 'profile.update', 'method' => 'PATCH', 'class' => 'editform', 'files'=>true]) !!}
                                     <div class="row g-4">
                                         <div class="col-12">
                                             <label for="">Profile picture</label>
                                             <div class="d-flex align-items-center">
                                                 <div class="editform__picture position-relative">
-                                                    <img src="{{ $user->photo ? $user->photo : asset('images/profile-pic.jpg') }}" class="rounded-circle shadow-lg" width="60" alt="">
-                                                    <button type="button" class="position-absolute translate-middle bg-danger border-0 rounded-circle">
+                                                    <img id="previewImg" src="{{ $user->photo ? url('/').'/images/profile/'.$user->photo : asset('images/profile-pic.jpg') }}" class="rounded-circle shadow-lg" width="60" alt="">
+                                                    <label for="changePicture" class="position-absolute translate-middle bg-danger text-white border-0 rounded-circle profile-picture-change-badge">
                                                         <i class="fa-solid fa-xmark"></i>
-                                                    </button>
+                                                    </label>
                                                 </div>
                                                 <div class="editform__upload-btn ms-3">
                                                     <label for="changePicture" class="btn bg-primary bg-opacity-10 text-primary px-3 m-0 fw-500">Change</label>
-                                                    <input type="file" id="changePicture" class="form-control d-none">
+                                                    <input type="file" id="changePicture" name="photo" class="form-control d-none" accept="image/x-png,image/gif,image/jpeg" oninput="previewImg.src=window.URL.createObjectURL(this.files[0])">
                                                 </div>
                                             </div>
+                                            <small class="text-danger">{{ $errors->first('photo') }}</small>
                                         </div>
 
                                         <div class="col-md-6">
@@ -224,41 +240,12 @@
                                         </div>
 
                                         <div class="col-12 text-end">
-                                            <input type="submit" class="btn btn-primary" value="Save changes">
+                                            {!! Form::button('<i class="far fa-check-circle me-2"></i>Save changes', ['type'=>'submit', 'class' => 'btn btn-primary']) !!}
+                                            
                                         </div>
 
                                     </div>
                                 {!! Form::close() !!}
-                            </div>
-                        </div>
-
-                        <!-- Edit password -->
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="card profile__content__editprofile rounded-3 mt-5">
-                                    <h5 class="card-header py-3 bg-white fw-700 text-gray-800">Update Password</h5>
-                                    <div class="card-body">
-                                        <form action="#" class="editform">
-                                            <div class="row g-4">
-                                                <div class="col-12">
-                                                    <label for="current_password">Current password</label>
-                                                    <input type="password" class="form-control" name="current_password" placeholder="Current password">
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="new_password">Enter new password</label>
-                                                    <input type="password" class="form-control" name="new_password" placeholder="Enter new password">
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="confirm_password">Confirm new password</label>
-                                                    <input type="password" class="form-control" name="confirm_password" placeholder="Enter new password">
-                                                </div>
-                                                <div class="col-12 text-end">
-                                                    <input type="submit" class="btn btn-primary" value="Change password">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

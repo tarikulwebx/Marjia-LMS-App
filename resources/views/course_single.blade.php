@@ -360,7 +360,7 @@
                                                 @foreach ($reviews_with_pagination as $review)
                                                     <!-- Review Item -->
                                                     <div class="reviews__review d-md-flex">
-                                                        <img src="{{ $review->user->photo ? $review->user->photo : asset('images/profile-pic.jpg') }}" class="reviews__review__thumb rounded-circle mb-2 mb-md-0" width="100" alt="...">
+                                                        <img src="{{ $review->user->photo ? url('/').'/images/profile/'.$review->user->photo : asset('images/profile-pic.jpg') }}" class="reviews__review__thumb rounded-circle mb-2 mb-md-0" width="100" alt="...">
                                                         <div>
                                                             <h5 class="reviews__review__name">{{ $review->user->first_name }} {{ $review->user->last_name }}</h5>
                                                             <ul class="reviews__review__rating list-inline text-warning mt-0">
@@ -448,14 +448,12 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    @if (Auth::user() && Auth::user()->role->name == 'student')
+                                    @if (Auth::user())
                                         @if (Auth::user()->isEnrolled($course->id))
                                             <a href="{{ route('course-lessons', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-angles-right fa-sm me-2"></i>Lessons</a>
                                             @else
                                             <a href="{{ route('user-enroll-course', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
                                         @endif
-                                    @elseif (Auth::user() && Auth::user()->role->name == 'administrator')
-                                        <a href="{{ route('course-lessons', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-angles-right fa-sm me-2"></i>Lessons</a>
                                     @else
                                         <a href="{{ route('user-enroll-course', $course->slug) }}" class="enroll-btn btn btn-lg btn-primary rounded-2"><i class="fa-solid fa-user-graduate me-2"></i>Enroll</a>
                                     @endif

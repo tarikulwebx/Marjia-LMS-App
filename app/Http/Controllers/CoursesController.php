@@ -95,12 +95,7 @@ class CoursesController extends Controller
         $course = Course::findBySlugOrFail($course_slug);
         $user = Auth::user();
         $course->enrollments()->UpdateOrCreate(['user_id' => $user['id']]);
-        if($user->isEnrolled($course['id'])) {
-            session()->flash('course_action_msg', 'Hi '.$user['first_name'].', you already enrolled this course. Continue leaning..');
-        } else {
-            session()->flash('course_action_msg', 'Hi '.$user['first_name'].', you enrolled this course successfully!');
-        }
-       
+        session()->flash('course_action_msg', 'Hi '.$user['first_name'].', you enrolled this course. Continue learning...');
         return redirect()->route('course-lessons', $course_slug);
     }
 
