@@ -17,7 +17,7 @@ class HomeController extends Controller
     public function index()
     {
         $latest_public_courses = Course::where('visibility', 'public')->latest()->take(8)->get();
-        $popular_public_courses = Course::withCount('reviews')->orderBy('reviews_count', 'desc')->take(12)->get();
+        $popular_public_courses = Course::where('visibility', 'public')->withCount('reviews')->orderBy('reviews_count', 'desc')->take(12)->get();
         $categories = Category::all();
         $reviews = Review::inRandomOrder()->take(5)->get();
         return view('home', compact('latest_public_courses', 'popular_public_courses', 'categories', 'reviews'));

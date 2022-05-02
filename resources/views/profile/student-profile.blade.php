@@ -115,7 +115,7 @@
 
                         <!-- COURSES -->
                         <div id="courses" class="card profile__content__courses">
-                            <h3 class="card-header py-3 bg-white fw-700">My Courses List</h3>
+                            <h3 class="card-header py-3 bg-white fw-700">Enrolled Courses</h3>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table align-middle table-borderless table-hover">

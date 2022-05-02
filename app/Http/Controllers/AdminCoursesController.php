@@ -93,6 +93,7 @@ class AdminCoursesController extends Controller
         $course = Course::findBySlugOrFail($slug);
         $categories = Category::pluck('name', 'id')->all();
         $students = Role::whereName('student')->first()->users->pluck('email', 'id');
+        $students = User::pluck('email', 'id')->all();
         $enrolled_students_object = $course->enrollments;
         $enrolled_students = array();
         foreach($enrolled_students_object as $student) {

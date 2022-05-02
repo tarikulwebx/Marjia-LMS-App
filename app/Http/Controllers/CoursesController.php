@@ -18,14 +18,17 @@ class CoursesController extends Controller
     {
         $courses = Course::where('visibility', 'public')->paginate(12);
         $categories = Category::all();
-        return view('courses', compact('courses', 'categories'));
+
+        $popular_public_courses = Course::where('visibility', 'public')->withCount('reviews')->orderBy('reviews_count', 'desc')->take(4)->get();
+        return view('courses', compact('courses', 'categories', 'popular_public_courses'));
     }
 
     public function courses_by_category($category_slug) {
         $category = Category::findBySlugOrFail($category_slug);
         $courses = $category->courses()->where('visibility', 'public')->paginate(12);
         $categories = Category::all();
-        return view('category', compact('courses', 'categories', 'category'));
+        $popular_public_courses = Course::where('visibility', 'public')->withCount('reviews')->orderBy('reviews_count', 'desc')->take(4)->get();
+        return view('category', compact('courses', 'categories', 'category', 'popular_public_courses'));
     }
 
     /**
@@ -64,7 +67,13 @@ class CoursesController extends Controller
 
         $popular_public_courses = Course::withCount('reviews')->orderBy('reviews_count', 'desc')->take(4)->get();
 
-        return view('course_single', compact('course', 'categories', 'reviews', 'reviews_with_pagination', 'popular_public_courses'));
+        if($course['visibility'] == 'public' || ($course['visibility'] == 'defined' && Auth::user() && Auth::user()->isEnrolled($course['id']))) {
+            return view('course_single', compact('course', 'categories', 'reviews', 'reviews_with_pagination', 'popular_public_courses'));
+        } 
+        else {
+            return redirect()->route('courses');
+        }
+        
     }
 
     /**

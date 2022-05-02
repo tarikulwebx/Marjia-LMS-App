@@ -12,12 +12,20 @@
                     <h1 class="h1 intro__title">A revolutionary way to <span>educate</span></h1>
                     <p class="lead intro__description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Voluptates dolor quibusdam sit sequi illo.</p>
-                    <a href="courses.html" class="rounded-pill btn btn-rounded intro__btn"> Start course now
+                    <a href="{{ route('courses') }}" class="rounded-pill btn btn-rounded intro__btn"> Enroll courses
                         <span><i class="fas fa-arrow-right"></i></span>
                     </a>
-                    <a href="register.html" class="rounded-pill btn btn-rounded intro__btn">Signup
-                        <span><i class="fa fa-sign-in" aria-hidden="true"></i></span>
-                    </a>
+                    @if (Auth::user())
+                        <a href="{{ route('profile.show') }}" class="rounded-pill btn btn-rounded intro__btn">
+                            <span><i class="fas fa-user fa-sm me-1"></i></span>
+                            My Profile
+                        </a>
+                        @else
+                        <a href="{{ route('register') }}" class="rounded-pill btn btn-rounded intro__btn">Signup
+                            <span><i class="fa fa-sign-in" aria-hidden="true"></i></span>
+                        </a>
+                    @endif
+                    
                 </div>
                 <div class="col-lg-6">
                     <div class="video-box">
@@ -46,7 +54,7 @@
         <div class="container">
             <div class="section-head">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h1>Trending courses</h1>
+                    <h1>Popular courses</h1>
                     <div>
                         <div class="d-flex flex-nowrap align-items-center">
                             <button class="btn btn-grid">
@@ -58,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <p class="lead text-muted">Top courses can help you to choose which is the best</p>
             </div>
         </div>
         <!-- Courses -->
@@ -145,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <p class="lead text-muted">Latest courses depending on their upload date</p>
             </div>
         </div>
         <!-- Courses -->
@@ -239,7 +247,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <p class="lead text-muted">Here are some reviews of our happy learners</p>
             </div>
         </div>
         <div class="container">
@@ -268,7 +276,7 @@
                                     </div>
 
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ $review->user->photo ? $review->user->photo : asset('images/profile-pic.jpg') }}" class="review__thumb img-fluid rounded-circle" alt="Avatar">
+                                        <img src="{{ $review->user->photo ? url('/').'/images/profile/'.$review->user->photo : asset('images/profile-pic.jpg') }}" class="review__thumb img-fluid rounded-circle" alt="Avatar">
                                         <div>
                                             <h4 class="review__title card-title">{{ $review->user->first_name }} {{ $review->user->last_name }}</h4>
                                             <h6 class="review__subtitle card-subtitle text-muted text-capitalize">{{ $review->user->role->name }}</h6>
