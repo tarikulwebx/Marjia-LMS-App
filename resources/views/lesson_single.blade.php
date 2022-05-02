@@ -78,7 +78,10 @@
                                     
                                 </div>
                             </div>
-                            <hr class="my-4 bg-primary">
+                            <div class="progress my-3" style="height: 0.2rem">
+                                <div class="progress-bar bg-primary bg-opacity-75" role="progressbar" style="width: {{ $course->lessons->count() > 0 ? round($course->completedLecturesCount(Auth::user()->id)/$course->lessons->count() *100, 0) : '0' }}%;" aria-valuenow="{{ $course->lessons->count() > 0 ? round($course->completedLecturesCount(Auth::user()->id)/$course->lessons->count() *100, 0) : '0' }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            {{-- <hr class="my-4 bg-primary"> --}}
                         </div>
     
                         <div class="lesson__content__body">

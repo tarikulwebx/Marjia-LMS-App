@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminLessonsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstructorProfilesController;
 use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReviewController;
@@ -49,12 +50,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('update_review', [ReviewsController::class, 'update_review']);
     Route::post('delete_review', [ReviewsController::class, 'delete_review']);
 
-    // Profile Routes
+    // Profile (student) Routes
     Route::get('profile', [ProfilesController::class, 'show'])->name('profile.show');
     Route::get('profile/edit', [ProfilesController::class, 'edit'])->name('profile.edit');
     Route::patch('profile/update', [ProfilesController::class, 'update'])->name('profile.update');
     Route::post('profile/reset-read/{course_id}', [ProfilesController::class, 'reset_course_read'])->name('profile.reset-course-read');
     Route::get('profile/reviews', [ProfilesController::class, 'reviews'])->name('profile.reviews');
+    Route::get('profile/delete', [ProfilesController::class, 'delete'])->name('profile.delete');
+    Route::post('profile/delete-confirm', [ProfilesController::class, 'delete_confirm']);
+
+
 });
 
 
@@ -85,6 +90,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/courses/{course_slug}/groups/{group_slug}/lessons/create', [AdminLessonsController::class, 'create_by_group'])->name('create-lesson-by-group');
     Route::post('admin/courses/{course_slug}/groups/{group_slug}/lessons/store', [AdminLessonsController::class, 'store_by_group'])->name('store_lesson_by_group');
 
+
+    // Profile-instructor Routes
+    Route::get('instructor-profile', [InstructorProfilesController::class, 'instructor_profile_show'])->name('instructor.profile.show');
+    Route::get('instructor-profile/courses', [InstructorProfilesController::class, 'instructor_profile_courses'])->name('instructor.profile.courses');
+    Route::get('instructor-profile/reviews', [InstructorProfilesController::class, 'instructor_profile_reviews'])->name('instructor.profile.reviews');
+    Route::post('instructor-profile/delete_review', [InstructorProfilesController::class, 'delete_review']);
+    Route::get('instructor-profile/edit', [InstructorProfilesController::class, 'instructor_profile_edit'])->name('instructor.profile.edit');
+    Route::patch('instructor-profile/update', [InstructorProfilesController::class, 'instructor_profile_update'])->name('instructor.profile.update');
 });
 
 

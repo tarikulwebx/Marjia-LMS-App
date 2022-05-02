@@ -140,4 +140,26 @@ class ProfilesController extends Controller
     {
         //
     }
+
+
+    public function delete(){
+        $user = Auth::user();
+        return view('profile.student-profile-delete', compact('user'));
+    }
+
+
+    public function delete_confirm() {
+        $user = Auth::user();
+
+        if($user->photo) {
+            $photo = $user->photo;
+            unlink(public_path() . '/images/profile/' . $photo);
+        }
+        $result = $user->delete();
+        if ($result == true) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

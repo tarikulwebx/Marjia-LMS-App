@@ -59,3 +59,7 @@
 .profile__content__courses .course__thumb {
     height: 4.2rem;
 }
+
+.d-none-important {
+    display: none !important;
+}

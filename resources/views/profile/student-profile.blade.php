@@ -66,8 +66,11 @@
                                             <a class="list-group-item" href="{{ route('profile.edit') }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
                                             <a class="list-group-item" href="{{ route('profile.show') }}?#courses"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
                                             <a class="list-group-item" href="{{ route('profile.reviews') }}"><i class="fa-solid fa-star me-2"></i>Reviews</a>
-                                            <a class="list-group-item" href="student-profile-delete.html"><i class="fa-solid fa-trash-can me-2"></i>Delete Profile</a>
-                                            <a class="list-group-item text-danger bg-danger-soft-hover" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</a>
+                                            <a class="list-group-item" href="{{ route('profile.delete') }}"><i class="fa-solid fa-trash-can me-2"></i>Delete Profile</a>
+                                            <a class="list-group-item text-danger bg-danger-soft-hover" href="{{ route("logout") }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -134,9 +137,9 @@
                                                                 <div class="ms-2 w-100">
                                                                     <h6 class="course__title"><a href="{{ route('single-course', $enrollment->course->slug ) }}" class="text-decoration-none">{{ $enrollment->course->name }}</a></h6>
                                                                     <div class="course__progress overflow-hidden">
-                                                                        <h6 class="text-end mb-0 small text-primary fw-500 me-2">{{ round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) }}%</h6>
+                                                                        <h6 class="text-end mb-0 small text-primary fw-500 me-2">{{ $enrollment->course->lessons->count() > 0 ? round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) : '0' }}%</h6>
                                                                         <div class="progress" style="height: 0.35rem;">
-                                                                            <div class="progress-bar" role="progressbar" style="width: {{ round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) }}%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                            <div class="progress-bar" role="progressbar" style="width: {{ $enrollment->course->lessons->count() > 0 ? round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) : '0' }}%;" aria-valuenow="{{ $enrollment->course->lessons->count() > 0 ? round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) : '0' }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -147,7 +150,8 @@
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 <a href="{{ route('course-lessons', $enrollment->course->slug) }}" class="course__btn course__btn--continue btn">Continue</a>
-                                                                @if (round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) == 100)
+
+                                                                @if ($enrollment->course->lessons->count() > 0 && round($enrollment->course->completedLecturesCount($user->id)/$enrollment->course->lessons->count() *100, 0) == 100)
                                                                     <a href="{{ route('profile.reset-course-read', $enrollment->course->id) }}" class="reset-course-read-btn course__btn course__btn--restart btn text-nowrap ms-2" data-course_id="{{ $enrollment->course->id }}"><i class="fa-solid fa-rotate fa-sm me-2"></i>Restart</a>
                                                                 @endif
                                                                 

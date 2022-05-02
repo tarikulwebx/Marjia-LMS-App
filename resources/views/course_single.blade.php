@@ -640,7 +640,6 @@
                 localStorage.setItem('activeTab', activeTab);
             });
             var activeTab = localStorage.getItem('activeTab');
-            $('.table-pane').removeClass('show active');
             if(activeTab){
                 $('#'+activeTab+'-tab').addClass('active');
                 $('#'+ activeTab).addClass('show active');

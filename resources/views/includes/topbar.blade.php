@@ -145,10 +145,12 @@
                             <hr class="dropdown-divider">
                         </li>
                         @if (Auth::user()->isStudent())
-                            <li><a class="dropdown-item" href="{{ route('profile.show', Auth::user()->slug) }}">My Profile <i class="fa-solid fa-user"></i></a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.show') }}">My Profile <i class="fa-solid fa-user"></i></a></li>
                         @endif
                         
                         @if (Auth::user()->isAdmin())
+                            <li><a class="dropdown-item" href="{{ route('profile.show') }}">Profile <i class="fa-solid fa-user"></i></a></li>
+                            <li><a class="dropdown-item" href="{{ route('instructor.profile.show') }}">Instructor Profile <i class="fa-solid fa-chalkboard-user"></i></a></li>
                             <li><a class="dropdown-item" href="{{ route('admin-dashboard') }}" target="_blank">Admin Dashboard <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
                         @endif
                         <li>

@@ -38,16 +38,16 @@
                                     <h2 class="user-info__name mt-3 mt-sm-5">{{ $user->first_name }} {{ $user->last_name }}</h2>
                                     <ul class="user-info__list list-inline p-0 m-0">
                                         <li class="list-inline-item">
-                                            <span class="h6"><i class="fas fa-graduation-cap text-primary me-1"></i> {{ $user->enrollments->count() }}</span> 
-                                            <span class="text">Enrolled Courses</span>
+                                            <span class="h6"><i class="fa-solid fa-user-graduate text-danger"></i></span> 
+                                            <span class="text text-gray-700">{{ $enrollmentsCount }} Enrolled Students</span>
                                         </li>
                                         <li class="list-inline-item">
-                                            <span class="h6"><i class="fa-solid fa-book-open-reader text-secondary me-1"></i> {{ $user->reads->count() }}</span> 
-                                            <span class="text">Completed Lessons</span>
+                                            <span class="h6"><i class="fa-solid fa-graduation-cap text-primary"></i></span> 
+                                            <span class="text text-gray-700">{{ $user->courses->count() }} Courses</span>
                                         </li>
                                     </ul>
                                 </div>
-                                <a href="{{ route('profile.show') }}" class="btn btn-primary view-btn mt-3 mt-md-5 ms-auto text-nowrap"><i class="fa-solid fa-edit me-2 fa-sm"></i>Dashboard</a>
+                                <a href="{{ route('admin-dashboard') }}" target="_blank" class="btn btn-primary view-btn mt-3 mt-md-5 ms-auto text-nowrap"><i class="fa fa-external-link fa-sm me-2" aria-hidden="true"></i> Admin Panel</a>
                             </div>
                             
                         </div>
@@ -65,6 +65,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-3">
+
+                        <!-- SIDEBAR -->
                         <nav class="navbar navbar-light navbar-expand-xl mx-0 py-0">
                             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="visibility: hidden;" aria-hidden="true">
                                 <!-- Offcanvas header -->
@@ -74,14 +76,14 @@
                                 </div>
                                 <!-- Offcanvas body -->
                                 <div class="offcanvas-body p-3 p-xl-0">
-                                    <div class="nav-menu bg-dark border pb-0 p-3 w-100">
+                                    <div class="nav-menu border pb-0 p-3 w-100">
                                         <!-- Dashboard menu -->
                                         <div class="list-group list-group-dark list-group-borderless">
-                                            <a class="list-group-item" href="{{ route('profile.show') }}"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
-                                            <a class="list-group-item active" href="{{ route('profile.edit') }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
-                                            <a class="list-group-item" href="{{ route('profile.show') }}?#courses"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
-                                            <a class="list-group-item" href="{{ route('profile.reviews') }}"><i class="fa-solid fa-star me-2"></i>Reviews</a>
-                                            <a class="list-group-item" href="{{ route('profile.delete') }}"><i class="fa-solid fa-trash-can me-2"></i>Delete Profile</a>
+                                            <a class="list-group-item" href="{{ route('instructor.profile.show') }}"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
+                                            <a class="list-group-item active" href="{{ route('instructor.profile.edit') }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
+                                            <a class="list-group-item" href="{{ route('instructor.profile.courses') }}"><i class="fa-solid fa-graduation-cap me-2"></i>Courses</a>
+                                            <a class="list-group-item" href="{{ route('instructor.profile.reviews') }}"><i class="fa-solid fa-star me-2"></i>Reviews</a>
+                                            <a class="list-group-item" href="{{ route('admin-dashboard') }}" target="_blank"><i class="fa fa-external-link me-2" aria-hidden="true"></i> Admin Site</a>
                                             <a class="list-group-item text-danger bg-danger-soft-hover" href="{{ route("logout") }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
@@ -106,11 +108,12 @@
                                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
+
                         <!-- Edit profile -->
                         <div class="card profile__content__editprofile rounded-3">
                             <h3 class="card-header py-3 bg-white fw-700">Edit Profile</h3>
                             <div class="card-body">
-                                {!! Form::model($user, ['route' => 'profile.update', 'method' => 'PATCH', 'class' => 'editform', 'files'=>true]) !!}
+                                {!! Form::model($user, ['route' => 'instructor.profile.update', 'method' => 'PATCH', 'class' => 'editform', 'files'=>true]) !!}
                                     <div class="row g-4">
                                         <div class="col-12">
                                             <label for="">Profile picture</label>
@@ -264,6 +267,7 @@
                                 {!! Form::close() !!}
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -272,4 +276,6 @@
     </section>
     <!-- PROFILE SECTION: END -->
 
+
 @endsection
+

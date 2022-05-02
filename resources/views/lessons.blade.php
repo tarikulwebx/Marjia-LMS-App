@@ -75,21 +75,46 @@
                             <div class="d-flex d-xl-block justify-content-between">
                                 <button type="button" id="showSidebarBtn" class="btn btn-sm rounded btn-light bg-primary bg-opacity-10 text-primary d-xl-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="fa-solid fa-sliders"></i> Lessons</button>
                                 <div class="navigation d-flex justify-content-between align-items-center">
-                                    <a href="#" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 me-3"><i class="fas fa-chevron-left"></i> <span>Previous</span></a>
-                                    <a href="#" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0"><span>Next</span> <i class="fas fa-chevron-right"></i></a>
+                                    <a href="{{ route('single-course', $course->slug) }}" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0 me-3"><i class="fas fa-chevron-left"></i> <span>Course info</span></a>
+                                    <a href="{{ route('lesson-single', [$course->slug, $course->firstLessonOrContinueSlug(Auth::user()->id)]) }}" class="btn btn-sm btn-primary rounded bg-secondary bg-opacity-10 text-secondary border-0"><span>Continue</span> <i class="fas fa-chevron-right"></i></a>
                                 </div>
                             </div>
                             <hr class="my-4 bg-primary">
                         </div>
     
                         <div class="lesson__content__body">
-                            <h1>Hi, Tarikul</h1>
-                            <p class="lead">You're learning <a href=""><strong>{{ $course->name }}</strong></a>. I think you're enjoying this course. For your acknowledgement this course contains <strong>{{ $course->lessons->count() }}</strong> lessons and required files are provided with every lessons.</p>
 
-                            <h4>You completed</h4>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                            <div class="row mb-4">
+                                <div class="col-sm-6 mb-3 mb-lg-0">
+                                    <div class="d-flex h-100 justify-content-center align-items-center bg-secondary bg-opacity-10 text-secondary p-4 rounded-3">
+                                        <div class=""><i class="fa-solid fa-book-open fa-3x"></i></div>
+                                        <div class="ms-4 text-dark">
+                                            <h4 class="mb-0">{{ $course->lessons->count() }}</h4>
+                                            <p class="mb-0">Total Lessons</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-lg-0">
+                                    <div class="d-flex h-100 justify-content-center align-items-center bg-success bg-opacity-10 text-success p-4 rounded-3">
+                                        <div class=""><i class="fa-solid fa-book-open-reader text-success fa-3x"></i></div>
+                                        <div class="ms-4 text-dark">
+                                            <h4 class="mb-0">{{ $course->completedLecturesCount(Auth::user()->id) }}</h4>
+                                            <p class="mb-0">Completed Lessons</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="progress" style="height: 0.6rem">
+                                <div class="progress-bar" role="progressbar" style="width: {{ $course->lessons->count() > 0 ? round($course->completedLecturesCount(Auth::user()->id)/$course->lessons->count() *100, 0) : '0' }}%;" aria-valuenow="{{ $course->lessons->count() > 0 ? round($course->completedLecturesCount(Auth::user()->id)/$course->lessons->count() *100, 0) : '0' }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h5 class="text-end mt-2">{{ $course->lessons->count() > 0 ? round($course->completedLecturesCount(Auth::user()->id)/$course->lessons->count() *100, 0) : '0' }}%</h5>
+
+                            <h2>Hi, Tarikul</h2>
+                            <p class="lead">You're learning <a href="{{ route('single-course', $course->slug) }}"><strong>{{ $course->name }}</strong></a>. I think you're enjoying this course. For your acknowledgement this course contains <strong>{{ $course->lessons->count() }}</strong> lessons and required files are provided with every lessons.</p>
+                            <div class="text-end">
+                                <a href="{{ route('lesson-single', [$course->slug, $course->firstLessonOrContinueSlug(Auth::user()->id)]) }}" class="btn btn-primary text-white">Continue Reading</a>
+                            </div>
+                            
                         </div>
                     
                     </div>

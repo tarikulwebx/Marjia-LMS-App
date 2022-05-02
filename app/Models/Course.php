@@ -113,6 +113,34 @@ class Course extends Model
 
 
 
+    public function firstLessonOrContinueSlug($user_id) {
+        $first_lesson_slug = "";
+        $last_read_lesson_slug = false;
+
+        $i = 0;
+        foreach($this->lessons as $lesson) {
+            if ($i == 0) {
+                $first_lesson_slug = $lesson['slug'];
+                $i++;
+            }
+            foreach($lesson->reads as $read) {
+                if ($read['user_id'] == $user_id) {
+                    $last_read_lesson_slug = $lesson['slug'];
+                }
+            }
+        }
+
+
+        if ($last_read_lesson_slug) {
+            return $last_read_lesson_slug;
+        }
+
+        return $first_lesson_slug;
+
+    }
+
+
+
     /**
      * Return the sluggable configuration array for this model.
      *
