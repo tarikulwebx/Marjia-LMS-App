@@ -80,7 +80,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="blog.html">Blog</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('blogs') }}">Blog</a>
                 </li>
                 
                 <li class="nav-item">

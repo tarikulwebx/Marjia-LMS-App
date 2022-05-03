@@ -1,0 +1,174 @@
+@extends('admin.layouts.app')
+
+@section('title', 'Create blog')
+
+@section('styles')
+    <style>
+
+        .multi-select-with-search .multiselect-container .multiselect-filter>input.multiselect-search {
+            background: transparent
+        }
+
+        .multi-select-with-search .multiselect-container .multiselect-filter {
+            margin-bottom: 0.4rem;
+        }
+
+        .multiselect-native-select .multi-select-with-search .multiselect-container {
+            padding-top: 0.25rem
+        }
+
+        .multiselect-native-select .multi-select-with-search .multiselect-container .multiselect-option {
+            text-transform: lowercase !important;
+        }
+
+        #imgPreviewHolder img {
+            height: auto !important;
+            width: 75% !important; 
+            border-radius: 0.3rem;
+        }
+    </style>
+@endsection
+
+@section('content')
+
+    @if (session('blog_action_msg'))
+    <div class="alert alert-success d-flex align-items-center mb-3 alert-dismissible fade show" role="alert">
+        <div class="me-2 pe-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+        </div>
+        <div>
+            {{ session('blog_action_msg') }}
+        </div>
+        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+
+    @if ($errors->all())
+        <div class="alert alert-danger  mb-3 alert-dismissible fade show" role="alert">
+            <strong>Fix following errors: </strong>
+            <ul class="m-0">
+                @foreach ($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">New Post</h1>
+        <a href="{{ route('blogs.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fa-solid fa-arrow-left text-white-50 me-1"></i> All Posts</a>
+    </div>
+
+    <!-- Card -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">New Blog Post</h6>
+        </div>
+        <div class="card-body pb-5">
+            {!! Form::open(['method' => 'POST', 'route' => 'blogs.store', 'files' => true]) !!}
+                <div class="row gy-3 gx-4">
+                    <!-- Left Contents -->
+                    <div class="col-lg-8">
+                        <!-- Form grid -->
+                        <div class="row g-3">
+                            <!-- Input: Title -->
+                            <div class="col-12">
+                                {!! Form::label('title', 'Blog Title') !!}
+                                {!! Form::text('title', null, ['class' => $errors->has('title') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Title']) !!}
+                                <small class="text-danger">{{ $errors->first('title') }}</small>
+                            </div>
+                            <!-- Input: Body -->
+                            <div class="col-12">
+                                {!! Form::label('body', 'Blog Body') !!}
+                                {!! Form::textarea('body', null, ['id' => 'tinymceEditor', 'class' => $errors->has('body') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Write content here', 'rows' => '10']) !!}
+                                <small class="text-danger">{{ $errors->first('body') }}</small>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- Right Contents -->
+                    <div class="col-lg-4">
+                        <!-- Form Grid -->
+                        <div class="row g-3">
+                            <!-- Input: Thumbnail -->
+                            <div class="col-12">
+                                {!! Form::label('thumbnail', 'Thumbnail') !!}
+                                <div id="imgPreviewHolder" class="mb-2">
+                                    <img src="{{ asset('images/placeholder_600x370.jpg') }}" alt="thumb">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                    <a id="lfm" data-input="thumbnail" data-preview="imgPreviewHolder" class="btn btn-primary bg-primary bg-opacity-75 rounded-right-0">
+                                        <i class="fa-solid fa-image fa-sm me-2"></i>Choose
+                                    </a>
+                                    </span>
+                                    {!! Form::text('thumbnail', null, ['class' => $errors->has('thumbnail') ? ' form-control is-invalid' : ' form-control', 'placeholder' => 'Thumbnail url']) !!}
+                                </div>
+                                <em class="d-block"><small class="help-block text-warning">Thumbnail dimension 600x370 and jpg/png</small></em>
+                                <small class="text-danger d-block">{{ $errors->first('thumbnail') }}</small>
+                            </div>
+                            <!-- Input: Visiblility -->
+                            <div class="col-12">
+                                {!! Form::label('visibility', 'Visiblility', ['class' => 'd-block']) !!}
+                                <div class="form-check form-check-inline">
+                                    {!! Form::radio('visibility', 'public',  true, ['class' => 'form-check-input', 'id' => 'public']) !!}
+                                    <label class="form-check-label text-primary" for="public">Public</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    {!! Form::radio('visibility', 'private',  null, ['class' => 'form-check-input', 'id' => 'private']) !!}
+                                    <label class="form-check-label text-primary" for="private">Private</label>
+                                </div>
+                                <small class="text-danger d-block">{{ $errors->first('visibility') }}</small>
+                            </div>
+                            <!-- Input: Submit -->
+                            <div class="col-12 text-end">
+                                {!! Form::button('<i class="fa-regular fa-check-circle me-2"></i>Create', ['type' => 'submit', 'class' => 'btn btn-primary px-3 rounded-pill']) !!}
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            {!! Form::close() !!}
+        </div>
+    </div>
+@endsection
+
+
+
+@section('scripts')
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(function(){
+            $('#multiselectCategories, #multiselectLanguage, #multiselectLevel, #multiselectLevel').multiselect({
+                buttonWidth:'100%',
+                buttonClass: 'form-control text-left',
+                selectedClass: 'selected'
+            });
+
+            $('#multiselectDefinedUsers').multiselect({
+                buttonWidth:'100%',
+                buttonClass: 'form-control text-left',
+                selectedClass: 'selected',
+                enableFiltering:true,
+                buttonContainer:'<div class="btn-group multi-select-with-search" />',
+                numberDisplayed: 1,
+                includeSelectAllOption: true
+            });
+
+            $('#lfm').filemanager('image');
+
+        });
+    </script>
+    
+    @include('admin.includes.tinymce-config')
+
+
+
+@endsection

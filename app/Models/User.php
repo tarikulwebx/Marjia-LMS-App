@@ -107,7 +107,13 @@ class User extends Authenticatable
         return $this->hasMany(Review::class, 'user_id', 'id');
     }
 
-    
+
+    /**
+     * User has many Blog
+     */
+    public function blogs() {
+        return $this->hasMany(Blog::class);
+    }
 
 
 

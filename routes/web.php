@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminBlogsController;
 use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLessonGroupController;
 use App\Http\Controllers\AdminLessonsController;
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorProfilesController;
@@ -34,8 +36,11 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{slug}', [CoursesController::class, 'show'])->name('single-course');
 Route::get('/course/{course_slug}/enroll', [CoursesController::class, 'user_enroll_course'])->middleware('auth')->name('user-enroll-course');
-
 Route::get('/courses/categories/{category_slug}', [CoursesController::class, 'courses_by_category'])->name('category.courses');
+
+// Blog Posts
+Route::get('/blogs', [BlogsController::class, 'all_blog_posts'])->name('blogs');
+Route::get('/blogs/{slug}', [BlogsController::class, 'single_blog_post'])->name('blog_post_single');
 
 
 
@@ -98,6 +103,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('instructor-profile/delete_review', [InstructorProfilesController::class, 'delete_review']);
     Route::get('instructor-profile/edit', [InstructorProfilesController::class, 'instructor_profile_edit'])->name('instructor.profile.edit');
     Route::patch('instructor-profile/update', [InstructorProfilesController::class, 'instructor_profile_update'])->name('instructor.profile.update');
+
+
+    // Blog CRUD
+    Route::resource('admin/blogs', AdminBlogsController::class);
 });
 
 

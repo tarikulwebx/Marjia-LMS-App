@@ -93,6 +93,26 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
+        Blog Manage
+    </div>
+    <!-- Nav Item - Blog Collapse Menu -->
+    <li class="nav-item {{ Request::is('admin/blogs*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBlogs"
+            aria-expanded="true" aria-controls="collapseBlogs">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Blog Posts</span>
+        </a>
+        <div id="collapseBlogs" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Blog Posts</h6>
+                <a class="collapse-item {{ Request::is('admin/blogs') ? 'active' : '' }}" href="{{ route('blogs.index') }}"><i class="fa-solid fa-graduation-cap me-2"></i>All Posts</a>
+                <a class="collapse-item {{ Request::is('admin/blogs/create') ? 'active' : '' }}" href="{{ route('blogs.create') }}"><i class="fa-solid fa-square-plus me-2"></i>New Post</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
         Addons
     </div>
 

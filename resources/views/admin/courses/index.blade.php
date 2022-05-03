@@ -65,7 +65,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @if ('courses')
+                        @if ($courses)
                             @foreach ($courses as $course)
                                 <tr>
                                     <td class="align-middle">{{ $course->id }}</td>
