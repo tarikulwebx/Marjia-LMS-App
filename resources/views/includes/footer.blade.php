@@ -114,7 +114,7 @@
                                 <li><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></li>
                             @endif
                             <li><a href="{{ route('show_contact_page') }}">Contact Us</a></li>
-                            <li><a href="faq-page.html">FAQ</a></li>
+                            <li><a href="{{ route('all_faqs') }}">FAQ</a></li>
                         </ul>
                     </div>
                 </div>

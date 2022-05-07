@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\AdminContactsController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminFaqsController;
 use App\Http\Controllers\AdminLessonGroupController;
 use App\Http\Controllers\AdminLessonsController;
 use App\Http\Controllers\AdminPagesController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorProfilesController;
 use App\Http\Controllers\LessonsController;
@@ -50,9 +52,11 @@ Route::get('/blogs/{slug}', [BlogsController::class, 'single_blog_post'])->name(
 Route::get('/contact-us', [ContactsController::class, 'show_contact_page'])->name('show_contact_page');
 Route::post('/contact-us/store', [ContactsController::class, 'store_contact_message'])->name('store_contact_message');
 
-
 // Pages
 Route::get('/pages/{slug}', [PagesController::class, 'show_page'])->name('show_page');
+
+// FAQs
+Route::get('/faqs', [FaqsController::class, 'all_faqs'])->name('all_faqs');
 
 
 
@@ -76,7 +80,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile/reviews', [ProfilesController::class, 'reviews'])->name('profile.reviews');
     Route::get('profile/delete', [ProfilesController::class, 'delete'])->name('profile.delete');
     Route::post('profile/delete-confirm', [ProfilesController::class, 'delete_confirm']);
-
 
 });
 
@@ -127,6 +130,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Pages CRUD
     Route::resource('admin/pages', AdminPagesController::class);
+
+
+    // FAQs CRUD
+    Route::resource('admin/faqs', AdminFaqsController::class);
    
 });
 

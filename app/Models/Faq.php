@@ -7,15 +7,15 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Faq extends Model
 {
     use HasFactory;
     use Sluggable;
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'title',
-        'body',
+        'question',
+        'answer',
         'slug',
     ];
 
@@ -29,10 +29,9 @@ class Page extends Model
     {
         return [
             'slug' => [
-                'source' => 'title',
-                'onUpdate' => 'false'
+                'source' => 'question',
+                'onUpdate' => 'true'
             ]
         ];
     }
-
 }

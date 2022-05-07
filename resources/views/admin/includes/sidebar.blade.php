@@ -79,6 +79,24 @@
         </div>
     </li>
 
+    <!-- Nav Item - FAQs Collapse Menu -->
+    <li class="nav-item {{ Request::is('admin/faqs*') ? 'active' : '' }}">
+        <a class="nav-link collapsed " href="#" data-bs-toggle="collapse" data-bs-target="#collapseFaqs"
+            aria-expanded="true" aria-controls="collapseFaqs">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>FAQs</span>
+        </a>
+        <div id="collapseFaqs" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Manage FAQs</h6>
+                <a class="collapse-item {{ Request::is('admin/faqs') ? 'active' : '' }}" href="{{ route('faqs.index') }}">All FAQs</a>
+                <a class="collapse-item {{ Request::is('admin/faqs/create') ? 'active' : '' }}" href="{{ route('faqs.create') }}">New FAQ</a>
+            </div>
+        </div>
+    </li>
+
+    
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
