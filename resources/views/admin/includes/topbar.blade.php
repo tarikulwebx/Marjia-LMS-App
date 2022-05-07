@@ -105,63 +105,37 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-envelope fa-fw"></i>
                     <!-- Counter - Messages -->
-                    <span class="badge badge-danger badge-counter bg-danger">7</span>
+                    @if (\App\Models\Contact::where('read', '=', '0')->count() > 0)
+                        <span class="badge badge-danger badge-counter bg-danger">{{ \App\Models\Contact::where('read', '=', '0')->count() }}</span>
+                    @endif
+                   
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-list dropdown-menu dropdown-menu-end shadow animated--grow-in"
                     aria-labelledby="messagesDropdown">
                     <h6 class="dropdown-header">
-                        Message Center
+                        Contact Messages
                     </h6>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image me-3">
-                            <img class="rounded-circle" src="{{ asset('images/profile-pic.jpg') }}"
-                                alt="...">
-                            <div class="status-indicator bg-success"></div>
-                        </div>
-                        <div class="font-weight-bold">
-                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                problem I've been having.</div>
-                            <div class="small text-gray-500">Emily Fowler · 58m</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image me-3">
-                            <img class="rounded-circle" src="{{ asset('images/profile-pic.jpg') }}"
-                                alt="...">
-                            <div class="status-indicator"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">I have the photos that you ordered last month, how
-                                would you like them sent to you?</div>
-                            <div class="small text-gray-500">Jae Chun · 1d</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image me-3">
-                            <img class="rounded-circle" src="{{ asset('images/profile-pic.jpg') }}"
-                                alt="...">
-                            <div class="status-indicator bg-warning"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">Last month's report looks great, I am very happy with
-                                the progress so far, keep up the good work!</div>
-                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image me-3">
-                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                alt="...">
-                            <div class="status-indicator bg-success"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                told me that people say this to all dogs, even if they aren't good...</div>
-                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                        </div>
-                    </a>
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                    @if (\App\Models\Contact::where('read', '=', '0')->count() > 0)
+                        @foreach (\App\Models\Contact::where('read', '=', '0')->latest()->take(4)->get() as $contact)
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('contacts.show', $contact->id) }}">
+                                <div class="dropdown-list-image me-3">
+                                    <img class="rounded-circle" src="{{ asset('images/profile-pic.jpg') }}"
+                                        alt="...">
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">{{ Str::limit($contact->message, 35, '...') }}</div>
+                                    <div class="small text-gray-500">{{ $contact->first_name }} {{ $contact->last_name }} · {{ $contact->created_at->diffForHumans() }}</div>
+                                </div>
+                            </a>
+                        @endforeach
+                        @else
+                            <div class="dropdown-item text-gray-700">
+                                No recent messages
+                            </div>
+                    @endif
+                    
+                    <a class="dropdown-item text-center small text-gray-500" href="{{ route('contacts.unread-contacts') }}">Read More Messages</a>
                 </div>
             </li>
 

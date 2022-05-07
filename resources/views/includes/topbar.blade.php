@@ -84,7 +84,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="contact-us.html">Contact</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('show_contact_page') }}">Contact</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

@@ -2,18 +2,19 @@
 
 use App\Http\Controllers\AdminBlogsController;
 use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\AdminContactsController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLessonGroupController;
 use App\Http\Controllers\AdminLessonsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorProfilesController;
 use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\ProfilesController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,10 @@ Route::get('/courses/categories/{category_slug}', [CoursesController::class, 'co
 Route::get('/blogs', [BlogsController::class, 'all_blog_posts'])->name('blogs');
 Route::get('/blogs/{slug}', [BlogsController::class, 'single_blog_post'])->name('blog_post_single');
 
+
+// Contact Us
+Route::get('/contact-us', [ContactsController::class, 'show_contact_page'])->name('show_contact_page');
+Route::post('/contact-us/store', [ContactsController::class, 'store_contact_message'])->name('store_contact_message');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -107,6 +112,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Blog CRUD
     Route::resource('admin/blogs', AdminBlogsController::class);
+
+    // Contacts CRUD
+    Route::get('admin/contacts/unread', [AdminContactsController::class, 'unread_contacts'])->name('contacts.unread-contacts');
+    Route::resource('admin/contacts', AdminContactsController::class);
+   
 });
 
 
