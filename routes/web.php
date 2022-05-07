@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLessonGroupController;
 use App\Http\Controllers\AdminLessonsController;
+use App\Http\Controllers\AdminPagesController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\ContactsController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorProfilesController;
 use App\Http\Controllers\LessonsController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReviewsController;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +49,12 @@ Route::get('/blogs/{slug}', [BlogsController::class, 'single_blog_post'])->name(
 // Contact Us
 Route::get('/contact-us', [ContactsController::class, 'show_contact_page'])->name('show_contact_page');
 Route::post('/contact-us/store', [ContactsController::class, 'store_contact_message'])->name('store_contact_message');
+
+
+// Pages
+Route::get('/pages/{slug}', [PagesController::class, 'show_page'])->name('show_page');
+
+
 
 
 Route::middleware(['auth'])->group(function () {
@@ -116,6 +124,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Contacts CRUD
     Route::get('admin/contacts/unread', [AdminContactsController::class, 'unread_contacts'])->name('contacts.unread-contacts');
     Route::resource('admin/contacts', AdminContactsController::class);
+
+    // Pages CRUD
+    Route::resource('admin/pages', AdminPagesController::class);
    
 });
 

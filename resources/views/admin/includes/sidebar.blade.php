@@ -64,20 +64,17 @@
     </li>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+    <li class="nav-item {{ Request::is('admin/pages*') ? 'active' : '' }}">
+        <a class="nav-link collapsed " href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
             <span>Pages</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="admin-login.html">Login</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="admin-404.html">404 Page</a>
-                <a class="collapse-item" href="admin-blank.html">Blank Page</a>
+                <h6 class="collapse-header">Manage pages</h6>
+                <a class="collapse-item {{ Request::is('admin/pages') ? 'active' : '' }}" href="{{ route('pages.index') }}">All pages</a>
+                <a class="collapse-item {{ Request::is('admin/pages/create') ? 'active' : '' }}" href="{{ route('pages.create') }}">New page</a>
             </div>
         </div>
     </li>

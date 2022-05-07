@@ -94,9 +94,12 @@
                     <div class="widget">
                         <h4 class="widget__head">Useful links</h4>
                         <ul class="footer__ul">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about-us.html">About</a></li>
-                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="{{ url('/') }}">Home</a></li>
+                            <li><a href="{{ route('courses') }}">Courses</a></li>
+                            @if ($page = \App\Models\Page::where('slug', '=', 'about-us')->first())
+                                <li><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></li>
+                            @endif
+                            <li><a href="{{ route('blogs') }}">Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -104,10 +107,14 @@
                     <div class="widget">
                         <h4 class="widget__head">Support</h4>
                         <ul class="footer__ul">
-                            <li><a href="page.html">DOC</a></li>
-                            <li><a href="page.html">Support</a></li>
+                            @if ($page = \App\Models\Page::where('slug', '=', 'doc')->first())
+                                <li><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></li>
+                            @endif
+                            @if ($page = \App\Models\Page::where('slug', '=', 'support')->first())
+                                <li><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></li>
+                            @endif
+                            <li><a href="{{ route('show_contact_page') }}">Contact Us</a></li>
                             <li><a href="faq-page.html">FAQ</a></li>
-                            <li><a href="page.html">Download</a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,9 +122,12 @@
                     <div class="widget">
                         <h4 class="widget__head">Terms</h4>
                         <ul class="footer__ul">
-                            <li><a href="page.html">Term & Condition</a></li>
-                            <li><a href="page.html">Privacy & Policy</a></li>
-                            <li><a href="page.html">Partners</a></li>
+                            @if ($page = \App\Models\Page::where('slug', '=', 'term-condition')->first())
+                                <li><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></li>
+                            @endif
+                            @if ($page = \App\Models\Page::where('slug', '=', 'privacy-policy')->first())
+                                <li><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
