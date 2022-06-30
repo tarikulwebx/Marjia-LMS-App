@@ -21,7 +21,7 @@
             <!-- Courses -->
             @if (!$courses->isEmpty())
                 <!-- COURSE SECTION: START -->
-                <section class="course-section mb-5">
+                <section id="searched-course-section" class="course-section mb-5">
                     <!-- Section head -->
                     <div class="container">
                         <div class="section-head mb-3">

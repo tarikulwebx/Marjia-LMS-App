@@ -10831,6 +10831,19 @@ jQuery(function($){
         $('#recent-course-section .courses').removeClass('horizontal-list');
     });
 
+
+    // Searched Course Toggle
+    $('#searched-course-section .btn-list').on('click', function() {
+        $('#searched-course-section .courses').addClass('horizontal-list');
+    });
+
+    $('#searched-course-section .btn-grid').on('click', function() {
+        $('#searched-course-section .courses').removeClass('horizontal-list');
+    });
+
+
+    
+
     // Courses page course toggle
     $('#btn-course-grid-view').on('click', function(){
         $('#course-section .courses').removeClass('horizontal-list');
