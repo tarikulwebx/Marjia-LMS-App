@@ -20,6 +20,7 @@ use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,10 @@ Route::get('/pages/{slug}', [PagesController::class, 'show_page'])->name('show_p
 
 // FAQs
 Route::get('/faqs', [FaqsController::class, 'all_faqs'])->name('all_faqs');
+
+
+// Search
+Route::get('/search', [SearchController::class, 'search'])->name('web.search');
 
 
 

@@ -106,8 +106,8 @@
                 </li>
             </ul>
             <!-- NAVBAR SEARCH FORM CONTENT -->
-            <form class="d-flex search-form">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <form action="{{ route('web.search') }}" method="GET" class="d-flex search-form" autocomplete="off">
+                <input class="form-control" name="query" type="search" placeholder="Search" aria-label="Search" value="{{ isset($_GET['query']) ? $_GET['query'] : '' }}" required>
                 <button class="btn" type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>

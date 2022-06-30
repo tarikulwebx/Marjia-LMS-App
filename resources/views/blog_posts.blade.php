@@ -39,7 +39,7 @@
                                                         <li class="list-inline-item"><i class="far fa-clock me-2"></i>{{ $post->created_at->diffForHumans() }}</li>
                                                     </ul>
                                                     <p class="article__text card-text">{!! Str::limit($post->body, 350, '...') !!}</p>
-                                                    <a href="#" class="article__readmore btn">Read more <i class="fas fa-long-arrow-right"></i></a>
+                                                    <a href="{{ route('blog_post_single', $post->slug) }}" class="article__readmore btn">Read more <i class="fas fa-long-arrow-right"></i></a>
                                                 </div>
                                             </div>
                                         </div>
