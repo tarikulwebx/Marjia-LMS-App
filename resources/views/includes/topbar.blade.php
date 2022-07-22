@@ -92,16 +92,10 @@
                         Others
                     </a>
                     <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdown">
-                        <li><a href="instructor-dashboard.html" class="dropdown-item">Instructor Dashboard</a></li>
-                        <li><a href="student-dashboard.html" class="dropdown-item">Student Dashboard</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a href="register.html" class="dropdown-item">Register</a></li>
-                        <li><a href="login.html" class="dropdown-item">Login</a></li>
-                        <li><a href="forget-password.html" class="dropdown-item">Forget Password</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a href="about-us.html" class="dropdown-item">About us</a></li>
-                        <li><a href="404.html" class="dropdown-item">404 not found</a></li>
-                        <li><a href="faq-page.html" class="dropdown-item">FAQ page</a></li>
+                        <li><a href="{{ route('all_faqs') }}" class="dropdown-item">FAQ</a></li>
+                        @if ($page = \App\Models\Page::where('slug', '=', 'about-us')->first())
+                            <li><a href="{{ route('show_page', $page->slug) }}" class="dropdown-item">{{ $page->title }}</a></li>
+                        @endif
                     </ul>
                 </li>
             </ul>

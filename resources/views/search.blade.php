@@ -171,7 +171,7 @@
                                     <div class="col-sm-6">
                                         <div class="card shadow-sm">
                                             <div class="card-body">
-                                                <h4 class="card-title mb-2 text-primary"><a href="{{ route('pages.show', $page->slug) }}">{{ $page->title }}</a></h4>
+                                                <h4 class="card-title mb-2 text-primary"><a href="{{ route('show_page', $page->slug) }}">{{ $page->title }}</a></h4>
                                                 <div class="card-text">{!! Str::limit($page->body, 120, '...') !!}</div>
                                             </div>
                                         </div>

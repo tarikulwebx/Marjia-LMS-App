@@ -49,6 +49,7 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/assets/js/jquery-3.6.0.min.js',
         'resources/assets/js/jquery.easing.1.3.js',
         'resources/assets/js/datatables.min.js',
+        'resources/assets/js/chart.min.js',
         'resources/assets/js/bootstrap-multiselect.js',
         'resources/assets/js/toastr.min.js',
         'resources/assets/js/admin-script.js',
